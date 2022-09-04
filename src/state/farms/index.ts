@@ -9,7 +9,6 @@ import stringify from 'fast-json-stable-stringify'
 import farmsConfig, { farmsTestnet } from 'config/constants/farms'
 import multicall from 'utils/multicall'
 import masterchefABI from 'config/abi/masterchef.json'
-import masterchefTestnetABI from 'config/abi/masterchefTestnet.json'
 import { getMasterChefAddress } from 'utils/addressHelpers'
 import { getBalanceAmount } from 'utils/formatBalance'
 import { ethersToBigNumber } from 'utils/bigNumber'
@@ -59,7 +58,7 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
   'farms/fetchFarmsPublicDataAsync',
   async ({ pids, chainId }) => {
     const masterChefAddress = getMasterChefAddress(chainId)
-    const calls = chainId === ChainId.BSC_TESTNET ? [
+    const calls = [
       {
         address: masterChefAddress,
         name: 'poolLength',
@@ -69,18 +68,8 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
         name: 'bullPerBlock',
         params: [true],
       },
-    ] : [
-      {
-        address: masterChefAddress,
-        name: 'poolLength',
-      },
-      {
-        address: masterChefAddress,
-        name: 'cakePerBlock',
-        params: [true],
-      },
     ]
-    const [[poolLength], [cakePerBlockRaw]] = await multicall(chainId === ChainId.BSC_TESTNET ? masterchefTestnetABI : masterchefABI, calls, chainId)
+    const [[poolLength], [cakePerBlockRaw]] = await multicall(masterchefABI, calls, chainId)
     const regularCakePerBlock = getBalanceAmount(ethersToBigNumber(cakePerBlockRaw))
     const farmsCanFetch = chainId === ChainId.BSC_TESTNET ? farmsTestnet.filter(
       (farmConfig) => pids.includes(farmConfig.pid) && poolLength.gt(farmConfig.pid),

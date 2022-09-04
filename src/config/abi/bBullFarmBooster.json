@@ -2,24 +2,34 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      },
-      {
-        "internalType": "contract ICakePool",
-        "name": "_cakePool",
+        "internalType": "address",
+        "name": "_bull",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_admin",
+        "name": "_bullPool",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_treasury",
+        "name": "_v2",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_max",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_cA",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_cB",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -31,23 +41,23 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "sender",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "shares",
+        "name": "pid",
         "type": "uint256"
       }
     ],
-    "name": "ChargePerformanceFee",
+    "name": "ActiveFarmPool",
     "type": "event"
   },
   {
@@ -56,126 +66,23 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "sender",
+        "name": "user",
         "type": "address"
       },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "ChargeWithdrawFee",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "shares",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "lastDepositedTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "DepositCake",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
       {
         "indexed": false,
         "internalType": "address",
-        "name": "admin",
+        "name": "proxy",
         "type": "address"
-      }
-    ],
-    "name": "NewAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
+      },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "performanceFee",
+        "name": "pid",
         "type": "uint256"
       }
     ],
-    "name": "NewPerformanceFee",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "treasury",
-        "type": "address"
-      }
-    ],
-    "name": "NewTreasury",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "withdrawAmountBooster",
-        "type": "uint256"
-      }
-    ],
-    "name": "NewWithdrawAmountBooster",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "withdrawFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "NewWithdrawFee",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "withdrawFeePeriod",
-        "type": "uint256"
-      }
-    ],
-    "name": "NewWithdrawFeePeriod",
+    "name": "DeactiveFarmPool",
     "type": "event"
   },
   {
@@ -199,8 +106,27 @@
   },
   {
     "anonymous": false,
-    "inputs": [],
-    "name": "Pause",
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      }
+    ],
+    "name": "Refresh",
     "type": "event"
   },
   {
@@ -209,17 +135,11 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "account",
+        "name": "factory",
         "type": "address"
       }
     ],
-    "name": "Paused",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "Unpause",
+    "name": "UpdateBoostFactory",
     "type": "event"
   },
   {
@@ -227,12 +147,18 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "status",
+        "type": "bool"
       }
     ],
-    "name": "Unpaused",
+    "name": "UpdateBoostFarms",
     "type": "event"
   },
   {
@@ -241,119 +167,141 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "sender",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
+        "type": "address"
+      }
+    ],
+    "name": "UpdateBoostProxy",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "lockedAmount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "shares",
+        "name": "lockedDuration",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalLockedAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxLockDuration",
         "type": "uint256"
       }
     ],
-    "name": "WithdrawShares",
+    "name": "UpdateBullPool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldCA",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newCA",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateCA",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldCB",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newCB",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateCB",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "factory",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateMaxBoostPool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldMultiplier",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newMultiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdatePoolBoostMultiplier",
     "type": "event"
   },
   {
     "inputs": [],
-    "name": "MAX_PERFORMANCE_FEE",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MAX_WITHDRAW_AMOUNT_BOOSTER",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MAX_WITHDRAW_FEE",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MAX_WITHDRAW_FEE_PERIOD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MIN_DEPOSIT_AMOUNT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MIN_WITHDRAW_AMOUNT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MIN_WITHDRAW_AMOUNT_BOOSTER",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "admin",
+    "name": "BOOSTER_FACTORY",
     "outputs": [
       {
         "internalType": "address",
@@ -366,7 +314,7 @@
   },
   {
     "inputs": [],
-    "name": "available",
+    "name": "BOOST_PRECISION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -379,7 +327,7 @@
   },
   {
     "inputs": [],
-    "name": "balanceOf",
+    "name": "BOOST_RATIO_PRECISION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -392,12 +340,142 @@
   },
   {
     "inputs": [],
-    "name": "cakePool",
+    "name": "BOOST_WEIGHT_PRECISION",
     "outputs": [
       {
-        "internalType": "contract ICakePool",
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "BULL",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "BULL_POOL",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "CA_PRECISION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MASTER_CHEF",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_BOOST_POOL",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_BOOST_PRECISION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_CA",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_CB",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MIN_CA",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MIN_CB",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -407,25 +485,100 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "_pid",
         "type": "uint256"
       }
     ],
-    "name": "deposit",
+    "name": "activate",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "activedPools",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "pools",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "emergencyWithdraw",
+    "name": "avgLockDuration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "cA",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "cB",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_pid",
+        "type": "uint256"
+      }
+    ],
+    "name": "deactive",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getPricePerFullShare",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_pid",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUserMultiplier",
     "outputs": [
       {
         "internalType": "uint256",
@@ -440,11 +593,55 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_token",
+        "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_pid",
+        "type": "uint256"
       }
     ],
-    "name": "inCaseTokensGetStuck",
+    "name": "isBoostedPool",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lockedAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lockedDuration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_totalLockedAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxLockDuration",
+        "type": "uint256"
+      }
+    ],
+    "name": "onBullPoolUpdate",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -463,36 +660,40 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "pause",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "paused",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "proxyContract",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "address",
         "name": "",
-        "type": "bool"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "performanceFee",
-    "outputs": [
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "_pid",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "refresh",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -506,11 +707,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_admin",
+        "name": "_factory",
         "type": "address"
       }
     ],
-    "name": "setAdmin",
+    "name": "setBoostFactory",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -519,11 +720,55 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_performanceFee",
+        "name": "_pid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_status",
+        "type": "bool"
+      }
+    ],
+    "name": "setBoosterFarms",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_cA",
         "type": "uint256"
       }
     ],
-    "name": "setPerformanceFee",
+    "name": "setCA",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_cB",
+        "type": "uint256"
+      }
+    ],
+    "name": "setCB",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_max",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxBoostPool",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -532,91 +777,18 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_treasury",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_proxy",
         "type": "address"
       }
     ],
-    "name": "setTreasury",
+    "name": "setProxy",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_withdrawAmountBooster",
-        "type": "uint256"
-      }
-    ],
-    "name": "setWithdrawAmountBooster",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_withdrawFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setWithdrawFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_withdrawFeePeriod",
-        "type": "uint256"
-      }
-    ],
-    "name": "setWithdrawFeePeriod",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "staking",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "token",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalShares",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -633,21 +805,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "treasury",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_pid",
+        "type": "uint256"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "unpause",
+    "name": "updatePoolBoostMultiplier",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -664,22 +834,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "shares",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastDepositedTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "cakeAtLastUserAction",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastUserActionTime",
+        "name": "size",
         "type": "uint256"
       }
     ],
@@ -690,56 +845,16 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_shares",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawAll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawAmountBooster",
-    "outputs": [
-      {
-        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawFee",
+    "name": "whiteList",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "bool",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawFeePeriod",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
 import Balance from 'components/Balance'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { usePotteryData } from 'state/pottery/hook'
 import { getBalanceAmount } from 'utils/formatBalance'
 
@@ -14,7 +14,7 @@ interface YourDepositProps {
 const YourDeposit: React.FC<React.PropsWithChildren<YourDepositProps>> = ({ depositBalance }) => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const { userData } = usePotteryData()
   const totalDepositBalance = getBalanceAmount(depositBalance).toNumber()
   const balanceInBusd = new BigNumber(totalDepositBalance).times(cakePriceBusd).toNumber()

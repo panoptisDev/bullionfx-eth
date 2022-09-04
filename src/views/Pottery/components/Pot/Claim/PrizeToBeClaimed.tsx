@@ -2,7 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Box, Text } from '@pancakeswap/uikit'
 import Balance from 'components/Balance'
 import { DeserializedPotteryUserData } from 'state/types'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import BigNumber from 'bignumber.js'
 import ClaimButton from './ClaimButton'
@@ -13,7 +13,7 @@ interface PrizeToBeClaimedProps {
 
 const PrizeToBeClaimed: React.FC<React.PropsWithChildren<PrizeToBeClaimedProps>> = ({ userData }) => {
   const { t } = useTranslation()
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
 
   const rewardToken = getBalanceNumber(userData.rewards)
   const rewardInBusd = new BigNumber(rewardToken).times(cakePriceBusd).toNumber()

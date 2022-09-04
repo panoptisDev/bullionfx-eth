@@ -44,7 +44,6 @@ export const computePairAddress = ({
 export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: [CurrencyAmount<Token>, CurrencyAmount<Token>]
-
   public static getAddress(tokenA: Token, tokenB: Token): string {
     return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
   }

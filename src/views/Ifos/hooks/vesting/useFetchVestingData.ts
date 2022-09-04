@@ -8,14 +8,14 @@ import { fetchUserWalletIfoData } from './fetchUserWalletIfoData'
 const allVestingIfo: Ifo[] = ifosConfig.filter((ifo) => ifo.version >= 3.2 && ifo.vestingTitle)
 
 const useFetchVestingData = () => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
 
   const { data, mutate } = useSWR(
     account ? ['vestingData'] : null,
     async () => {
       const allData = await Promise.all(
         allVestingIfo.map(async (ifo) => {
-          const response = await fetchUserWalletIfoData(ifo, account)
+          const response = await fetchUserWalletIfoData(ifo, account, chainId)
           return response
         }),
       )

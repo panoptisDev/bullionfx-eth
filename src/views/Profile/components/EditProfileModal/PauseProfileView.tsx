@@ -12,14 +12,15 @@ import { ToastDescriptionWithTx } from 'components/Toast'
 
 interface PauseProfilePageProps extends InjectedModalProps {
   onSuccess?: () => void
+  chainId: number
 }
 
-const PauseProfilePage: React.FC<React.PropsWithChildren<PauseProfilePageProps>> = ({ onDismiss, onSuccess }) => {
+const PauseProfilePage: React.FC<React.PropsWithChildren<PauseProfilePageProps>> = ({ onDismiss, onSuccess, chainId }) => {
   const [isAcknowledged, setIsAcknowledged] = useState(false)
   const { profile, refresh: refreshProfile } = useProfile()
   const {
     costs: { numberCakeToReactivate },
-  } = useGetProfileCosts()
+  } = useGetProfileCosts(chainId)
   const { t } = useTranslation()
   const pancakeProfileContract = useProfileContract()
   const { callWithGasPrice } = useCallWithGasPrice()

@@ -45,7 +45,7 @@ import PrizesInfoSection from './components/PrizesInfoSection'
 
 const MoDCompetition = () => {
   const profileApiUrl = process.env.NEXT_PUBLIC_API_PROFILE
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { t } = useTranslation()
   const { profile, isLoading } = useProfile()
   const { isMobile } = useMatchBreakpointsContext()
@@ -116,7 +116,7 @@ const MoDCompetition = () => {
               params: [account],
             },
           ],
-          { requireSuccess: false },
+          { requireSuccess: false, chainId },
         )
         const userObject: UserTradingInformation = {
           hasRegistered: user[0],
@@ -149,7 +149,7 @@ const MoDCompetition = () => {
         canClaimNFT: false,
       })
     }
-  }, [account, registrationSuccessful, claimSuccessful, tradingCompetitionContract])
+  }, [account, registrationSuccessful, claimSuccessful, tradingCompetitionContract, chainId])
 
   useEffect(() => {
     const fetchUserTradingStats = async () => {

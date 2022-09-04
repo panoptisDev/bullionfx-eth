@@ -18,14 +18,14 @@ interface RoundsTabProps {
 const RoundsTab: React.FC<React.PropsWithChildren<RoundsTabProps>> = ({ hasBetHistory, bets }) => {
   const { t } = useTranslation()
   const dispatch = useLocalDispatch()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const hasHistoryLoaded = useGetHasHistoryLoaded()
   const currentHistoryPage = useGetCurrentHistoryPage()
   const isFetchingHistory = useGetIsFetchingHistory()
   const { token } = useConfig()
 
   const handleClick = () => {
-    dispatch(fetchNodeHistory({ account, page: currentHistoryPage + 1 }))
+    dispatch(fetchNodeHistory({ account, chainId, page: currentHistoryPage + 1 }))
   }
 
   const v1Claim = token.symbol === 'BNB' ? <V1ClaimCheck /> : null

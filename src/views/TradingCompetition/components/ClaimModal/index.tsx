@@ -34,10 +34,10 @@ const ClaimModal: React.FC<React.PropsWithChildren<CompetitionProps>> = ({
   const { fetchWithCatchTxError, loading: isConfirming } = useCatchTxError()
   const { t } = useTranslation()
 
-  const { userRewardGroup, userCakeRewards, userDarRewards, userPointReward, canClaimNFT } = userTradingInformation
+  const { userRewardGroup, userCakeRewards, userPointReward, canClaimNFT } = userTradingInformation
   const { cakeReward, darReward } = useModCompetitionRewards({
     userCakeRewards,
-    userDarRewards,
+    // userDarRewards,
   })
   const achievement = getRewardGroupAchievements(modPrizes, userRewardGroup, userPointReward)
   const { callWithGasPrice } = useCallWithGasPrice()

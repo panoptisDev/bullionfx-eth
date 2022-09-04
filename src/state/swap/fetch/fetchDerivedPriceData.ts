@@ -1,5 +1,5 @@
 import orderBy from 'lodash/orderBy'
-import { INFO_CLIENT, INFO_CLIENT_TESTNET } from 'config/constants/endpoints'
+import { INFO_CLIENT, INFO_CLIENT_GOERLI } from 'config/constants/endpoints'
 import { ONE_DAY_UNIX, ONE_HOUR_SECONDS } from 'config/constants/info'
 import { getBlocksFromTimestamps } from 'utils/getBlocksFromTimestamps'
 import { getUnixTime, startOfHour, sub } from 'date-fns'
@@ -9,8 +9,8 @@ import { getDerivedPrices, getDerivedPricesQueryConstructor } from '../queries/g
 import { PairDataTimeWindowEnum } from '../types'
 import { ChainId } from '../../../../packages/swap-sdk/src/constants'
 
-const getTokenDerivedBnbPrices = async (tokenAddress: string, blocks: Block[], chainId: number) => {
-  const infoClient = chainId === ChainId.BSC_TESTNET ? INFO_CLIENT_TESTNET : INFO_CLIENT
+const getTokenDerivedUsdPrices = async (tokenAddress: string, blocks: Block[], chainId: number) => {
+  const infoClient = chainId === ChainId.BSC_TESTNET ? INFO_CLIENT_GOERLI : INFO_CLIENT
   const prices: any | undefined = await multiQuery(
     getDerivedPricesQueryConstructor,
     getDerivedPrices(tokenAddress, blocks),
@@ -27,7 +27,7 @@ const getTokenDerivedBnbPrices = async (tokenAddress: string, blocks: Block[], c
   const tokenPrices: {
     tokenAddress: string
     timestamp: string
-    derivedBNB: number
+    derivedUSD: number
   }[] = []
 
   // Get Token prices in BNB
@@ -37,7 +37,7 @@ const getTokenDerivedBnbPrices = async (tokenAddress: string, blocks: Block[], c
       tokenPrices.push({
         tokenAddress,
         timestamp,
-        derivedBNB: prices[priceKey]?.derivedBNB ? parseFloat(prices[priceKey].derivedBNB) : 0,
+        derivedUSD: prices[priceKey]?.derivedUSD ? parseFloat(prices[priceKey].derivedUSD) : 0,
       })
     }
   })
@@ -100,11 +100,11 @@ const fetchDerivedPriceData = async (
       return null
     }
 
-    const [token0DerivedBnb, token1DerivedBnb] = await Promise.all([
-      getTokenDerivedBnbPrices(token0Address, blocks, chainId),
-      getTokenDerivedBnbPrices(token1Address, blocks, chainId),
+    const [token0DerivedUsd, token1DerivedUsd] = await Promise.all([
+      getTokenDerivedUsdPrices(token0Address, blocks, chainId),
+      getTokenDerivedUsdPrices(token1Address, blocks, chainId),
     ])
-    return { token0DerivedBnb, token1DerivedBnb }
+    return { token0DerivedUsd, token1DerivedUsd }
   } catch (error) {
     console.error('Failed to fetched derived price data for chart', error)
     return null

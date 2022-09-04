@@ -10,7 +10,7 @@ import { fetchPotteryUserDataAsync } from 'state/pottery'
 
 export const useClaimPottery = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const dispatch = useAppDispatch()
   const { toastSuccess } = useToast()
   const contract = usePotterytDrawContract()
@@ -26,9 +26,9 @@ export const useClaimPottery = () => {
           {t('You have successfully claimed your rewards.')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchPotteryUserDataAsync(account))
+      dispatch(fetchPotteryUserDataAsync({ account, chainId }))
     }
-  }, [account, contract, t, dispatch, fetchWithCatchTxError, toastSuccess])
+  }, [account, contract, t, dispatch, fetchWithCatchTxError, toastSuccess, chainId])
 
   return { isPending, handleClaim }
 }

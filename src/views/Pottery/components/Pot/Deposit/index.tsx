@@ -32,8 +32,8 @@ const CardAction = styled(Flex)`
 
 const Deposit: React.FC<React.PropsWithChildren> = () => {
   const { t } = useTranslation()
-  const { account } = useActiveWeb3React()
-  const { getLockedApy } = useVaultApy()
+  const { chainId, account } = useActiveWeb3React()
+  const { getLockedApy } = useVaultApy(chainId)
   const { publicData, userData } = usePotteryData()
   const lastVaultAddress = useLatestVaultAddress()
   const { totalSupply, totalLockCake, getStatus, totalLockedValue, maxTotalDeposit } = publicData

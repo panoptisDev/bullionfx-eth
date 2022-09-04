@@ -29,7 +29,7 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useToast from 'hooks/useToast'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useERC20 } from 'hooks/useContract'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { requiresApproval } from 'utils/requiresApproval'
 
 const MessageTextLink = styled(Link)`
@@ -99,7 +99,7 @@ const ContributeModal: React.FC<React.PropsWithChildren<Props>> = ({
   const raisingTokenContractApprover = useERC20(currency.address)
   const { t } = useTranslation()
   const valueWithTokenDecimals = new BigNumber(value).times(DEFAULT_TOKEN_DECIMAL)
-  const label = currency === bscTokens.cake ? t('Max. CAKE entry') : t('Max. token entry')
+  const label = currency === ethTokens.bull ? t('Max. BULL entry') : t('Max. token entry')
 
   const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
     useApproveConfirmTransaction({
@@ -186,9 +186,8 @@ const ContributeModal: React.FC<React.PropsWithChildren<Props>> = ({
           <Flex justifyContent="space-between" mb="16px">
             {tooltipVisible && tooltip}
             <TooltipText ref={targetRef}>{label}:</TooltipText>
-            <Text>{`${formatNumber(getBalanceAmount(maximumTokenEntry, currency.decimals).toNumber(), 3, 3)} ${
-              ifo.currency.symbol
-            }`}</Text>
+            <Text>{`${formatNumber(getBalanceAmount(maximumTokenEntry, currency.decimals).toNumber(), 3, 3)} ${ifo.currency.symbol
+              }`}</Text>
           </Flex>
           <Flex justifyContent="space-between" mb="8px">
             <Text>{t('Commit')}:</Text>

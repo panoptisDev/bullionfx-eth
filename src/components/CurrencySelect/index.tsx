@@ -5,7 +5,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTranslation } from '@pancakeswap/localization'
 import { formatNumber } from 'utils/formatBalance'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import useBUSDPrice from 'hooks/useBUSDPrice'
+import useBUSDPrice from 'hooks/useUSDCPrice'
 import { CurrencyLogo } from '../Logo'
 import { RowBetween, AutoRow } from '../Layout/Row'
 
@@ -94,9 +94,9 @@ export const CurrencySelect = ({
                 <Text id="pair" bold>
                   {selectedCurrency && selectedCurrency.symbol && selectedCurrency.symbol.length > 20
                     ? `${selectedCurrency.symbol.slice(0, 4)}...${selectedCurrency.symbol.slice(
-                        selectedCurrency.symbol.length - 5,
-                        selectedCurrency.symbol.length,
-                      )}`
+                      selectedCurrency.symbol.length - 5,
+                      selectedCurrency.symbol.length,
+                    )}`
                     : selectedCurrency?.symbol}
                 </Text>
               </Flex>

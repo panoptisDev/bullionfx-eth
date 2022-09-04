@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components'
 import { Box, Flex, Heading, Skeleton } from '@pancakeswap/uikit'
 import { LotteryStatus } from 'config/constants/types'
 import { useTranslation } from '@pancakeswap/localization'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useLottery } from 'state/lottery/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
@@ -79,7 +79,7 @@ const PrizeTotalBalance = styled(Balance)`
   -webkit-text-fill-color: transparent;
 `
 
-const StyledBuyTicketButton = styled(BuyTicketsButton)<{ disabled: boolean }>`
+const StyledBuyTicketButton = styled(BuyTicketsButton) <{ disabled: boolean }>`
   background: ${({ theme, disabled }) =>
     disabled ? theme.colors.disabled : 'linear-gradient(180deg, #7645d9 0%, #452a7a 100%)'};
   width: 200px;
@@ -218,7 +218,7 @@ const Hero = () => {
     isTransitioning,
   } = useLottery()
 
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const prizeInBusd = amountCollectedInCake.times(cakePriceBusd)
   const prizeTotal = getBalanceNumber(prizeInBusd)
   const ticketBuyIsDisabled = status !== LotteryStatus.OPEN || isTransitioning

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Box, Text } from '@pancakeswap/uikit'
 import Balance from 'components/Balance'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { PotteryWithdrawAbleData } from 'state/types'
@@ -19,7 +19,7 @@ const AvailableWithdraw: React.FC<React.PropsWithChildren<AvailableWithdrawProps
     t,
     currentLanguage: { locale },
   } = useTranslation()
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const { previewRedeem, lockedDate, shares, status, potteryVaultAddress, totalSupply, totalLockCake, balanceOf } =
     withdrawData
 

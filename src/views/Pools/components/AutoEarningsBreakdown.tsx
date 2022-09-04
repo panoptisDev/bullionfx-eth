@@ -23,8 +23,8 @@ const AutoEarningsBreakdown: React.FC<React.PropsWithChildren<AutoEarningsBreakd
     earningTokenPrice,
     pool.vaultKey === VaultKey.CakeVault
       ? (userData as DeserializedLockedVaultUser).currentPerformanceFee
-          .plus((userData as DeserializedLockedVaultUser).currentOverdueFee)
-          .plus((userData as DeserializedLockedVaultUser).userBoostedShare)
+        .plus((userData as DeserializedLockedVaultUser).currentOverdueFee)
+        .plus((userData as DeserializedLockedVaultUser).userBoostedShare)
       : null,
   )
 
@@ -37,7 +37,7 @@ const AutoEarningsBreakdown: React.FC<React.PropsWithChildren<AutoEarningsBreakd
     <>
       <Text bold>
         {autoCakeToDisplay.toFixed(3)}
-        {' CAKE'}
+        {' BULL'}
       </Text>
       <Text bold>~${autoUsdToDisplay.toFixed(2)}</Text>
       <Text>{t('Earned since your last action')}:</Text>
@@ -45,7 +45,7 @@ const AutoEarningsBreakdown: React.FC<React.PropsWithChildren<AutoEarningsBreakd
       {hourDiffSinceLastAction ? (
         <>
           <Text>{t('Your average per hour')}:</Text>
-          <Text bold>{t('CAKE per hour: %amount%', { amount: earnedCakePerHour.toFixed(2) })}</Text>
+          <Text bold>{t('BULL per hour: %amount%', { amount: earnedCakePerHour.toFixed(2) })}</Text>
           <Text bold>{t('per hour: ~$%amount%', { amount: earnedUsdPerHour.toFixed(2) })}</Text>
         </>
       ) : null}

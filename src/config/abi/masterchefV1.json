@@ -2,8 +2,8 @@
   {
     "inputs": [
       {
-        "internalType": "contract CakeToken",
-        "name": "_cake",
+        "internalType": "contract BullToken",
+        "name": "_bull",
         "type": "address"
       },
       {
@@ -18,7 +18,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_cakePerBlock",
+        "name": "_bullPerBlock",
         "type": "uint256"
       },
       {
@@ -145,7 +145,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "_lpToken",
         "type": "address"
       },
@@ -162,10 +162,10 @@
   },
   {
     "inputs": [],
-    "name": "cake",
+    "name": "bull",
     "outputs": [
       {
-        "internalType": "contract CakeToken",
+        "internalType": "contract BullToken",
         "name": "",
         "type": "address"
       }
@@ -175,7 +175,7 @@
   },
   {
     "inputs": [],
-    "name": "cakePerBlock",
+    "name": "bullPerBlock",
     "outputs": [
       {
         "internalType": "uint256",
@@ -352,7 +352,7 @@
         "type": "address"
       }
     ],
-    "name": "pendingCake",
+    "name": "pendingBull",
     "outputs": [
       {
         "internalType": "uint256",
@@ -374,7 +374,7 @@
     "name": "poolInfo",
     "outputs": [
       {
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "lpToken",
         "type": "address"
       },
@@ -390,7 +390,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "accCakePerShare",
+        "name": "accBullPerShare",
         "type": "uint256"
       }
     ],

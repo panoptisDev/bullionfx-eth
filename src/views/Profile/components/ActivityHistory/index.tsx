@@ -16,7 +16,7 @@ import {
 import { Activity, NftToken } from 'state/nftMarket/types'
 import { useTranslation } from '@pancakeswap/localization'
 import TableLoader from 'components/TableLoader'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 import useTheme from 'hooks/useTheme'
 import { useRouter } from 'next/router'
 import { sortUserActivity } from '../../utils/sortUserActivity'
@@ -39,7 +39,7 @@ const ActivityHistory = () => {
   const [nftMetadata, setNftMetadata] = useState<NftToken[]>([])
   const [sortedUserActivities, setSortedUserActivities] = useState<Activity[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
   const { isXs, isSm } = useMatchBreakpointsContext()
 
   useEffect(() => {

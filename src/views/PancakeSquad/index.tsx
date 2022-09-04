@@ -18,7 +18,7 @@ import { getUserStatus } from './utils'
 const REFRESH_INTERVAL = 4000
 
 const PancakeSquad: React.FC<React.PropsWithChildren> = () => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { hasProfile, isInitialized } = useProfile()
   const [eventInfos, setEventInfo] = useState<EventInfos>()
   const [userInfos, setUserInfos] = useState<UserInfos>()
@@ -26,8 +26,8 @@ const PancakeSquad: React.FC<React.PropsWithChildren> = () => {
   const [isUserEnabled, setIsUserEnabled] = useState(false)
   const isLoading = (!eventInfos || !userInfos) && nftSaleAbi?.length > 0
 
-  useEventInfos({ setCallback: setEventInfo, refreshCounter })
-  useUserInfos({ setCallback: setUserInfos, refreshCounter, account })
+  useEventInfos({ setCallback: setEventInfo, refreshCounter, chainId })
+  useUserInfos({ setCallback: setUserInfos, refreshCounter, account, chainId })
 
   const userStatus = getUserStatus({
     account,

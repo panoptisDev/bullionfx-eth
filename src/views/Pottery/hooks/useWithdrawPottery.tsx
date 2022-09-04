@@ -10,7 +10,7 @@ import { fetchPotteryUserDataAsync } from 'state/pottery'
 
 export const useWithdrawPottery = (redeemShare: string, vaultAddress: string) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const dispatch = useAppDispatch()
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError, loading: isPending } = useCatchTxError()
@@ -26,9 +26,9 @@ export const useWithdrawPottery = (redeemShare: string, vaultAddress: string) =>
           {t('Your earnings have also been harvested to your wallet')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchPotteryUserDataAsync(account))
+      dispatch(fetchPotteryUserDataAsync({ account, chainId }))
     }
-  }, [account, contract, redeemShare, t, dispatch, fetchWithCatchTxError, toastSuccess])
+  }, [account, contract, redeemShare, chainId, t, dispatch, fetchWithCatchTxError, toastSuccess])
 
   return { isPending, handleWithdraw }
 }

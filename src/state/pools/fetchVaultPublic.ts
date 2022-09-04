@@ -1,11 +1,9 @@
 import BigNumber from 'bignumber.js'
 import { multicallv2 } from 'utils/multicall'
-import cakeVaultAbi from 'config/abi/cakeVaultV2.json'
-import bullVaultAbi from 'config/abi/cakeVaultV2Bull.json'
+import bullVaultAbi from 'config/abi/bullVaultV2.json'
 import { getCakeVaultAddress, getCakeFlexibleSideVaultAddress } from 'utils/addressHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getCakeContract } from 'utils/contractHelpers'
-import { ChainId } from '../../../packages/swap-sdk/src/constants'
 
 export const fetchPublicVaultData = async (chainId, cakeVaultAddress?) => {
   const cakeVaultV2 = getCakeVaultAddress(chainId)
@@ -15,9 +13,8 @@ export const fetchPublicVaultData = async (chainId, cakeVaultAddress?) => {
       address: cakeVaultAddress || cakeVaultV2,
       name: method,
     }))
-    const abi = chainId === ChainId.BSC_TESTNET ? bullVaultAbi : cakeVaultAbi
     const [[[sharePrice], [shares], totalLockedAmount], totalCakeInVault] = await Promise.all([
-      multicallv2(abi, calls, {
+      multicallv2(bullVaultAbi, calls, {
         requireSuccess: false,
         chainId
       }),
@@ -45,7 +42,7 @@ export const fetchPublicVaultData = async (chainId, cakeVaultAddress?) => {
 
 export const fetchPublicFlexibleSideVaultData = async (chainId, cakeVaultAddress?) => {
   const cakeContract = getCakeContract(chainId)
-  const cakeFlexibleSideVaultV2 = getCakeFlexibleSideVaultAddress()
+  const cakeFlexibleSideVaultV2 = getCakeFlexibleSideVaultAddress(chainId)
   try {
     const calls = ['getPricePerFullShare', 'totalShares'].map((method) => ({
       address: cakeVaultAddress || cakeFlexibleSideVaultV2,
@@ -53,8 +50,8 @@ export const fetchPublicFlexibleSideVaultData = async (chainId, cakeVaultAddress
     }))
 
     const [[[sharePrice], [shares]], totalCakeInVault] = await Promise.all([
-      multicallv2(cakeVaultAbi, calls, {
-        requireSuccess: false,
+      multicallv2(bullVaultAbi, calls, {
+        requireSuccess: false, chainId
       }),
       cakeContract.balanceOf(cakeVaultAddress || cakeFlexibleSideVaultV2),
     ])
@@ -82,8 +79,7 @@ export const fetchVaultFees = async (chainId, cakeVaultAddress?) => {
       address: cakeVaultAddress || cakeVaultV2,
       name: method,
     }))
-
-    const [[performanceFee], [withdrawalFee], [withdrawalFeePeriod]] = await multicallv2(cakeVaultAbi, calls)
+    const [[performanceFee], [withdrawalFee], [withdrawalFeePeriod]] = await multicallv2(bullVaultAbi, calls, { chainId })
 
     return {
       performanceFee: performanceFee.toNumber(),

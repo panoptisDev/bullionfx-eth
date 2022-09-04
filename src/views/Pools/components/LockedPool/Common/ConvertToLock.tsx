@@ -11,19 +11,21 @@ import useAvgLockDuration from '../hooks/useAvgLockDuration'
 interface ConvertToLockProps {
   stakingToken: Token
   currentStakedAmount: number
+  chainId: number
   isInline?: boolean
 }
 
 const ConvertToLock: React.FC<React.PropsWithChildren<ConvertToLockProps>> = ({
   stakingToken,
   currentStakedAmount,
+  chainId,
   isInline,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpointsContext()
   const isTableView = isInline && !isMobile
   const { avgLockDurationsInSeconds } = useAvgLockDuration()
-  const { lockedApy } = useVaultApy({ duration: Math.min(avgLockDurationsInSeconds, MAX_LOCK_DURATION) })
+  const { lockedApy } = useVaultApy(chainId, { duration: Math.min(avgLockDurationsInSeconds, MAX_LOCK_DURATION) })
 
   return (
     <Message

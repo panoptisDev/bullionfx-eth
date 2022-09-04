@@ -4,9 +4,10 @@ import BigNumber from 'bignumber.js'
 import { useTranslation } from '@pancakeswap/localization'
 import { Modal, Text, Box, Flex, BalanceInput } from '@pancakeswap/uikit'
 import useWinRateCalculator from 'views/Pottery/hooks/useWinRateCalculator'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useVaultApy } from 'hooks/useVaultApy'
 import { weeksToSeconds } from 'views/Pools/components/utils/formatSecondsToWeeks'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { CalculatorMode, EditingCurrency } from '../../types'
 import ButtonMenu from './ButtonMenu'
 import WinRateTvl from './WinRateTvl'
@@ -47,8 +48,9 @@ const WinRateModal: React.FC<React.PropsWithChildren<WinRateModalProps>> = ({
   totalSupply,
 }) => {
   const { t } = useTranslation()
-  const cakePrice = usePriceCakeBusd()
-  const { getLockedApy } = useVaultApy()
+  const cakePrice = usePriceBullUsdc()
+  const { chainId } = useActiveWeb3React()
+  const { getLockedApy } = useVaultApy(chainId)
   const balanceInputRef = useRef<HTMLInputElement | null>(null)
   const apy = getLockedApy(weeksToSeconds(10))
 

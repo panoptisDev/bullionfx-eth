@@ -18,7 +18,7 @@ import {
 import { getBlockExploreLink } from 'utils'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTranslation } from '@pancakeswap/localization'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { Bidder } from 'config/constants/types'
 import WhitelistedBiddersModal from '../WhitelistedBiddersModal'
 
@@ -30,7 +30,7 @@ const LeaderboardContainer = styled.div`
   }
 `
 
-const GridCell = styled(Flex)<{ isTopPosition: boolean }>`
+const GridCell = styled(Flex) <{ isTopPosition: boolean }>`
   height: 65px;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
@@ -118,7 +118,7 @@ const AuctionLeaderboardTable: React.FC<React.PropsWithChildren<{ bidders: Bidde
   noBidsText,
 }) => {
   const [visibleBidders, setVisibleBidders] = useState(10)
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const { t } = useTranslation()
 
   const { isMobile } = useMatchBreakpointsContext()

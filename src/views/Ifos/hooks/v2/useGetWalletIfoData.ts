@@ -61,14 +61,14 @@ const useGetWalletIfoData = (ifo: Ifo): WalletIfoData => {
     }))
   }
 
-  const fetchIfoData = useCallback(async () => {
+  const fetchIfoData = useCallback(async (chainId) => {
     const ifoCalls = ['viewUserInfo', 'viewUserOfferingAndRefundingAmountsForPools'].map((method) => ({
       address,
       name: method,
       params: [account, [0, 1]],
     }))
 
-    const [userInfo, amounts] = await multicallv2(ifoV2Abi, ifoCalls)
+    const [userInfo, amounts] = await multicallv2(ifoV2Abi, ifoCalls, { chainId })
 
     setState((prevState) => ({
       ...prevState,

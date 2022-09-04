@@ -6,7 +6,7 @@ import { transformPool } from 'state/pools/helpers'
 import { getCakeContract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { PoolCategory } from 'config/constants/types'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { serializeTokens } from 'utils/serializeTokens'
 import { fetchUserStakeBalances, fetchUserPendingRewards } from './fetchPoolsUser'
 import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
@@ -16,19 +16,19 @@ export interface PoolsState {
   userDataLoaded: boolean
 }
 
-const serializedTokens = serializeTokens(bscTokens)
+const serializedTokens = serializeTokens(ethTokens)
 
 const initialData = {
   data: {
     sousId: 0,
-    stakingToken: serializedTokens.cake,
-    earningToken: serializedTokens.cake,
+    stakingToken: serializedTokens.bull,
+    earningToken: serializedTokens.bull,
     contractAddress: {
-      97: '0x1d32c2945C8FDCBc7156c553B7cEa4325a17f4f9',
-      56: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
+      5: '0xCCBF0E1975A9dDD7cB41Af7f2C6F037DBaa04d10',
+      1: '',
     },
     poolCategory: PoolCategory.CORE,
-    tokenPerBlock: '10',
+    tokenPerBlock: '0.25',
     isFinished: false,
     totalStaked: '0',
   },
@@ -46,8 +46,8 @@ export const useFetchUserPools = (account) => {
       const fetchPoolsUserDataAsync = async () => {
         try {
           const [stakedBalances, pendingRewards, totalStaking] = await Promise.all([
-            fetchUserStakeBalances(account),
-            fetchUserPendingRewards(account),
+            fetchUserStakeBalances(account, chainId),
+            fetchUserPendingRewards(account, chainId),
             cakeContract.balanceOf(initialData.data.contractAddress[chainId]),
           ])
 

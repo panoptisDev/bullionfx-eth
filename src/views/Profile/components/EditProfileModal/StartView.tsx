@@ -48,14 +48,14 @@ const StartPage: React.FC<React.PropsWithChildren<StartPageProps>> = ({
   onDismiss,
 }) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { reader: cakeContract } = useCake()
   const { profile } = useProfile()
   const { balance: cakeBalance, fetchStatus } = useGetCakeBalance()
   const {
     costs: { numberCakeToUpdate, numberCakeToReactivate },
     isLoading: isProfileCostsLoading,
-  } = useGetProfileCosts()
+  } = useGetProfileCosts(chainId)
   const [needsApproval, setNeedsApproval] = useState(null)
   const minimumCakeRequired = profile?.isActive ? numberCakeToUpdate : numberCakeToReactivate
   const hasMinimumCakeRequired = fetchStatus === FetchStatus.Fetched && cakeBalance.gte(minimumCakeRequired)

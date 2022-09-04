@@ -22,7 +22,7 @@ export const useProfileForAddress = (
 } => {
   const { data, status, mutate, isValidating } = useSWR(
     address ? [address, 'profile'] : null,
-    () => getProfile(address),
+    () => getProfile(),
     fetchConfiguration,
   )
 
@@ -57,7 +57,7 @@ export const useProfile = (): {
   refresh: KeyedMutator<GetProfileResponse>
 } => {
   const { account } = useWeb3React()
-  const { data, status, mutate } = useSWRImmutable(account ? [account, 'profile'] : null, () => getProfile(account), {
+  const { data, status, mutate } = useSWRImmutable(account ? [account, 'profile'] : null, () => getProfile(), {
     use: [localStorageMiddleware],
   })
 

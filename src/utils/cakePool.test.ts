@@ -11,8 +11,8 @@ describe('cakePool', () => {
     ['DURATION_FACTOR', DURATION_FACTOR],
     ['MAX_LOCK_DURATION', MAX_LOCK_DURATION],
   ])('%s should be equal to SC: %s', async (method, result) => {
-    const cakeVault = getCakeVaultV2Contract(56)
-    const got = await cakeVault[method]()
+    const bullVault = getCakeVaultV2Contract(56)
+    const got = await bullVault[method]()
     expect(got.eq(result)).toBe(true)
   })
   const NOW = new Date('2022-01-01').getTime()

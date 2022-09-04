@@ -86,18 +86,18 @@ type PredictionInitialization = Pick<
   PredictionsState,
   'status' | 'currentEpoch' | 'intervalSeconds' | 'minBetAmount' | 'rounds' | 'ledgers' | 'claimableStatuses'
 >
-export const initializePredictions = createAsyncThunk<PredictionInitialization, string, { extra: PredictionConfig }>(
+export const initializePredictions = createAsyncThunk<PredictionInitialization, { account: string, chainId: number }, { extra: PredictionConfig }>(
   'predictions/initialize',
-  async (account = null, { extra }) => {
+  async ({ account = null, chainId }, { extra }) => {
     // Static values
-    const marketData = await getPredictionData(extra.address)
+    const marketData = await getPredictionData(extra.address, chainId)
     const epochs =
       marketData.currentEpoch > PAST_ROUND_COUNT
         ? range(marketData.currentEpoch, marketData.currentEpoch - PAST_ROUND_COUNT)
         : [marketData.currentEpoch]
 
     // Round data
-    const roundsResponse = await getRoundsData(epochs, extra.address)
+    const roundsResponse = await getRoundsData(epochs, extra.address, chainId)
     const initialRoundData: { [key: string]: ReduxNodeRound } = roundsResponse.reduce((accum, roundResponse) => {
       const reduxNodeRound = serializePredictionsRoundsResponse(roundResponse)
 
@@ -119,8 +119,8 @@ export const initializePredictions = createAsyncThunk<PredictionInitialization, 
     }
 
     const [ledgerResponses, claimableStatuses] = await Promise.all([
-      getLedgerData(account, epochs, extra.address), // Bet data
-      getClaimStatuses(account, epochs, extra.address), // Claim statuses
+      getLedgerData(account, epochs, extra.address, chainId), // Bet data
+      getClaimStatuses(account, epochs, extra.address, chainId), // Claim statuses
     ])
 
     return merge({}, initializedData, {
@@ -130,13 +130,13 @@ export const initializePredictions = createAsyncThunk<PredictionInitialization, 
   },
 )
 
-export const fetchPredictionData = createAsyncThunk<PredictionInitialization, string, { extra: PredictionConfig }>(
+export const fetchPredictionData = createAsyncThunk<PredictionInitialization, { account: string, chainId: number }, { extra: PredictionConfig }>(
   'predictions/fetchPredictionData',
-  async (account = null, { extra }) => {
-    const { status, currentEpoch, intervalSeconds, minBetAmount } = await getPredictionData(extra.address)
+  async ({ account = null, chainId }, { extra }) => {
+    const { status, currentEpoch, intervalSeconds, minBetAmount } = await getPredictionData(extra.address, chainId)
     const liveCurrentAndRecent = [currentEpoch, currentEpoch - 1, currentEpoch - 2]
 
-    const roundsResponse = await getRoundsData(liveCurrentAndRecent, extra.address)
+    const roundsResponse = await getRoundsData(liveCurrentAndRecent, extra.address, chainId)
     const roundData = roundsResponse.reduce((accum, round) => {
       if (!round) {
         return accum
@@ -168,8 +168,8 @@ export const fetchPredictionData = createAsyncThunk<PredictionInitialization, st
       currentEpoch > PAST_ROUND_COUNT ? range(currentEpoch, currentEpoch - PAST_ROUND_COUNT) : [currentEpoch]
 
     const [ledgerResponses, claimableStatuses] = await Promise.all([
-      getLedgerData(account, epochs, extra.address), // Bet data
-      getClaimStatuses(account, epochs, extra.address), // Claim statuses
+      getLedgerData(account, epochs, extra.address, chainId), // Bet data
+      getClaimStatuses(account, epochs, extra.address, chainId), // Claim statuses
     ])
 
     return merge({}, publicData, {
@@ -181,10 +181,10 @@ export const fetchPredictionData = createAsyncThunk<PredictionInitialization, st
 
 export const fetchLedgerData = createAsyncThunk<
   LedgerData,
-  { account: string; epochs: number[] },
+  { account: string; epochs: number[], chainId: number },
   { extra: PredictionConfig }
->('predictions/fetchLedgerData', async ({ account, epochs }, { extra }) => {
-  const ledgers = await getLedgerData(account, epochs, extra.address)
+>('predictions/fetchLedgerData', async ({ account, epochs, chainId }, { extra }) => {
+  const ledgers = await getLedgerData(account, epochs, extra.address, chainId)
   return makeLedgerData(account, ledgers, epochs)
 })
 
@@ -213,9 +213,9 @@ export const fetchHistory = createAsyncThunk<
 
 export const fetchNodeHistory = createAsyncThunk<
   { bets: Bet[]; claimableStatuses: PredictionsState['claimableStatuses']; page?: number; totalHistory: number },
-  { account: string; page?: number },
+  { account: string; chainId: number, page?: number },
   { state: PredictionsState; extra: PredictionConfig }
->('predictions/fetchNodeHistory', async ({ account, page = 1 }, { getState, extra }) => {
+>('predictions/fetchNodeHistory', async ({ account, chainId, page = 1 }, { getState, extra }) => {
   const userRoundsLength = await fetchUsersRoundsLength(account, extra.address)
   const emptyResult = { bets: [], claimableStatuses: {}, totalHistory: userRoundsLength.toNumber() }
   const maxPages = userRoundsLength.lte(ROUNDS_PER_PAGE) ? 1 : Math.ceil(userRoundsLength.toNumber() / ROUNDS_PER_PAGE)
@@ -234,8 +234,8 @@ export const fetchNodeHistory = createAsyncThunk<
   const size =
     maxPages === page
       ? userRoundsLength
-          .sub(ROUNDS_PER_PAGE * (page - 1)) // Previous page's cursor
-          .toNumber()
+        .sub(ROUNDS_PER_PAGE * (page - 1)) // Previous page's cursor
+        .toNumber()
       : ROUNDS_PER_PAGE
   const userRounds = await fetchUserRounds(account, cursor.lt(0) ? 0 : cursor.toNumber(), size, extra.address)
 
@@ -245,8 +245,8 @@ export const fetchNodeHistory = createAsyncThunk<
 
   const epochs = Object.keys(userRounds).map((epochStr) => Number(epochStr))
   const [roundData, claimableStatuses] = await Promise.all([
-    getRoundsData(epochs, extra.address),
-    getClaimStatuses(account, epochs, extra.address),
+    getRoundsData(epochs, extra.address, chainId),
+    getClaimStatuses(account, epochs, extra.address, chainId),
   ])
 
   // No need getState().predictions in local redux state

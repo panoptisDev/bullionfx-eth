@@ -6,33 +6,33 @@ import { SerializedFarm } from '../types'
 import { getMasterChefV1Address } from '../../utils/addressHelpers'
 import { getMasterchefV1Contract } from '../../utils/contractHelpers'
 
-const masterChefAddress = getMasterChefV1Address()
-const masterChefContract = getMasterchefV1Contract()
 
-export const fetchMasterChefFarmPoolLength = async () => {
+export const fetchMasterChefFarmPoolLength = async (chainId: number) => {
+  const masterChefContract = getMasterchefV1Contract(chainId)
   const poolLength = await masterChefContract.poolLength()
   return poolLength
 }
 
-const masterChefFarmCalls = (farm: SerializedFarm) => {
+const masterChefFarmCalls = (farm: SerializedFarm, chainId: number) => {
+  const masterChefAddress = getMasterChefV1Address(chainId)
   const { v1pid } = farm
   return v1pid || v1pid === 0
     ? [
-        {
-          address: masterChefAddress,
-          name: 'poolInfo',
-          params: [v1pid],
-        },
-        {
-          address: masterChefAddress,
-          name: 'totalAllocPoint',
-        },
-      ]
+      {
+        address: masterChefAddress,
+        name: 'poolInfo',
+        params: [v1pid],
+      },
+      {
+        address: masterChefAddress,
+        name: 'totalAllocPoint',
+      },
+    ]
     : [null, null]
 }
 
-export const fetchMasterChefData = async (farms: SerializedFarmConfig[]): Promise<any[]> => {
-  const masterChefCalls = farms.map((farm) => masterChefFarmCalls(farm))
+export const fetchMasterChefData = async (farms: SerializedFarmConfig[], chainId: number): Promise<any[]> => {
+  const masterChefCalls = farms.map((farm) => masterChefFarmCalls(farm, chainId))
   const chunkSize = masterChefCalls.flat().length / farms.length
   const masterChefAggregatedCalls = masterChefCalls
     .filter((masterChefCall) => masterChefCall[0] !== null && masterChefCall[1] !== null)

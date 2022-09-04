@@ -19,14 +19,14 @@ import PoolsTable from './PoolTable'
 const NewPool: React.FC<React.PropsWithChildren> = () => {
   const { chainId, account } = useWeb3React()
   const { pools } = usePoolsWithVault()
-  const cakeVault = useCakeVault()
+  const bullVault = useCakeVault()
 
   const stakedOnlyOpenPools = useMemo(
     () => pools.filter((pool) => pool.userData && pool.sousId === 0 && !pool.isFinished),
     [pools],
   )
 
-  const userDataReady: boolean = !account || (!!account && !cakeVault.userData?.isLoading)
+  const userDataReady: boolean = !account || (!!account && !bullVault.userData?.isLoading)
 
   const dispatch = useAppDispatch()
 
@@ -37,7 +37,7 @@ const NewPool: React.FC<React.PropsWithChildren> = () => {
       dispatch(fetchCakePoolPublicDataAsync())
       if (account) {
         dispatch(fetchCakeVaultUserData({ account, chainId }))
-        dispatch(fetchCakeFlexibleSideVaultUserData({ account }))
+        dispatch(fetchCakeFlexibleSideVaultUserData({ account, chainId }))
         dispatch(fetchCakePoolUserDataAsync(account))
       }
     })
@@ -46,7 +46,7 @@ const NewPool: React.FC<React.PropsWithChildren> = () => {
   useEffect(() => {
     batch(() => {
       dispatch(fetchCakeVaultFees({ chainId }))
-      dispatch(fetchCakeFlexibleSideVaultFees())
+      dispatch(fetchCakeFlexibleSideVaultFees({ chainId }))
     })
   }, [dispatch, chainId])
 

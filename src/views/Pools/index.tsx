@@ -220,7 +220,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       })
     }
   }, [isIntersecting])
-  const showFinishedPools = router.pathname.includes('history')
+  // const showFinishedPools = router.pathname.includes('history')
+  const showFinishedPools = false
 
   const handleChangeSearchQuery = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(event.target.value),
@@ -235,7 +236,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   } else {
     chosenPools = stakedOnly ? stakedOnlyOpenPools() : openPoolsWithStartBlockFilter
   }
-
   chosenPools = useMemo(() => {
     const sortedPools = sortPools(account, sortOption, pools, chosenPools).slice(0, numberOfPoolsVisible)
 
@@ -331,7 +331,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         {showFinishedPools && (
           <FinishedTextContainer>
             <Text fontSize={['16px', null, '20px']} color="failure" pr="4px">
-              {t('Looking for v1 CAKE syrup pools?')}
+              {t('Looking for v1 BULL syrup pools?')}
             </Text>
             <FinishedTextLink href="/migration" fontSize={['16px', null, '20px']} color="failure">
               {t('Go to migration page')}.

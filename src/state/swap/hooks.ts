@@ -17,7 +17,7 @@ import { getChangeForPeriod } from 'utils/getChangeForPeriod'
 import { getLpFeesAndApr } from 'utils/getLpFeesAndApr'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { computeSlippageAdjustedAmounts } from 'utils/exchange'
-import { CAKE, BUSD } from 'config/constants/tokens'
+import { BULL, USDC } from 'config/constants/tokens'
 import getLpAddress from 'utils/getLpAddress'
 import { getTokenAddress } from 'views/Swap/components/Chart/utils'
 import tryParseAmount from 'utils/tryParseAmount'
@@ -250,7 +250,7 @@ export function useDefaultsFromURLSearch():
 
   useEffect(() => {
     if (!chainId || !native) return
-    const parsed = queryParametersToSwapState(query, BUSD[chainId]?.address, CAKE[chainId]?.address)
+    const parsed = queryParametersToSwapState(query, USDC[chainId]?.address, BULL[chainId]?.address)
 
     dispatch(
       replaceSwapState({

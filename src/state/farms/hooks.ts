@@ -17,7 +17,7 @@ import { DeserializedFarm, DeserializedFarmsState, DeserializedFarmUserData, Sta
 import {
   farmSelector,
   farmFromLpSymbolSelector,
-  priceCakeFromPidSelector,
+  priceBullFromPidSelector,
   makeBusdPriceFromPidSelector,
   makeUserFarmFromPidSelector,
   makeLpTokenPriceFromLpSymbolSelector,
@@ -66,8 +66,8 @@ export const usePollFarmsWithUserData = () => {
  * 3 = BUSD-BNB LP
  */
 const coreFarmPIDs = {
-  56: [2, 3],
-  97: [2, 3],
+  1: [],
+  5: [1, 2],
 }
 
 export const usePollCoreFarmData = () => {
@@ -117,27 +117,27 @@ export const useLpTokenPrice = (symbol: string) => {
 /**
  * @@deprecated use the BUSD hook in /hooks
  */
-export const usePriceCakeBusd = (): BigNumber => {
-  return useSelector(priceCakeFromPidSelector)
+export const usePriceBullUsdc = (): BigNumber => {
+  return useSelector(priceBullFromPidSelector)
 }
 
 export const useFarmWithStakeValue = (farm: DeserializedFarm): FarmWithStakedValue => {
   const { pathname } = useRouter()
-  const cakePrice = usePriceCakeBusd()
+  const bullPrice = usePriceBullUsdc()
   const { regularCakePerBlock } = useFarms()
 
   const isArchived = pathname.includes('archived')
   const isInactive = pathname.includes('history')
   const isActive = !isInactive && !isArchived
 
-  if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
+  if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceUsdc) {
     return farm
   }
-  const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
+  const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceUsdc)
   const { cakeRewardsApr, lpRewardsApr } = isActive
     ? getFarmApr(
       new BigNumber(farm.poolWeight),
-      cakePrice,
+      bullPrice,
       totalLiquidity,
       farm.lpAddresses[ChainId.BSC],
       regularCakePerBlock,

@@ -10,7 +10,7 @@ import { useERC20 } from 'hooks/useContract'
 import { TransactionResponse } from '@ethersproject/providers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getBalanceAmount } from 'utils/formatBalance'
 import { FarmWithStakedValue } from '../../types'
@@ -52,7 +52,7 @@ export const HarvestAction: React.FunctionComponent<React.PropsWithChildren<Harv
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError, loading: pendingTx } = useCatchTxError()
   const earningsBigNumber = new BigNumber(userData.earnings)
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceBullUsdc()
   let earnings = BIG_ZERO
   let earningsBusd = 0
   let displayBalance = userDataReady ? earnings.toFixed(5, BigNumber.ROUND_DOWN) : <Skeleton width={60} />

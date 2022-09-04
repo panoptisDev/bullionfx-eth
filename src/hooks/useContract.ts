@@ -1,7 +1,7 @@
 import {
-  Cake,
-  CakeFlexibleSideVaultV2,
-  CakeVaultV2,
+  Bull,
+  BullFlexibleSideVaultV2,
+  BullVaultV2,
   Erc20,
   Erc20Bytes32,
   Erc721collection,
@@ -65,7 +65,7 @@ import { Contract } from '@ethersproject/contracts'
 import { WNATIVE } from '@pancakeswap/sdk'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
-import IPancakePairABI from '../config/abi/IPancakePair.json'
+import IBullPairABI from '../config/abi/IBullPair.json'
 import multiCallAbi from '../config/abi/Multicall.json'
 import WETH_ABI from '../config/abi/weth.json'
 import { getContract } from '../utils'
@@ -105,7 +105,7 @@ export const useERC721 = (address: string, withSignerIfPossible = true) => {
   return useMemo(() => getErc721Contract(address, providerOrSigner), [address, providerOrSigner])
 }
 
-export const useCake = (): { reader: Cake; signer: Cake } => {
+export const useCake = (): { reader: Bull; signer: Bull } => {
   const providerOrSigner = useProviderOrSigner()
   const { chainId } = useActiveWeb3React()
   return useMemo(
@@ -148,7 +148,8 @@ export const useMasterchef = (withSignerIfPossible = true) => {
 
 export const useMasterchefV1 = () => {
   const { data: signer } = useSigner()
-  return useMemo(() => getMasterchefV1Contract(signer), [signer])
+  const { chainId } = useActiveWeb3React()
+  return useMemo(() => getMasterchefV1Contract(chainId, signer), [signer, chainId])
 }
 
 export const useSousChef = (id, chainId) => {
@@ -196,7 +197,7 @@ export const useEasterNftContract = () => {
   return useMemo(() => getEasterNftContract(signer), [signer])
 }
 
-export const useVaultPoolContract = (vaultKey: VaultKey): CakeVaultV2 | CakeFlexibleSideVaultV2 => {
+export const useVaultPoolContract = (vaultKey: VaultKey): BullVaultV2 | BullFlexibleSideVaultV2 => {
   const { data: signer } = useSigner()
   const { chainId } = useActiveWeb3React()
   return useMemo(() => {
@@ -204,7 +205,7 @@ export const useVaultPoolContract = (vaultKey: VaultKey): CakeVaultV2 | CakeFlex
       return getCakeVaultV2Contract(chainId, signer)
     }
     if (vaultKey === VaultKey.CakeFlexibleSideVault) {
-      return getCakeFlexibleSideVaultV2Contract(signer)
+      return getCakeFlexibleSideVaultV2Contract(chainId, signer)
     }
     return null
   }, [signer, vaultKey, chainId])
@@ -332,7 +333,7 @@ export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossi
 }
 
 export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): IPancakePair | null {
-  return useContract(pairAddress, IPancakePairABI, withSignerIfPossible)
+  return useContract(pairAddress, IBullPairABI, withSignerIfPossible)
 }
 
 export function useMulticallContract() {

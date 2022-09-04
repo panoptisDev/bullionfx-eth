@@ -1,12 +1,12 @@
 import { ReactNode } from 'react'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { Text, Flex, Box, Skeleton, TooltipText, useTooltip } from '@pancakeswap/uikit'
 import { PublicIfoData, WalletIfoData } from 'views/Ifos/types'
 import { useTranslation } from '@pancakeswap/localization'
 import { Ifo, PoolIds } from 'config/constants/types'
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber, formatNumber } from 'utils/formatBalance'
-import useBUSDPrice from 'hooks/useBUSDPrice'
+import useBUSDPrice from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { SkeletonCardDetails } from './Skeletons'
 
@@ -53,18 +53,18 @@ const FooterEntry: React.FC<React.PropsWithChildren<FooterEntryProps>> = ({ labe
 }
 
 const MaxTokenEntry = ({ maxToken, ifo, poolId }: { maxToken: number; ifo: Ifo; poolId: PoolIds }) => {
-  const isCurrencyCake = ifo.currency === bscTokens.cake
+  const isCurrencyCake = ifo.currency === ethTokens.bull
   const isV3 = ifo.version >= 3
   const { t } = useTranslation()
 
   const basicTooltipContent =
     ifo.version >= 3.1
       ? t(
-          'For the private sale, each eligible participant will be able to commit any amount of CAKE up to the maximum commit limit, which is published along with the IFO voting proposal.',
-        )
+        'For the private sale, each eligible participant will be able to commit any amount of CAKE up to the maximum commit limit, which is published along with the IFO voting proposal.',
+      )
       : t(
-          'For the basic sale, Max CAKE entry is capped by minimum between your average CAKE balance in the iCAKE, or the pool’s hard cap. To increase the max entry, Stake more CAKE into the iCAKE',
-        )
+        'For the basic sale, Max CAKE entry is capped by minimum between your average CAKE balance in the iCAKE, or the pool’s hard cap. To increase the max entry, Stake more CAKE into the iCAKE',
+      )
 
   const unlimitedToolipContent =
     ifo.version >= 3.1 ? (
@@ -79,7 +79,7 @@ const MaxTokenEntry = ({ maxToken, ifo, poolId }: { maxToken: number; ifo: Ifo; 
       </Box>
     ) : (
       t(
-        'For the unlimited sale, Max CAKE entry is capped by your average CAKE balance in the iCake. To increase the max entry, Stake more CAKE into the iCake',
+        'For the unlimited sale, Max CAKE entry is capped by your average CAKE balance in the IBull. To increase the max entry, Stake more CAKE into the IBull',
       )
     )
 
@@ -106,9 +106,8 @@ const MaxTokenEntry = ({ maxToken, ifo, poolId }: { maxToken: number; ifo: Ifo; 
         }
         value={
           <Text small textAlign="right" color={maxToken > 0 ? 'text' : 'failure'}>
-            {`${formatNumber(maxToken, 3, 3)} ${
-              !isCurrencyCake ? ifo.currency.symbol : ''
-            } ${` ~($${dollarValueOfToken.toFixed(0)})`}`}
+            {`${formatNumber(maxToken, 3, 3)} ${!isCurrencyCake ? ifo.currency.symbol : ''
+              } ${` ~($${dollarValueOfToken.toFixed(0)})`}`}
           </Text>
         }
       />
@@ -130,9 +129,9 @@ const IfoCardDetails: React.FC<React.PropsWithChildren<IfoCardDetailsProps>> = (
 
   let version3MaxTokens = walletIfoData.ifoCredit?.creditLeft
     ? // if creditLeft > limit show limit else show creditLeft
-      walletIfoData.ifoCredit.creditLeft.gt(
-        poolCharacteristic.limitPerUserInLP.minus(walletCharacteristic.amountTokenCommittedInLP),
-      )
+    walletIfoData.ifoCredit.creditLeft.gt(
+      poolCharacteristic.limitPerUserInLP.minus(walletCharacteristic.amountTokenCommittedInLP),
+    )
       ? poolCharacteristic.limitPerUserInLP.minus(walletCharacteristic.amountTokenCommittedInLP)
       : walletIfoData.ifoCredit.creditLeft
     : null

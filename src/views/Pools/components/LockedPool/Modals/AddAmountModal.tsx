@@ -7,7 +7,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import BigNumber from 'bignumber.js'
 import { useIfoCeiling } from 'state/pools/hooks'
 import useTheme from 'hooks/useTheme'
-import { useBUSDCakeAmount } from 'hooks/useBUSDPrice'
+import { useUSDCBullAmount } from 'hooks/useUSDCPrice'
 import { getBalanceNumber, getDecimalAmount, getBalanceAmount } from 'utils/formatBalance'
 import { ONE_WEEK_DEFAULT } from 'config/constants/pools'
 import { BIG_ZERO } from 'utils/bigNumber'
@@ -67,8 +67,8 @@ const AddAmountModal: React.FC<React.PropsWithChildren<AddAmountModalProps>> = (
   )
   const currentLockedAmountAsBalance = getBalanceAmount(currentLockedAmount)
 
-  const usdValueStaked = useBUSDCakeAmount(lockedAmountAsBigNumber.toNumber())
-  const usdValueNewStaked = useBUSDCakeAmount(totalLockedAmount)
+  const usdValueStaked = useUSDCBullAmount(lockedAmountAsBigNumber.toNumber())
+  const usdValueNewStaked = useUSDCBullAmount(totalLockedAmount)
 
   const remainingDuration = differenceInSeconds(new Date(convertTimeToSeconds(lockEndTime)), new Date(), {
     roundingMethod: 'ceil',

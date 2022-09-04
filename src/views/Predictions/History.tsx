@@ -46,7 +46,7 @@ const SpinnerWrapper = styled.div`
 `
 
 const History = () => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const dispatch = useLocalDispatch()
   const isHistoryPaneOpen = useIsHistoryPaneOpen()
   const isFetchingHistory = useGetIsFetchingHistory()
@@ -59,9 +59,9 @@ const History = () => {
 
   useEffect(() => {
     if (account && isHistoryPaneOpen) {
-      dispatch(fetchNodeHistory({ account }))
+      dispatch(fetchNodeHistory({ account, chainId }))
     }
-  }, [account, currentEpoch, isHistoryPaneOpen, dispatch])
+  }, [account, currentEpoch, isHistoryPaneOpen, dispatch, chainId])
 
   const results = getFilteredBets(bets, historyFilter)
   const hasBetHistory = results && results.length > 0

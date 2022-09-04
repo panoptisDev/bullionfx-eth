@@ -3,17 +3,17 @@ import BigNumber from 'bignumber.js'
 import poolsConfig from 'config/constants/pools'
 import sousChefV2 from 'config/abi/sousChefV2.json'
 import multicall from '../multicall'
-import { bscRpcProvider } from '../providers'
+import { ethRpcProvider } from '../providers'
 import { getAddress } from '../addressHelpers'
 
 /**
  * Returns the total number of pools that were active at a given block
  */
-export const getActivePools = async (block?: number) => {
+export const getActivePools = async (chainId: number, block?: number) => {
   const eligiblePools = poolsConfig
     .filter((pool) => pool.sousId !== 0)
     .filter((pool) => pool.isFinished === false || pool.isFinished === undefined)
-  const blockNumber = block || (await bscRpcProvider.getBlockNumber())
+  const blockNumber = block || (await ethRpcProvider.getBlockNumber())
   const startBlockCalls = eligiblePools.map(({ contractAddress }) => ({
     address: getAddress(contractAddress, 56),
     name: 'startBlock',
@@ -23,8 +23,8 @@ export const getActivePools = async (block?: number) => {
     name: 'bonusEndBlock',
   }))
   const [startBlocks, endBlocks] = await Promise.all([
-    multicall(sousChefV2, startBlockCalls),
-    multicall(sousChefV2, endBlockCalls),
+    multicall(sousChefV2, startBlockCalls, chainId),
+    multicall(sousChefV2, endBlockCalls, chainId),
   ])
 
   return eligiblePools.reduce((accum, poolCheck, index) => {

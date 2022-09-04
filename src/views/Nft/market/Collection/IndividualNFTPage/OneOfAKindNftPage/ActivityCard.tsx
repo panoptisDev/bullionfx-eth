@@ -12,7 +12,7 @@ import {
 import { useTranslation } from '@pancakeswap/localization'
 import useTheme from 'hooks/useTheme'
 import { Activity, NftToken } from 'state/nftMarket/types'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 import { useAppDispatch } from '../../../../../../state'
 import NoNftsImage from '../../../components/Activity/NoNftsImage'
 import TableLoader from '../../../../../../components/TableLoader'
@@ -36,7 +36,7 @@ const ActivityCard: React.FC<React.PropsWithChildren<ActivityCardProps>> = ({ nf
   const [activitiesSlice, setActivitiesSlice] = useState<Activity[]>([])
   const [sortedTokenActivities, setSortedTokenActivities] = useState<Activity[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
   const { isXs, isSm } = useMatchBreakpointsContext()
 
   useEffect(() => {

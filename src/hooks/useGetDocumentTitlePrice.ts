@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
+import { useBullUsdcPrice } from 'hooks/useUSDCPrice'
 
 const useGetDocumentTitlePrice = () => {
-  const cakePriceBusd = useCakeBusdPrice()
+  const bullPriceUsdc = useBullUsdcPrice()
   useEffect(() => {
-    const cakePriceBusdString = cakePriceBusd ? cakePriceBusd.toFixed(2) : ''
-    document.title = `Pancake Swap - ${cakePriceBusdString}`
-  }, [cakePriceBusd])
+    const bullPriceUsdcString = bullPriceUsdc ? bullPriceUsdc.toFixed(2) : ''
+    document.title = `BullionFx - ${bullPriceUsdcString}`
+  }, [bullPriceUsdc])
 }
 export default useGetDocumentTitlePrice

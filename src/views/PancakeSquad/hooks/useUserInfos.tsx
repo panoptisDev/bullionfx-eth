@@ -4,7 +4,7 @@ import { getPancakeSquadContract } from 'utils/contractHelpers'
 import { multicallv2 } from 'utils/multicall'
 import nftSaleAbi from 'config/abi/nftSale.json'
 
-const useUserInfos = ({ account, refreshCounter, setCallback }) => {
+const useUserInfos = ({ account, refreshCounter, setCallback, chainId }) => {
   useEffect(() => {
     const fetchUserInfos = async () => {
       try {
@@ -30,7 +30,7 @@ const useUserInfos = ({ account, refreshCounter, setCallback }) => {
             [currentNumberTicketsUsedForGen0],
             [currentNumberTicketsOfUser],
             [currentTicketsOfUser],
-          ] = await multicallv2(nftSaleAbi, calls)
+          ] = await multicallv2(nftSaleAbi, calls, { chainId })
 
           const currentNumberTokensOfUser = await pancakeSquadContract.balanceOf(account)
 
@@ -50,7 +50,7 @@ const useUserInfos = ({ account, refreshCounter, setCallback }) => {
     if (nftSaleAbi.length > 0) {
       fetchUserInfos()
     }
-  }, [account, refreshCounter, setCallback])
+  }, [account, refreshCounter, setCallback, chainId])
 }
 
 export default useUserInfos

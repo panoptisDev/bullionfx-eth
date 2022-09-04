@@ -37,7 +37,7 @@ describe('useVaultApy', () => {
     })
     const { result } = renderHook(
       () => {
-        const { flexibleApy, getLockedApy, lockedApy } = useVaultApy()
+        const { flexibleApy, getLockedApy, lockedApy } = useVaultApy(1)
         return {
           flexibleApy,
           getLockedApy,

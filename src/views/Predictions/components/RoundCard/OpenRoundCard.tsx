@@ -55,7 +55,7 @@ const OpenRoundCard: React.FC<React.PropsWithChildren<OpenRoundCardProps>> = ({
   const { t } = useTranslation()
   const { theme } = useTheme()
   const { toastSuccess } = useToast()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const dispatch = useLocalDispatch()
   const { token } = useConfig()
   const { lockTimestamp } = round ?? { lockTimestamp: null }
@@ -133,7 +133,7 @@ const OpenRoundCard: React.FC<React.PropsWithChildren<OpenRoundCardProps>> = ({
   }
 
   const handleSuccess = async (hash: string) => {
-    await dispatch(fetchLedgerData({ account, epochs: [round.epoch] }))
+    await dispatch(fetchLedgerData({ account, epochs: [round.epoch], chainId }))
 
     handleBack()
 

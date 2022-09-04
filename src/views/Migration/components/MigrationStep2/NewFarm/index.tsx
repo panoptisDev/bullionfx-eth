@@ -4,7 +4,7 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import { getFarmApr } from 'utils/apr'
 import { RowType } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
-import { useFarms, usePriceCakeBusd, usePollFarmsWithUserData } from 'state/farms/hooks'
+import { useFarms, usePriceBullUsdc, usePollFarmsWithUserData } from 'state/farms/hooks'
 import { useFarmsV1 } from 'state/farmsV1/hooks'
 import { DeserializedFarm } from 'state/types'
 import { getBalanceNumber } from 'utils/formatBalance'
@@ -18,7 +18,7 @@ const OldFarmStep1: React.FC<React.PropsWithChildren> = () => {
   const { account } = useWeb3React()
   const { data: farmsLP, userDataLoaded, regularCakePerBlock } = useFarms()
   const { data: farmsV1LP } = useFarmsV1()
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceBullUsdc()
 
   usePollFarmsWithUserData()
 
@@ -46,10 +46,10 @@ const OldFarmStep1: React.FC<React.PropsWithChildren> = () => {
   const farmsList = useCallback(
     (farmsToDisplay: DeserializedFarm[]): FarmWithStakedValue[] => {
       const farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
+        if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceUsdc) {
           return farm
         }
-        const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
+        const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceUsdc)
         const { cakeRewardsApr, lpRewardsApr } = getFarmApr(
           new BigNumber(farm.poolWeight),
           cakePrice,

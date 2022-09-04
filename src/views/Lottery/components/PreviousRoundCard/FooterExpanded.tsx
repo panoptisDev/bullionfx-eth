@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { Flex, Skeleton, Heading, Box, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { LotteryRound, LotteryRoundGraphEntity } from 'state/types'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useGetLotteryGraphDataById } from 'state/lottery/hooks'
 import { getGraphLotteries } from 'state/lottery/getLotteriesData'
 import { formatNumber, getBalanceNumber } from 'utils/formatBalance'
@@ -26,7 +26,7 @@ const PreviousRoundCardFooter: React.FC<React.PropsWithChildren<{ lotteryNodeDat
     const { t } = useTranslation()
     const [fetchedLotteryGraphData, setFetchedLotteryGraphData] = useState<LotteryRoundGraphEntity>()
     const lotteryGraphDataFromState = useGetLotteryGraphDataById(lotteryId)
-    const cakePriceBusd = usePriceCakeBusd()
+    const cakePriceBusd = usePriceBullUsdc()
 
     useEffect(() => {
       const getGraphData = async () => {

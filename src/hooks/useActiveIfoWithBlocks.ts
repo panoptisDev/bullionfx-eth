@@ -3,6 +3,7 @@ import ifoV3Abi from '../config/abi/ifoV3.json'
 import { multicallv2 } from '../utils/multicall'
 import { ifosConfig } from '../config/constants'
 import { Ifo } from '../config/constants/types'
+import { ChainId } from '../../packages/swap-sdk/src/constants'
 
 const activeIfo = ifosConfig.find((ifo) => ifo.isActive)
 
@@ -23,7 +24,7 @@ export const useActiveIfoWithBlocks = (): Ifo & { startBlock: number; endBlock: 
             name: 'endBlock',
           },
         ],
-        { requireSuccess: false },
+        { requireSuccess: false, chainId: ChainId.BSC },
       )
 
       return { startBlock: startBlock ? startBlock[0].toNumber() : 0, endBlock: endBlock ? endBlock[0].toNumber() : 0 }

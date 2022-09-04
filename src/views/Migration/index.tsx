@@ -18,7 +18,7 @@ import NewFarm from './components/MigrationStep2/NewFarm'
 
 const MigrationPage: React.FC<React.PropsWithChildren> = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const tableWrapperEl = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const [step, setStep] = useState<ProgressStepsType>(ProgressStepsType.STEP1)
@@ -39,7 +39,7 @@ const MigrationPage: React.FC<React.PropsWithChildren> = () => {
   usePollFarmsV1WithUserData()
 
   // v1 Pools
-  useFetchPublicPoolsData()
+  useFetchPublicPoolsData(chainId)
   const { data: cakePool, userDataLoaded } = useFetchUserPools(account)
 
   const v1Pools = useMemo(() => {

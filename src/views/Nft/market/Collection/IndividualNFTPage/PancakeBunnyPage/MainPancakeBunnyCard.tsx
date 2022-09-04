@@ -5,7 +5,7 @@ import { formatNumber } from 'utils/formatBalance'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { NftToken } from 'state/nftMarket/types'
 import NFTMedia from 'views/Nft/market/components/NFTMedia'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 import BuyModal from '../../../components/BuySellModals/BuyModal'
 import SellModal from '../../../components/BuySellModals/SellModal'
 import { nftsBaseUrl } from '../../../constants'
@@ -23,7 +23,7 @@ const MainPancakeBunnyCard: React.FC<React.PropsWithChildren<MainPancakeBunnyCar
   onSuccessSale,
 }) => {
   const { t } = useTranslation()
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
   const { account } = useWeb3React()
 
   const nftToDisplay = cheapestNft || nothingForSaleBunny

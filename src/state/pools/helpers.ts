@@ -160,7 +160,7 @@ export const getTokenPricesFromFarm = (farms: SerializedFarm[]) => {
     const tokenAddress = farm.token.address.toLowerCase()
     /* eslint-disable no-param-reassign */
     if (!prices[quoteTokenAddress]) {
-      prices[quoteTokenAddress] = new BigNumber(farm.quoteTokenPriceBusd).toNumber()
+      prices[quoteTokenAddress] = new BigNumber(farm.quoteTokenPriceUsdc).toNumber()
     }
     if (!prices[tokenAddress]) {
       prices[tokenAddress] = new BigNumber(farm.tokenPriceBusd).toNumber()

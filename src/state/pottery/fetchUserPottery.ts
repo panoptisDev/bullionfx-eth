@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getBep20Contract, getPotteryVaultContract, getPotteryDrawContract } from 'utils/contractHelpers'
 import { request, gql } from 'graphql-request'
@@ -12,7 +12,7 @@ const potteryDrawContract = getPotteryDrawContract()
 
 export const fetchPotterysAllowance = async (account: string, potteryVaultAddress: string) => {
   try {
-    const contract = getBep20Contract(bscTokens.cake.address)
+    const contract = getBep20Contract(ethTokens.bull.address)
     const allowances = await contract.allowance(account, potteryVaultAddress)
     return new BigNumber(allowances.toString()).toJSON()
   } catch (error) {
@@ -55,7 +55,7 @@ export const fetchUserDrawData = async (account: string) => {
   }
 }
 
-export const fetchWithdrawAbleData = async (account: string) => {
+export const fetchWithdrawAbleData = async (account: string, chainId: number) => {
   try {
     const response = await request(
       GRAPH_API_POTTERY,
@@ -98,7 +98,7 @@ export const fetchWithdrawAbleData = async (account: string) => {
             params: [account],
           },
         ]
-        const [[previewRedeem], [totalSupply], [totalLockCake], [balanceOf]] = await multicallv2(potteryVaultAbi, calls)
+        const [[previewRedeem], [totalSupply], [totalLockCake], [balanceOf]] = await multicallv2(potteryVaultAbi, calls, { chainId })
 
         return {
           id,

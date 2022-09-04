@@ -15,10 +15,10 @@ const AprLabelContainer = styled(Flex)`
   }
 `
 
-export const StakingApy = memo(({ pool }: { pool: DeserializedPool }) => {
+export const StakingApy = memo(({ pool, chainId }: { pool: DeserializedPool, chainId: number }) => {
   const { t } = useTranslation()
 
-  const { flexibleApy, lockedApy } = useVaultApy()
+  const { flexibleApy, lockedApy } = useVaultApy(chainId)
 
   const [onPresentFlexibleApyModal] = useModal(<VaultRoiCalculatorModal pool={pool} />)
 

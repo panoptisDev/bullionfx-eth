@@ -17,11 +17,11 @@ import {
 } from '@pancakeswap/uikit'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { useAppDispatch } from 'state'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useLottery } from 'state/lottery/hooks'
 import { fetchUserTicketsAndLotteries } from 'state/lottery'
 import useTheme from 'hooks/useTheme'
@@ -44,7 +44,7 @@ const StyledModal = styled(Modal)`
   }
 `
 
-const ShortcutButtonsWrapper = styled(Flex)<{ isVisible: boolean }>`
+const ShortcutButtonsWrapper = styled(Flex) <{ isVisible: boolean }>`
   justify-content: space-between;
   margin-top: 8px;
   margin-bottom: 24px;
@@ -85,12 +85,12 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
   const lotteryContract = useLotteryV2Contract()
   const { reader: cakeContractReader, signer: cakeContractApprover } = useCake()
   const { toastSuccess } = useToast()
-  const { balance: userCake, fetchStatus } = useTokenBalance(bscTokens.cake.address)
+  const { balance: userCake, fetchStatus } = useTokenBalance(ethTokens.bull.address)
   // balance from useTokenBalance causes rerenders in effects as a new BigNumber is instantiated on each render, hence memoising it using the stringified value below.
   const stringifiedUserCake = userCake.toJSON()
   const memoisedUserCake = useMemo(() => new BigNumber(stringifiedUserCake), [stringifiedUserCake])
 
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const dispatch = useAppDispatch()
   const hasFetchedBalance = fetchStatus === FetchStatus.Fetched
   const userCakeDisplayBalance = getFullDisplayBalance(userCake, 18, 3)

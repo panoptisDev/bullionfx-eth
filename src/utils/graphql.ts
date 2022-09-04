@@ -1,4 +1,4 @@
-import { INFO_CLIENT, INFO_CLIENT_TESTNET } from 'config/constants/endpoints'
+import { INFO_CLIENT, INFO_CLIENT_GOERLI } from 'config/constants/endpoints'
 import { GraphQLClient } from 'graphql-request'
 
 // Extra headers
@@ -19,7 +19,7 @@ export const getGQLHeaders = (endpoint: string) => {
 }
 
 export const infoClient = new GraphQLClient(INFO_CLIENT, { headers: getGQLHeaders(INFO_CLIENT) })
-export const infoClientTestnet = new GraphQLClient(INFO_CLIENT_TESTNET)
+export const infoClientTestnet = new GraphQLClient(INFO_CLIENT_GOERLI)
 
 export const infoServerClient = new GraphQLClient(INFO_CLIENT, {
   headers: {

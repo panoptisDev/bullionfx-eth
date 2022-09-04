@@ -5,7 +5,7 @@ import { multicallv2 } from 'utils/multicall'
 import { BigNumber } from '@ethersproject/bignumber'
 import nftSaleAbi from 'config/abi/nftSale.json'
 
-const useEventInfos = ({ refreshCounter, setCallback }) => {
+const useEventInfos = ({ refreshCounter, setCallback, chainId }) => {
   useEffect(() => {
     const fetchEventInfos = async () => {
       try {
@@ -33,7 +33,7 @@ const useEventInfos = ({ refreshCounter, setCallback }) => {
           [currentTotalTicketsDistributed],
           [currentSaleStatus],
           [currentStartTimestamp],
-        ] = await multicallv2(nftSaleAbi, calls)
+        ] = await multicallv2(nftSaleAbi, calls, { chainId })
 
         const currentTotalSupplyMinted = await pancakeSquadContract.totalSupply()
 
@@ -55,7 +55,7 @@ const useEventInfos = ({ refreshCounter, setCallback }) => {
     if (nftSaleAbi.length > 0) {
       fetchEventInfos()
     }
-  }, [refreshCounter, setCallback])
+  }, [refreshCounter, setCallback, chainId])
 }
 
 export default useEventInfos

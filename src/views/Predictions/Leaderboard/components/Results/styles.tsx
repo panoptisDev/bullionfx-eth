@@ -1,7 +1,7 @@
 import { Token } from '@pancakeswap/sdk'
 import { Flex, FlexProps, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import useBUSDPrice from 'hooks/useBUSDPrice'
+import useBUSDPrice from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { useConfig } from 'views/Predictions/context/ConfigProvider'
 

@@ -8,7 +8,7 @@ import { fetchVaultFees } from 'state/pools/fetchVaultPublic'
 import type { Signer } from '@ethersproject/abstract-signer'
 import type { Provider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
-import { bscRpcProvider } from 'utils/providers'
+import { ethRpcProvider } from 'utils/providers'
 import cakeVaultAbi from 'config/abi/cakeVault.json'
 import { FAST_INTERVAL } from 'config/constants'
 import { VaultKey } from 'state/types'
@@ -18,7 +18,7 @@ export const ifoPoolV1Contract = '0x1B2A2f6ed4A1401E8C73B4c2B6172455ce2f78E8'
 export const cakeVaultAddress = '0xa80240Eb5d7E05d3F250cF000eEc0891d00b51CC'
 
 const getCakeVaultContract = (signer?: Signer | Provider) => {
-  const signerOrProvider = signer ?? bscRpcProvider
+  const signerOrProvider = signer ?? ethRpcProvider
   return new Contract(cakeVaultAddress, cakeVaultAbi, signerOrProvider) as any
 }
 
@@ -44,11 +44,11 @@ const fetchVaultUserV1 = async (account: string) => {
   }
 }
 
-const getIfoPoolData = async (account) => {
+const getIfoPoolData = async (account, chainId) => {
   const [ifoData, userData, feesData] = await Promise.all([
-    fetchPublicIfoPoolData(ifoPoolV1Contract),
-    fetchIfoPoolUser(account, ifoPoolV1Contract),
-    fetchIfoPoolFeesData(ifoPoolV1Contract),
+    fetchPublicIfoPoolData(ifoPoolV1Contract, chainId),
+    fetchIfoPoolUser(account, ifoPoolV1Contract, chainId),
+    fetchIfoPoolFeesData(ifoPoolV1Contract, chainId),
   ])
   const ifoPoolData = {
     ...ifoData,
@@ -58,11 +58,11 @@ const getIfoPoolData = async (account) => {
   return transformData(ifoPoolData)
 }
 
-const getCakePoolData = async (account) => {
+const getCakePoolData = async (account, chainId) => {
   const [vaultData, userData, feesData] = await Promise.all([
-    fetchPublicVaultData(cakeVaultAddress),
+    fetchPublicVaultData(cakeVaultAddress, chainId),
     fetchVaultUserV1(account),
-    fetchVaultFees(cakeVaultAddress),
+    fetchVaultFees(chainId, cakeVaultAddress),
   ])
   const cakeData = {
     ...vaultData,
@@ -100,14 +100,14 @@ const transformData = ({
 }
 
 export const useVaultPoolByKeyV1 = (key: VaultKey) => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { data, mutate } = useSWR(
     account ? [key, 'v1'] : null,
     async () => {
       if (key === VaultKey.IfoPool) {
-        return getIfoPoolData(account)
+        return getIfoPoolData(account, chainId)
       }
-      return getCakePoolData(account)
+      return getCakePoolData(account, chainId)
     },
     {
       revalidateOnFocus: false,

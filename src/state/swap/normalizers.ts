@@ -31,24 +31,24 @@ export const normalizeChartData = (
 }
 
 export const normalizeDerivedChartData = (data: any) => {
-  if (!data?.token0DerivedBnb || data?.token0DerivedBnb.length === 0) {
+  if (!data?.token0DerivedUsd || data?.token0DerivedUsd.length === 0) {
     return []
   }
-  return data?.token0DerivedBnb.reduce((acc, token0DerivedBnbEntry) => {
-    const token1DerivedBnbEntry = data?.token1DerivedBnb?.find(
-      (entry) => entry.timestamp === token0DerivedBnbEntry.timestamp,
+  return data?.token0DerivedUsd.reduce((acc, token0DerivedUsdEntry) => {
+    const token1DerivedUsdEntry = data?.token1DerivedUsd?.find(
+      (entry) => entry.timestamp === token0DerivedUsdEntry.timestamp,
     )
-    if (!token1DerivedBnbEntry) {
+    if (!token1DerivedUsdEntry) {
       return acc
     }
     return [
       ...acc,
       {
-        time: parseInt(token0DerivedBnbEntry.timestamp, 10),
-        token0Id: token0DerivedBnbEntry.tokenAddress,
-        token1Id: token1DerivedBnbEntry.tokenAddress,
-        token0DerivedBNB: token0DerivedBnbEntry.derivedBNB,
-        token1DerivedBNB: token1DerivedBnbEntry.derivedBNB,
+        time: parseInt(token0DerivedUsdEntry.timestamp, 10),
+        token0Id: token0DerivedUsdEntry.tokenAddress,
+        token1Id: token1DerivedUsdEntry.tokenAddress,
+        token0DerivedUSD: token0DerivedUsdEntry.derivedUSD,
+        token1DerivedUSD: token1DerivedUsdEntry.derivedUSD,
       },
     ]
   }, [])
@@ -86,6 +86,6 @@ export const normalizeDerivedPairDataByActiveToken = ({
     time: fromUnixTime(pairPrice.time),
     value:
       activeToken === pairPrice?.token0Id
-        ? pairPrice.token0DerivedBNB / pairPrice.token1DerivedBNB
-        : pairPrice.token1DerivedBNB / pairPrice.token0DerivedBNB,
+        ? pairPrice.token0DerivedUSD / pairPrice.token1DerivedUSD
+        : pairPrice.token1DerivedUSD / pairPrice.token0DerivedUSD,
   }))

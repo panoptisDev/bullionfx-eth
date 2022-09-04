@@ -18,7 +18,7 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
 import { useAppDispatch } from 'state'
 
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useVaultPoolByKey } from 'state/pools/hooks'
 import { useVaultApy } from 'hooks/useVaultApy'
 
@@ -93,11 +93,11 @@ const VaultStakeModal: React.FC<React.PropsWithChildren<VaultStakeModalProps>> =
   const [percent, setPercent] = useState(0)
   const [showRoiCalculator, setShowRoiCalculator] = useState(false)
   const { hasUnstakingFee } = useWithdrawalFeeTimer(parseInt(lastDepositedTime, 10), userShares)
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const usdValueStaked = new BigNumber(stakeAmount).times(cakePriceBusd)
   const formattedUsdValueStaked = cakePriceBusd.gt(0) && stakeAmount ? formatNumber(usdValueStaked.toNumber()) : ''
 
-  const { flexibleApy } = useVaultApy()
+  const { flexibleApy } = useVaultApy(chainId)
 
   const callOptions = {
     gasLimit: vaultPoolConfig[pool.vaultKey].gasLimit,
@@ -289,7 +289,7 @@ const VaultStakeModal: React.FC<React.PropsWithChildren<VaultStakeModalProps>> =
       )}
       {pool.vaultKey === VaultKey.CakeVault && cakeAsNumberBalance ? (
         <Box mt="8px" maxWidth="370px">
-          <ConvertToLock stakingToken={stakingToken} currentStakedAmount={cakeAsNumberBalance} />
+          <ConvertToLock stakingToken={stakingToken} currentStakedAmount={cakeAsNumberBalance} chainId={chainId} />
         </Box>
       ) : null}
       <Button

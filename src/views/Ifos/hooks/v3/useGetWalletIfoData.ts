@@ -92,7 +92,7 @@ const useGetWalletIfoData = (ifo: Ifo): WalletIfoData => {
           { address, name: 'computeVestingScheduleIdForAddressAndPid', params: [account, 0] },
           { address, name: 'computeVestingScheduleIdForAddressAndPid', params: [account, 1] },
         ],
-        { requireSuccess: false },
+        { requireSuccess: false, chainId },
       )
 
       basicId = basicIdData
@@ -146,7 +146,7 @@ const useGetWalletIfoData = (ifo: Ifo): WalletIfoData => {
       unlimitedSchedule,
       basicReleasableAmount,
       unlimitedReleasableAmount,
-    ] = await multicallv2(ifoV3Abi, [...ifoCalls, ...ifov3Calls], { requireSuccess: false })
+    ] = await multicallv2(ifoV3Abi, [...ifoCalls, ...ifov3Calls], { requireSuccess: false, chainId })
 
     setState((prevState) => ({
       ...prevState,

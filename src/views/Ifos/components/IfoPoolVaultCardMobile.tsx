@@ -36,7 +36,7 @@ interface IfoPoolVaultCardMobileProps {
 
 const IfoPoolVaultCardMobile: React.FC<React.PropsWithChildren<IfoPoolVaultCardMobileProps>> = ({ pool }) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const credit = useIfoCredit()
   const { isExpanded, setIsExpanded } = useConfig()
   const cakeAsNumberBalance = getBalanceNumber(credit)
@@ -84,6 +84,7 @@ const IfoPoolVaultCardMobile: React.FC<React.PropsWithChildren<IfoPoolVaultCardM
           vaultPool={vaultPool}
           accountHasSharesStaked={accountHasSharesStaked}
           performanceFeeAsDecimal={performanceFeeAsDecimal}
+          chainId={chainId}
         />
       )}
     </StyledCardMobile>

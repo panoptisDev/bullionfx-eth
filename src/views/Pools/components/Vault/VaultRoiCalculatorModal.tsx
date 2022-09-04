@@ -7,6 +7,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { DeserializedPool, VaultKey } from 'state/types'
 import { useVaultPoolByKey } from 'state/pools/hooks'
 import { getRoi } from 'utils/compoundApyHelpers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 import LockDurationField from '../LockedPool/Common/LockDurationField'
 import { weeksToSeconds } from '../utils/formatSecondsToWeeks'
@@ -22,7 +23,8 @@ export const VaultRoiCalculatorModal = ({
     },
   } = useVaultPoolByKey(pool.vaultKey)
 
-  const { getLockedApy, flexibleApy } = useVaultApy()
+  const { chainId } = useActiveWeb3React()
+  const { getLockedApy, flexibleApy } = useVaultApy(chainId)
   const { t } = useTranslation()
 
   const [cakeVaultView, setCakeVaultView] = useState(initialView || 0)
@@ -61,14 +63,15 @@ export const VaultRoiCalculatorModal = ({
       strategy={
         cakeVaultView
           ? (state, dispatch) => (
-              <LockedRoiStrategy
-                state={state}
-                dispatch={dispatch}
-                stakingTokenPrice={pool.stakingTokenPrice}
-                earningTokenPrice={pool.earningTokenPrice}
-                duration={duration}
-              />
-            )
+            <LockedRoiStrategy
+              state={state}
+              dispatch={dispatch}
+              stakingTokenPrice={pool.stakingTokenPrice}
+              earningTokenPrice={pool.earningTokenPrice}
+              duration={duration}
+              chainId={chainId}
+            />
+          )
           : null
       }
       header={
@@ -98,8 +101,8 @@ export const VaultRoiCalculatorModal = ({
   )
 }
 
-function LockedRoiStrategy({ state, dispatch, earningTokenPrice, duration, stakingTokenPrice }) {
-  const { getLockedApy } = useVaultApy()
+function LockedRoiStrategy({ state, dispatch, earningTokenPrice, duration, stakingTokenPrice, chainId }) {
+  const { getLockedApy } = useVaultApy(chainId)
   const { principalAsUSD, roiUSD } = state.data
   const { compounding, compoundingFrequency, stakingDuration, mode } = state.controls
 
@@ -114,9 +117,9 @@ function LockedRoiStrategy({ state, dispatch, earningTokenPrice, duration, staki
       const roiAsUSD = hasInterest ? roiTokens * earningTokenPrice : 0
       const roiPercentage = hasInterest
         ? getRoi({
-            amountEarned: roiAsUSD,
-            amountInvested: principalInUSDAsNumber,
-          })
+          amountEarned: roiAsUSD,
+          amountInvested: principalInUSDAsNumber,
+        })
         : 0
       dispatch({ type: 'setRoi', payload: { roiUSD: roiAsUSD, roiTokens, roiPercentage } })
     }

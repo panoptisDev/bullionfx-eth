@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber'
 import poolsConfig, { poolsTestnet } from 'config/constants/pools'
 import sousChefABI from 'config/abi/sousChef.json'
-import sousChefABIBull from 'config/abi/sousChefBull.json'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall, { multicallv2 } from 'utils/multicall'
 import { getAddress } from 'utils/addressHelpers'
@@ -31,7 +30,7 @@ export const fetchPoolsBlockLimits = async (chainId: number) => {
   })
 
   const startEndBlockRaw = await multicall(
-    chainId === ChainId.BSC_TESTNET ? sousChefABIBull : sousChefABI,
+    sousChefABI,
     startEndBlockCalls,
     chainId
   )

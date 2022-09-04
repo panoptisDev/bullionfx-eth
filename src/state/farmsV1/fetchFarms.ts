@@ -5,9 +5,9 @@ import { BIG_ZERO, BIG_TWO } from '../../utils/bigNumber'
 import { fetchPublicFarmsData } from './fetchPublicFarmData'
 import { fetchMasterChefData } from './fetchMasterChefData'
 
-const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]) => {
+const fetchFarms = async (farmsToFetch: SerializedFarmConfig[], chainId: number) => {
   const farmResult = await fetchPublicFarmsData(farmsToFetch)
-  const masterChefResult = await fetchMasterChefData(farmsToFetch)
+  const masterChefResult = await fetchMasterChefData(farmsToFetch, chainId)
 
   return farmsToFetch.map((farm, index) => {
     const [tokenBalanceLP, quoteTokenBalanceLP, lpTokenBalanceMC, lpTotalSupply, tokenDecimals, quoteTokenDecimals] =

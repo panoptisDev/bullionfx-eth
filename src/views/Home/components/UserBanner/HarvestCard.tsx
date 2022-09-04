@@ -4,7 +4,7 @@ import { AutoRenewIcon, Button, Card, CardBody, Flex, Skeleton, Text, ArrowForwa
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from '@pancakeswap/localization'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import useToast from 'hooks/useToast'
 import { useMasterchef } from 'hooks/useContract'
 import useCatchTxError from 'hooks/useCatchTxError'
@@ -29,7 +29,7 @@ const HarvestCard = () => {
   const { chainId } = useActiveWeb3React()
 
   const masterChefContract = useMasterchef()
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const earningsBusd = new BigNumber(farmEarningsSum).multipliedBy(cakePriceBusd)
   const numTotalToCollect = farmsWithStakedBalance.length
   const numFarmsToCollect = farmsWithStakedBalance.filter((value) => value.pid !== 0).length

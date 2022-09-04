@@ -12,7 +12,7 @@ interface TokenFields {
   id: string
   symbol: string
   name: string
-  derivedBNB: string // Price in BNB per token
+  derivedETH: string // Price in BNB per token
   derivedUSD: string // Price in USD per token
   tradeVolumeUSD: string
   totalTransactions: string
@@ -20,8 +20,7 @@ interface TokenFields {
 }
 
 interface FormattedTokenFields
-  extends Omit<TokenFields, 'derivedBNB' | 'derivedUSD' | 'tradeVolumeUSD' | 'totalTransactions' | 'totalLiquidity'> {
-  derivedBNB: number
+  extends Omit<TokenFields, 'derivedUSD' | 'tradeVolumeUSD' | 'totalTransactions' | 'totalLiquidity'> {
   derivedUSD: number
   tradeVolumeUSD: number
   totalTransactions: number
@@ -51,7 +50,6 @@ const TOKEN_AT_BLOCK = (block: number | undefined, tokens: string[]) => {
       id
       symbol
       name
-      derivedBNB
       derivedUSD
       tradeVolumeUSD
       totalTransactions
@@ -91,10 +89,9 @@ const parseTokenData = (tokens?: TokenFields[]) => {
     return {}
   }
   return tokens.reduce((accum: { [address: string]: FormattedTokenFields }, tokenData) => {
-    const { derivedBNB, derivedUSD, tradeVolumeUSD, totalTransactions, totalLiquidity } = tokenData
+    const { derivedUSD, tradeVolumeUSD, totalTransactions, totalLiquidity } = tokenData
     accum[tokenData.id] = {
       ...tokenData,
-      derivedBNB: parseFloat(derivedBNB),
       derivedUSD: parseFloat(derivedUSD),
       tradeVolumeUSD: parseFloat(tradeVolumeUSD),
       totalTransactions: parseFloat(totalTransactions),

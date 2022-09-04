@@ -12,7 +12,7 @@ import { fetchPotteryUserDataAsync } from 'state/pottery'
 
 export const useDepositPottery = (amount: string, potteryVaultAddress: string) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const dispatch = useAppDispatch()
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError, loading: isPending } = useCatchTxError()
@@ -29,9 +29,9 @@ export const useDepositPottery = (amount: string, potteryVaultAddress: string) =
           {t('Your funds have been staked in the pool')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchPotteryUserDataAsync(account))
+      dispatch(fetchPotteryUserDataAsync({ account, chainId }))
     }
-  }, [account, contract, amount, t, dispatch, fetchWithCatchTxError, toastSuccess])
+  }, [account, contract, amount, chainId, t, dispatch, fetchWithCatchTxError, toastSuccess])
 
   return { isPending, handleDeposit }
 }

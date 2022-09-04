@@ -11,14 +11,14 @@ export type ChainTokenList = ChainMap<Token[]>
 export type TranslatableText =
   | string
   | {
-      key: string
-      data?: {
-        [key: string]: string | number
-      }
+    key: string
+    data?: {
+      [key: string]: string | number
     }
+  }
 export interface Address {
-  97?: string
-  56: string
+  5?: string
+  1: string
   [chainId: number]: string
 }
 

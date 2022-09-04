@@ -1,4 +1,4 @@
-import { bsc, BscConnector, CHAINS } from '@pancakeswap/wagmi'
+import { mainnet as eth, BscConnector, CHAINS } from '@pancakeswap/wagmi'
 import { configureChains, createClient } from 'wagmi'
 import memoize from 'lodash/memoize'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -44,7 +44,7 @@ const getNodeRealUrl = (networkName: string) => {
 export const { provider, chains } = configureChains(CHAINS, [
   jsonRpcProvider({
     rpc: (chain) => {
-      if (!!process.env.NEXT_PUBLIC_NODE_PRODUCTION && chain.id === bsc.id) {
+      if (!!process.env.NEXT_PUBLIC_NODE_PRODUCTION && chain.id === eth.id) {
         return { http: process.env.NEXT_PUBLIC_NODE_PRODUCTION }
       }
       if (chain.rpcUrls.nodeReal) {

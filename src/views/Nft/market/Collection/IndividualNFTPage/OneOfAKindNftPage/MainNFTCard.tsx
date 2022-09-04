@@ -1,6 +1,6 @@
 import { BinanceIcon, Box, Button, Card, CardBody, Flex, Skeleton, Text, useModal } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 
 import { NftToken } from 'state/nftMarket/types'
 import { multiplyPriceByAmount } from 'utils/prices'
@@ -26,7 +26,7 @@ const MainNFTCard: React.FC<React.PropsWithChildren<MainNFTCardProps>> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation()
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
 
   const currentAskPriceAsNumber = nft?.marketData?.currentAskPrice ? parseFloat(nft.marketData?.currentAskPrice) : 0
   const priceInUsd = multiplyPriceByAmount(bnbBusdPrice, currentAskPriceAsNumber)

@@ -7,7 +7,7 @@ import profileABI from 'config/abi/pancakeProfile.json'
 import { getPancakeProfileAddress } from 'utils/addressHelpers'
 import useToast from 'hooks/useToast'
 
-const useGetProfileCosts = () => {
+const useGetProfileCosts = (chainId) => {
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
   const [costs, setCosts] = useState({
@@ -26,7 +26,7 @@ const useGetProfileCosts = () => {
         }))
         const [[numberCakeToReactivate], [numberCakeToRegister], [numberCakeToUpdate]] = await multicallv2<
           [[BigNumber], [BigNumber], [BigNumber]]
-        >(profileABI, calls)
+        >(profileABI, calls, { chainId })
 
         setCosts({
           numberCakeToReactivate,
@@ -40,7 +40,7 @@ const useGetProfileCosts = () => {
     }
 
     fetchCosts()
-  }, [setCosts, toastError, t])
+  }, [setCosts, toastError, t, chainId])
 
   return { costs, isLoading }
 }

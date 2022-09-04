@@ -30,6 +30,7 @@ import { getInterestBreakdown } from 'utils/compoundApyHelpers'
 import PercentageButton from './PercentageButton'
 import useStakePool from '../../../hooks/useStakePool'
 import useUnstakePool from '../../../hooks/useUnstakePool'
+import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
 
 interface StakeModalProps {
   isBnbPool: boolean
@@ -195,6 +196,8 @@ const StakeModal: React.FC<React.PropsWithChildren<StakeModalProps>> = ({
     )
   }
 
+  const url = chainId === ChainId.BSC_TESTNET ? `/images/tokens/testnet/${stakingToken.address}.png` : `/images/tokens/${stakingToken.address}.png`
+
   return (
     <Modal
       minWidth="346px"
@@ -213,7 +216,7 @@ const StakeModal: React.FC<React.PropsWithChildren<StakeModalProps>> = ({
       <Flex alignItems="center" justifyContent="space-between" mb="8px">
         <Text bold>{isRemovingStake ? t('Unstake') : t('Stake')}:</Text>
         <Flex alignItems="center" minWidth="70px">
-          <Image src={`/images/tokens/${stakingToken.address}.png`} width={24} height={24} alt={stakingToken.symbol} />
+          <Image src={url} width={24} height={24} alt={stakingToken.symbol} />
           <Text ml="4px" bold>
             {stakingToken.symbol}
           </Text>

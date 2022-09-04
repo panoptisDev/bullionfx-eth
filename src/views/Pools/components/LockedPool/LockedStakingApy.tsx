@@ -7,7 +7,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { useVaultApy } from 'hooks/useVaultApy'
 import { BalanceWithLoading } from 'components/Balance'
 import Divider from 'components/Divider'
-import { useBUSDCakeAmount } from 'hooks/useBUSDPrice'
+import { useUSDCBullAmount } from 'hooks/useUSDCPrice'
 import isUndefinedOrNull from 'utils/isUndefinedOrNull'
 import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import BurningCountDown from './Common/BurningCountDown'
@@ -19,6 +19,7 @@ import useUserDataInVaultPresenter from './hooks/useUserDataInVaultPresenter'
 import { LockedStakingApyPropsType } from './types'
 
 interface LockedStakingApyProps extends LockedStakingApyPropsType {
+  chainId: number
   showICake?: boolean
 }
 
@@ -26,7 +27,8 @@ const LockedStakingApy: React.FC<React.PropsWithChildren<LockedStakingApyProps>>
   stakingToken,
   stakingTokenBalance,
   userData,
-  showICake,
+  chainId,
+  showICake
 }) => {
   const { t } = useTranslation()
   const position = useMemo(
@@ -45,14 +47,14 @@ const LockedStakingApy: React.FC<React.PropsWithChildren<LockedStakingApyProps>>
 
   const currentLockedAmount = getBalanceNumber(currentLockedAmountAsBigNumber)
 
-  const usdValueStaked = useBUSDCakeAmount(currentLockedAmount)
+  const usdValueStaked = useUSDCBullAmount(currentLockedAmount)
 
   const { weekDuration, lockEndDate, secondDuration, remainingTime, burnStartTime } = useUserDataInVaultPresenter({
     lockStartTime: userData?.lockStartTime,
     lockEndTime: userData?.lockEndTime,
     burnStartTime: userData?.burnStartTime,
   })
-  const { lockedApy } = useVaultApy({ duration: secondDuration })
+  const { lockedApy } = useVaultApy(chainId, { duration: secondDuration })
 
   // earningTokenBalance includes overdue fee if any
   const earningTokenBalance = useMemo(() => {
@@ -138,7 +140,7 @@ const LockedStakingApy: React.FC<React.PropsWithChildren<LockedStakingApyProps>>
       )}
       <Flex alignItems="center" justifyContent="space-between">
         <Text color="textSubtle" textTransform="uppercase" bold fontSize="12px">
-          {t('Recent CAKE profit')}
+          {t('Recent BULL profit')}
         </Text>
         <BalanceWithLoading color="text" bold fontSize="16px" value={earningTokenBalance} decimals={5} />
       </Flex>

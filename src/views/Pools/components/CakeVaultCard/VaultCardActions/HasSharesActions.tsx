@@ -2,7 +2,7 @@ import { Flex, Text, IconButton, AddIcon, MinusIcon, useModal, Skeleton, Box } f
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DeserializedPool, VaultKey } from 'state/types'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useVaultPoolByKey } from 'state/pools/hooks'
 import Balance from 'components/Balance'
 import NotEnoughTokensModal from '../../PoolCard/Modals/NotEnoughTokensModal'
@@ -13,12 +13,14 @@ interface HasStakeActionProps {
   pool: DeserializedPool
   stakingTokenBalance: BigNumber
   performanceFee: number
+  chainId: number
 }
 
 const HasSharesActions: React.FC<React.PropsWithChildren<HasStakeActionProps>> = ({
   pool,
   stakingTokenBalance,
   performanceFee,
+  chainId
 }) => {
   const {
     userData: {
@@ -28,7 +30,7 @@ const HasSharesActions: React.FC<React.PropsWithChildren<HasStakeActionProps>> =
 
   const { stakingToken } = pool
 
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const stakedDollarValue = cakePriceBusd.gt(0)
     ? getBalanceNumber(cakeAsBigNumber.multipliedBy(cakePriceBusd), stakingToken.decimals)
     : 0
@@ -75,7 +77,7 @@ const HasSharesActions: React.FC<React.PropsWithChildren<HasStakeActionProps>> =
       </Flex>
       {pool.vaultKey === VaultKey.CakeVault && (
         <Box mb="16px">
-          <ConvertToLock stakingToken={stakingToken} currentStakedAmount={cakeAsNumberBalance} />
+          <ConvertToLock stakingToken={stakingToken} currentStakedAmount={cakeAsNumberBalance} chainId={chainId} />
         </Box>
       )}
     </>

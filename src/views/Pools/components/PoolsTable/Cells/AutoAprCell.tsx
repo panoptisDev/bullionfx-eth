@@ -8,6 +8,7 @@ import { useVaultPoolByKey } from 'state/pools/hooks'
 import { DeserializedPool, DeserializedLockedVaultUser, VaultKey } from 'state/types'
 import { MAX_LOCK_DURATION } from 'config/constants/pools'
 import { getVaultPosition, VaultPosition } from 'utils/cakePool'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { VaultRoiCalculatorModal } from '../../Vault/VaultRoiCalculatorModal'
 import BaseCell, { CellContent } from './BaseCell'
 
@@ -23,17 +24,18 @@ interface AprCellProps {
 
 const AutoAprCell: React.FC<React.PropsWithChildren<AprCellProps>> = ({ pool }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const { isMobile } = useMatchBreakpointsContext()
 
   const { userData } = useVaultPoolByKey(pool.vaultKey)
 
   const vaultPosition = getVaultPosition(userData)
 
-  const { flexibleApy, lockedApy } = useVaultApy({
+  const { flexibleApy, lockedApy } = useVaultApy(chainId, {
     duration:
       vaultPosition > VaultPosition.Flexible
         ? +(userData as DeserializedLockedVaultUser).lockEndTime -
-          +(userData as DeserializedLockedVaultUser).lockStartTime
+        +(userData as DeserializedLockedVaultUser).lockStartTime
         : MAX_LOCK_DURATION,
   })
 

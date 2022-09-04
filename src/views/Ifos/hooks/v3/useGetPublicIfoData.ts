@@ -3,10 +3,10 @@ import { useState, useCallback } from 'react'
 import { BSC_BLOCK_TIME } from 'config'
 import ifoV2Abi from 'config/abi/ifoV2.json'
 import ifoV3Abi from 'config/abi/ifoV3.json'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { Ifo, IfoStatus } from 'config/constants/types'
 
-import { useLpTokenPrice, usePriceCakeBusd } from 'state/farms/hooks'
+import { useLpTokenPrice, usePriceBullUsdc } from 'state/farms/hooks'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { multicallv2 } from 'utils/multicall'
 import { PublicIfoData } from '../../types'
@@ -37,9 +37,9 @@ const formatVestingInfo = (pool) => ({
  */
 const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
   const { address, releaseBlockNumber, version } = ifo
-  const cakePriceUsd = usePriceCakeBusd()
+  const cakePriceUsd = usePriceBullUsdc()
   const lpTokenPriceInUsd = useLpTokenPrice(ifo.currency.symbol)
-  const currencyPriceInUSD = ifo.currency === bscTokens.cake ? cakePriceUsd : lpTokenPriceInUsd
+  const currencyPriceInUSD = ifo.currency === ethTokens.bull ? cakePriceUsd : lpTokenPriceInUsd
 
   const [state, setState] = useState({
     isInitialized: false,
@@ -88,7 +88,7 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
   const abi = version >= 3.1 ? ifoV3Abi : ifoV2Abi // ifoV2Abi use for version 3.0
 
   const fetchIfoData = useCallback(
-    async (currentBlock: number) => {
+    async (currentBlock: number, chainId: number) => {
       const [
         startBlock,
         endBlock,
@@ -159,6 +159,7 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
             params: [1],
           },
         ].filter(Boolean),
+        { chainId }
       )
 
       const poolBasicFormatted = formatPool(poolBasic)

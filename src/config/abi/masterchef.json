@@ -7,8 +7,8 @@
         "type": "address"
       },
       {
-        "internalType": "contract IBEP20",
-        "name": "_CAKE",
+        "internalType": "contract IERC20",
+        "name": "_BULL",
         "type": "address"
       },
       {
@@ -42,7 +42,7 @@
       },
       {
         "indexed": true,
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "lpToken",
         "type": "address"
       },
@@ -198,25 +198,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "oldAdmin",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "UpdateBurnAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": false,
         "internalType": "uint256",
         "name": "burnRate",
@@ -235,7 +216,26 @@
         "type": "uint256"
       }
     ],
-    "name": "UpdateCakeRate",
+    "name": "UpdateBullRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oldAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "UpdateBurnAdmin",
     "type": "event"
   },
   {
@@ -262,7 +262,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "accCakePerShare",
+        "name": "accBullPerShare",
         "type": "uint256"
       }
     ],
@@ -315,7 +315,7 @@
   },
   {
     "inputs": [],
-    "name": "ACC_CAKE_PRECISION",
+    "name": "ACC_BULL_PRECISION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -341,10 +341,10 @@
   },
   {
     "inputs": [],
-    "name": "CAKE",
+    "name": "BULL",
     "outputs": [
       {
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -354,7 +354,7 @@
   },
   {
     "inputs": [],
-    "name": "CAKE_RATE_TOTAL_PRECISION",
+    "name": "BULL_RATE_TOTAL_PRECISION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -367,7 +367,7 @@
   },
   {
     "inputs": [],
-    "name": "MASTERCHEF_CAKE_PER_BLOCK",
+    "name": "MASTERCHEF_BULL_PER_BLOCK",
     "outputs": [
       {
         "internalType": "uint256",
@@ -425,7 +425,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "_lpToken",
         "type": "address"
       },
@@ -459,6 +459,77 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_isRegular",
+        "type": "bool"
+      }
+    ],
+    "name": "bullPerBlock",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bullPerBlockToBurn",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bullRateToBurn",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bullRateToRegularFarm",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bullRateToSpecialFarm",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "burnAdmin",
     "outputs": [
@@ -479,80 +550,9 @@
         "type": "bool"
       }
     ],
-    "name": "burnCake",
+    "name": "burnBull",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "_isRegular",
-        "type": "bool"
-      }
-    ],
-    "name": "cakePerBlock",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cakePerBlockToBurn",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cakeRateToBurn",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cakeRateToRegularFarm",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cakeRateToSpecialFarm",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -620,7 +620,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "dummyToken",
         "type": "address"
       }
@@ -654,7 +654,7 @@
     "name": "lpToken",
     "outputs": [
       {
-        "internalType": "contract IBEP20",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -695,7 +695,7 @@
         "type": "address"
       }
     ],
-    "name": "pendingCake",
+    "name": "pendingBull",
     "outputs": [
       {
         "internalType": "uint256",
@@ -718,7 +718,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "accCakePerShare",
+        "name": "accBullPerShare",
         "type": "uint256"
       },
       {
@@ -866,19 +866,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "updateBurnAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_burnRate",
         "type": "uint256"
@@ -899,7 +886,20 @@
         "type": "bool"
       }
     ],
-    "name": "updateCakeRate",
+    "name": "updateBullRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "updateBurnAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -918,7 +918,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "accCakePerShare",
+            "name": "accBullPerShare",
             "type": "uint256"
           },
           {

@@ -4,7 +4,7 @@ import { Price, Currency } from '@pancakeswap/sdk'
 import { Button, Grid, Text, Flex, Box, BinanceIcon, useModal, Skeleton } from '@pancakeswap/uikit'
 import { formatNumber } from 'utils/formatBalance'
 import { ContextApi, useTranslation } from '@pancakeswap/localization'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { NftToken } from 'state/nftMarket/types'
 import BuyModal from 'views/Nft/market/components/BuySellModals/BuyModal'
@@ -94,7 +94,7 @@ interface ForSaleTableRowsProps {
 const ForSaleTableRow: React.FC<React.PropsWithChildren<ForSaleTableRowsProps>> = ({ nftsForSale, onSuccessSale }) => {
   const { account } = useWeb3React()
   const { t } = useTranslation()
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
   return (
     <OwnersTableRow>
       {nftsForSale.map((nft) => (

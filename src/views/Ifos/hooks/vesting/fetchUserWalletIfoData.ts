@@ -23,7 +23,7 @@ export interface VestingData {
   }
 }
 
-export const fetchUserWalletIfoData = async (ifo: Ifo, account: string): Promise<VestingData> => {
+export const fetchUserWalletIfoData = async (ifo: Ifo, account: string, chainId: number): Promise<VestingData> => {
   const { address } = ifo
   let userVestingData = {
     vestingStartTime: 0,
@@ -54,7 +54,7 @@ export const fetchUserWalletIfoData = async (ifo: Ifo, account: string): Promise
         { address, name: 'computeVestingScheduleIdForAddressAndPid', params: [account, 0] },
         { address, name: 'computeVestingScheduleIdForAddressAndPid', params: [account, 1] },
       ],
-      { requireSuccess: false },
+      { requireSuccess: false, chainId },
     )
 
     const ifov3Calls = [
@@ -108,7 +108,7 @@ export const fetchUserWalletIfoData = async (ifo: Ifo, account: string): Promise
       basicVestingInformation,
       unlimitedVestingInformation,
       vestingStartTime,
-    ] = await multicallv2(ifoV3Abi, ifov3Calls, { requireSuccess: false })
+    ] = await multicallv2(ifoV3Abi, ifov3Calls, { requireSuccess: false, chainId })
 
     userVestingData = {
       vestingStartTime: vestingStartTime ? vestingStartTime[0].toNumber() : 0,

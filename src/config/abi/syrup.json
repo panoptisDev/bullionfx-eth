@@ -2,8 +2,8 @@
   {
     "inputs": [
       {
-        "internalType": "contract CakeToken",
-        "name": "_cake",
+        "internalType": "contract BullToken",
+        "name": "_bull",
         "type": "address"
       }
     ],
@@ -223,6 +223,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "bull",
+    "outputs": [
+      {
+        "internalType": "contract BullToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -238,19 +251,6 @@
     "name": "burn",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cake",
-    "outputs": [
-      {
-        "internalType": "contract CakeToken",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -590,7 +590,7 @@
         "type": "uint256"
       }
     ],
-    "name": "safeCakeTransfer",
+    "name": "safeBullTransfer",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

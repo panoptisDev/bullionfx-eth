@@ -10,15 +10,16 @@ import { UseEditProfileResponse } from './reducer'
 
 interface ApproveCakePageProps extends InjectedModalProps {
   goToChange: UseEditProfileResponse['goToChange']
+  chainId: number
 }
 
-const ApproveCakePage: React.FC<React.PropsWithChildren<ApproveCakePageProps>> = ({ goToChange, onDismiss }) => {
+const ApproveCakePage: React.FC<React.PropsWithChildren<ApproveCakePageProps>> = ({ goToChange, onDismiss, chainId }) => {
   const { profile } = useProfile()
   const { t } = useTranslation()
   const { fetchWithCatchTxError, loading: isApproving } = useCatchTxError()
   const {
     costs: { numberCakeToUpdate, numberCakeToReactivate },
-  } = useGetProfileCosts()
+  } = useGetProfileCosts(chainId)
   const { signer: cakeContract } = useCake()
 
   if (!profile) {

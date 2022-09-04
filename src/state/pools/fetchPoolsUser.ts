@@ -3,7 +3,7 @@ import sousChefABI from 'config/abi/sousChef.json'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
 import { getAddress } from 'utils/addressHelpers'
-import { bscRpcProvider, bscTestnetRpcProvider } from 'utils/providers'
+import { ethRpcProvider, goerliRpcProvider } from 'utils/providers'
 import BigNumber from 'bignumber.js'
 import uniq from 'lodash/uniq'
 import fromPairs from 'lodash/fromPairs'
@@ -13,15 +13,15 @@ import { ChainId } from '../../../packages/swap-sdk/src/constants'
 // BNB pools use the native BNB token (wrapping ? unwrapping is done at the contract level)
 const nonBnbPools = (chainId) => {
   if (chainId === ChainId.BSC_TESTNET) {
-    return poolsTestnet.filter((pool) => pool.stakingToken.symbol !== 'BNB')
+    return poolsTestnet.filter((pool) => pool.stakingToken.symbol !== 'ETH')
   }
-  return poolsConfig.filter((pool) => pool.stakingToken.symbol !== 'BNB')
+  return poolsConfig.filter((pool) => pool.stakingToken.symbol !== 'ETH')
 }
 const bnbPools = (chainId) => {
   if (chainId === ChainId.BSC_TESTNET) {
-    return poolsTestnet.filter((pool) => pool.stakingToken.symbol === 'BNB')
+    return poolsTestnet.filter((pool) => pool.stakingToken.symbol === 'ETH')
   }
-  return poolsConfig.filter((pool) => pool.stakingToken.symbol === 'BNB')
+  return poolsConfig.filter((pool) => pool.stakingToken.symbol === 'ETH')
 }
 const nonMasterPools = (chainId) => {
   const pools = chainId === ChainId.BSC_TESTNET ? poolsTestnet : poolsConfig
@@ -40,7 +40,7 @@ export const fetchPoolsAllowance = async (account, chainId) => {
 }
 
 export const fetchUserBalances = async (account, chainId) => {
-  const rpcProvider = chainId === ChainId.BSC_TESTNET ? bscTestnetRpcProvider : bscRpcProvider
+  const rpcProvider = chainId === ChainId.BSC_TESTNET ? goerliRpcProvider : ethRpcProvider
   // Non BNB pools
   const tokens = uniq(nonBnbPools(chainId).map((pool) => pool.stakingToken.address))
   const calls = tokens.map((token) => ({

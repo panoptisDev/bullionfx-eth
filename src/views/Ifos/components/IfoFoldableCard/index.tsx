@@ -36,7 +36,7 @@ interface IfoFoldableCardProps {
   walletIfoData: WalletIfoData
 }
 
-const StyledCard = styled(Card)<{ $isCurrent?: boolean }>`
+const StyledCard = styled(Card) <{ $isCurrent?: boolean }>`
   width: 100%;
   margin: auto;
   border-top-left-radius: 32px;
@@ -68,7 +68,7 @@ const StyledCard = styled(Card)<{ $isCurrent?: boolean }>`
   }
 `
 
-const Header = styled(CardHeader)<{ ifoId: string; $isCurrent?: boolean }>`
+const Header = styled(CardHeader) <{ ifoId: string; $isCurrent?: boolean }>`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -256,7 +256,7 @@ const IfoCard: React.FC<React.PropsWithChildren<IfoFoldableCardProps>> = ({ ifo,
   } = walletIfoData
   const [enableStatus, setEnableStatus] = useState(EnableStatus.DISABLED)
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const raisingTokenContract = useERC20(ifo.currency.address, false)
   // Continue to fetch 2 more minutes / is vesting need get latest data
   const isRecentlyActive =
@@ -274,21 +274,21 @@ const IfoCard: React.FC<React.PropsWithChildren<IfoFoldableCardProps>> = ({ ifo,
 
   useEffect(() => {
     if (isRecentlyActive || !isPublicIfoDataInitialized) {
-      fetchPublicIfoData(currentBlock)
+      fetchPublicIfoData(currentBlock, chainId)
     }
-  }, [isRecentlyActive, isPublicIfoDataInitialized, fetchPublicIfoData, currentBlock])
+  }, [isRecentlyActive, isPublicIfoDataInitialized, fetchPublicIfoData, currentBlock, chainId])
 
   useFastRefreshEffect(() => {
     if (isWindowVisible && (isRecentlyActive || !isWalletDataInitialized)) {
       if (account) {
-        fetchWalletIfoData()
+        fetchWalletIfoData(chainId)
       }
     }
 
     if (!account && isWalletDataInitialized) {
       resetWalletIfoData()
     }
-  }, [isWindowVisible, account, isRecentlyActive, isWalletDataInitialized, fetchWalletIfoData, resetWalletIfoData])
+  }, [isWindowVisible, account, isRecentlyActive, isWalletDataInitialized, chainId, fetchWalletIfoData, resetWalletIfoData])
 
   const handleApprove = async () => {
     const receipt = await fetchWithCatchTxError(() => {

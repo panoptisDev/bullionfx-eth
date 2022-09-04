@@ -18,11 +18,11 @@ const ModUserPrizeGrid: React.FC<React.PropsWithChildren<{ userTradingInformatio
   userTradingInformation,
 }) => {
   const { t } = useTranslation()
-  const { userRewardGroup, userCakeRewards, userDarRewards, userPointReward, canClaimNFT } = userTradingInformation
+  const { userRewardGroup, userCakeRewards, userPointReward, canClaimNFT } = userTradingInformation
   const canClaimSpecialNFT = useCanClaimSpecialNFT()
   const { cakeReward, darReward, dollarValueOfTokensReward } = useModCompetitionRewards({
     userCakeRewards,
-    userDarRewards,
+    // userDarRewards,
   })
 
   const achievement = getRewardGroupAchievements(modPrizes, userRewardGroup, userPointReward)

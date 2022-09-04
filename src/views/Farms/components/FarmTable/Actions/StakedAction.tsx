@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useContext } from 'react'
 import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
-import { useLpTokenPrice, usePriceCakeBusd } from 'state/farms/hooks'
+import { useLpTokenPrice, usePriceBullUsdc } from 'state/farms/hooks'
 import styled from 'styled-components'
 import { getAddress } from 'utils/addressHelpers'
 import { TransactionResponse } from '@ethersproject/providers'
@@ -150,7 +150,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
 
   const router = useRouter()
   const lpPrice = useLpTokenPrice(lpSymbol)
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceBullUsdc()
 
   const liquidityUrlPathParts = getLiquidityUrlPathParts({
     quoteTokenAddress: quoteToken.address,

@@ -5,7 +5,7 @@ import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import type { Provider } from '@ethersproject/providers'
 import { ChainId, Currency } from '@pancakeswap/sdk'
-import { bsc } from '@pancakeswap/wagmi'
+import { mainnet as eth } from '@pancakeswap/wagmi'
 import memoize from 'lodash/memoize'
 import { TokenAddressMap } from 'state/types'
 import { BASE_BSC_SCAN_URLS } from '../config'
@@ -27,7 +27,7 @@ export function getBlockExploreLink(
 ): string {
   const chainId = chainIdOverride || ChainId.BSC
   const chain = chains.find((c) => c.id === chainId)
-  if (!chain) return bsc.blockExplorers.default.url
+  if (!chain) return eth.blockExplorers.default.url
   switch (type) {
     case 'transaction': {
       return `${chain.blockExplorers.default.url}/tx/${data}`

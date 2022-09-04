@@ -68,7 +68,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
     userDataLoaded,
   } = pool
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { isMobile } = useMatchBreakpointsContext()
 
   const stakingTokenContract = useERC20(stakingToken.address || '')
@@ -448,7 +448,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
             ml={['0', '0', '12px', '12px', '32px']}
             mr={['0', '0', '12px', '12px', '0']}
           >
-            <ConvertToLock stakingToken={stakingToken} currentStakedAmount={cakeAsNumberBalance} isInline />
+            <ConvertToLock stakingToken={stakingToken} currentStakedAmount={cakeAsNumberBalance} isInline chainId={chainId} />
           </Box>
         )}
       </>

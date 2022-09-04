@@ -51,7 +51,6 @@ export const useFetchPublicPoolsData = () => {
     (currentBlock) => {
       const fetchPoolsDataWithFarms = async () => {
         await dispatch(fetchFarmsPublicDataAsync({ pids: activeFarms, chainId }))
-
         batch(() => {
           dispatch(fetchPoolsPublicDataAsync(currentBlock, chainId))
           dispatch(fetchPoolsStakingLimitsAsync(chainId))
@@ -92,7 +91,7 @@ export const usePoolsPageFetch = () => {
       if (account) {
         dispatch(fetchPoolsUserDataAsync({ account, chainId }))
         dispatch(fetchCakeVaultUserData({ account, chainId }))
-        dispatch(fetchCakeFlexibleSideVaultUserData({ account }))
+        dispatch(fetchCakeFlexibleSideVaultUserData({ account, chainId }))
       }
     })
   }, [account, dispatch, chainId])
@@ -100,7 +99,7 @@ export const usePoolsPageFetch = () => {
   useEffect(() => {
     batch(() => {
       dispatch(fetchCakeVaultFees({ chainId }))
-      dispatch(fetchCakeFlexibleSideVaultFees())
+      dispatch(fetchCakeFlexibleSideVaultFees({ chainId }))
     })
   }, [dispatch, chainId])
 }

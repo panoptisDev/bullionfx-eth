@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
-import { useFarms, usePriceCakeBusd } from 'state/farms/hooks'
+import { useFarms, usePriceBullUsdc } from 'state/farms/hooks'
 import { useAppDispatch } from 'state'
 import farmsConfig from 'config/constants/farms'
 import { fetchFarmsPublicDataAsync } from 'state/farms'
@@ -17,7 +17,7 @@ const useGetTopFarmsByApr = (isIntersecting: boolean) => {
   const { data: farms, regularCakePerBlock } = useFarms()
   const [fetchStatus, setFetchStatus] = useState(FetchStatus.Idle)
   const [topFarms, setTopFarms] = useState<FarmWithStakedValue[]>([null, null, null, null, null])
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const { chainId } = useActiveWeb3React()
 
   useEffect(() => {
@@ -43,13 +43,13 @@ const useGetTopFarmsByApr = (isIntersecting: boolean) => {
       const farmsWithPrices = farmsState.filter(
         (farm) =>
           farm.lpTotalInQuoteToken &&
-          farm.quoteTokenPriceBusd &&
+          farm.quoteTokenPriceUsdc &&
           farm.pid !== 0 &&
           farm.multiplier &&
           farm.multiplier !== '0X',
       )
       const farmsWithApr: FarmWithStakedValue[] = farmsWithPrices.map((farm) => {
-        const totalLiquidity = farm.lpTotalInQuoteToken.times(farm.quoteTokenPriceBusd)
+        const totalLiquidity = farm.lpTotalInQuoteToken.times(farm.quoteTokenPriceUsdc)
         const { cakeRewardsApr, lpRewardsApr } = getFarmApr(
           farm.poolWeight,
           cakePriceBusd,

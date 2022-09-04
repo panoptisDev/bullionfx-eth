@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
 import masterchefABI from 'config/abi/masterchef.json'
-import masterchefTestnetABI from 'config/abi/masterchefTestnet.json'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import { SerializedFarmConfig } from 'config/constants/types'
@@ -55,8 +54,7 @@ export const fetchFarmUserStakedBalances = async (account: string, farmsToFetch:
       params: [farm.pid, account],
     }
   })
-  const abi = chainId === ChainId.BSC_TESTNET ? masterchefTestnetABI : masterchefABI
-  const rawStakedBalances = await multicall(abi, calls, chainId)
+  const rawStakedBalances = await multicall(masterchefABI, calls, chainId)
   const parsedStakedBalances = rawStakedBalances.map((stakedBalance) => {
     return new BigNumber(stakedBalance[0]._hex).toJSON()
   })
@@ -80,8 +78,7 @@ export const fetchFarmUserEarnings = async (account: string, farmsToFetch: Seria
     }
   })
 
-  const abi = chainId === ChainId.BSC_TESTNET ? masterchefTestnetABI : masterchefABI
-  const rawEarnings = await multicall(abi, calls, chainId)
+  const rawEarnings = await multicall(masterchefABI, calls, chainId)
   const parsedEarnings = rawEarnings.map((earnings) => {
     return new BigNumber(earnings).toJSON()
   })

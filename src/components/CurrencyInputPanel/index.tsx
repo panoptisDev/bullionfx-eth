@@ -5,7 +5,7 @@ import { isAddress } from 'utils'
 import { useTranslation } from '@pancakeswap/localization'
 import { WrappedTokenInfo } from 'state/types'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useBUSDCurrencyAmount } from 'hooks/useBUSDPrice'
+import { useUSDCCurrencyAmount } from 'hooks/useUSDCPrice'
 import { formatNumber } from 'utils/formatBalance'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
@@ -122,7 +122,7 @@ export default function CurrencyInputPanel({
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
   const tokenAddress = token ? isAddress(token.address) : null
 
-  const amountInDollar = useBUSDCurrencyAmount(
+  const amountInDollar = useUSDCCurrencyAmount(
     showBUSD ? currency : undefined,
     Number.isFinite(+value) ? +value : undefined,
   )

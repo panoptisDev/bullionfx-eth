@@ -21,7 +21,7 @@ const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData
 }
 
 const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
-  const { lpAddresses, lpSymbol, v1pid, dual, multiplier, isCommunity, quoteTokenPriceBusd, tokenPriceBusd } = farm
+  const { lpAddresses, lpSymbol, v1pid, dual, multiplier, isCommunity, quoteTokenPriceUsdc, tokenPriceBusd } = farm
   return {
     lpAddresses,
     lpSymbol,
@@ -29,7 +29,7 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
     dual,
     multiplier,
     isCommunity,
-    quoteTokenPriceBusd,
+    quoteTokenPriceUsdc,
     tokenPriceBusd,
     token: deserializeToken(farm.token),
     quoteToken: deserializeToken(farm.quoteToken),
@@ -44,17 +44,17 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
 
 export const usePollFarmsV1WithUserData = () => {
   const dispatch = useAppDispatch()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
 
   useSlowRefreshEffect(() => {
     const pids = farmsConfig.filter((farmToFetch) => farmToFetch.v1pid).map((farmToFetch) => farmToFetch.v1pid)
 
-    dispatch(fetchFarmsPublicDataAsync(pids))
+    dispatch(fetchFarmsPublicDataAsync({ pids, chainId }))
 
     if (account) {
-      dispatch(fetchFarmUserDataAsync({ account, pids }))
+      dispatch(fetchFarmUserDataAsync({ account, pids, chainId }))
     }
-  }, [dispatch, account])
+  }, [dispatch, account, chainId])
 }
 
 /**
@@ -62,12 +62,12 @@ export const usePollFarmsV1WithUserData = () => {
  * 251 = CAKE-BNB LP
  * 252 = BUSD-BNB LP
  */
-export const usePollCoreFarmData = () => {
+export const usePollCoreFarmData = (chainId) => {
   const dispatch = useAppDispatch()
 
   useFastRefreshEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync([251, 252]))
-  }, [dispatch])
+    dispatch(fetchFarmsPublicDataAsync({ pids: [251, 252], chainId }))
+  }, [dispatch, chainId])
 }
 
 export const useFarmsV1 = (): DeserializedFarmsState => {
@@ -134,7 +134,7 @@ export const useLpTokenPrice = (symbol: string) => {
 /**
  * @@deprecated use the BUSD hook in /hooks
  */
-export const usePriceCakeBusd = (): BigNumber => {
+export const usePriceBullUsdc = (): BigNumber => {
   const cakeBnbFarm = useFarmFromPid(251)
 
   const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd

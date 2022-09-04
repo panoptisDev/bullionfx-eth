@@ -14,7 +14,7 @@ export interface FarmWithBalance extends SerializedFarmConfig {
 }
 
 const useFarmsWithBalance = () => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const poolLength = useFarmsPoolLength()
 
   const {
@@ -32,7 +32,7 @@ const useFarmsWithBalance = () => {
         params: [farm.pid, account],
       }))
 
-      const rawResults = await multicall(masterChefABI, calls)
+      const rawResults = await multicall(masterChefABI, calls, chainId)
       const results = farmsCanFetch.map((farm, index) => ({ ...farm, balance: new BigNumber(rawResults[index]) }))
       const farmsWithBalances: FarmWithBalance[] = results.filter((balanceType) => balanceType.balance.gt(0))
       const totalEarned = farmsWithBalances.reduce((accum, earning) => {

@@ -5,7 +5,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Box, Flex, Text, ChevronRightIcon, useModal } from '@pancakeswap/uikit'
 import Loading from 'components/Loading'
 import useLocalDispatch from 'contexts/LocalRedux/useLocalDispatch'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { Bet } from 'state/types'
 import { transformBetResponse } from 'state/predictions/helpers'
 import { getPredictionsV1Address } from 'utils/addressHelpers'
@@ -34,7 +34,7 @@ const ClaimCheck = () => {
   const [onPresentCollectWinningsModal] = useModal(
     <CollectRoundWinningsModal
       predictionsAddress={predictionsV1Address}
-      token={bscTokens.bnb}
+      token={ethTokens.eth}
       dispatch={dispatch}
       history={history}
       isLoadingHistory={isFetching}
@@ -58,7 +58,7 @@ const ClaimCheck = () => {
       })
 
       if (unclaimedBets.length > 0) {
-        const transformer = transformBetResponse(bscTokens.bnb)
+        const transformer = transformBetResponse(ethTokens.eth)
         setHistory(unclaimedBets.map(transformer))
         onPresentCollectWinningsModal()
       } else {

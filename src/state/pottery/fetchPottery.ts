@@ -4,10 +4,11 @@ import potteryVaultAbi from 'config/abi/potteryVaultAbi.json'
 import { getPotteryDrawAddress } from 'utils/addressHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { PotteryDepositStatus } from 'state/types'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens, ethTokensGoerli } from 'config/constants/tokens'
 import { getPotteryDrawContract, getBep20Contract } from 'utils/contractHelpers'
 import { request, gql } from 'graphql-request'
 import { GRAPH_API_POTTERY } from 'config/constants/endpoints'
+import { ChainId } from '../../../packages/swap-sdk/src/constants'
 
 const potteryDrawAddress = getPotteryDrawAddress()
 const potteryDrawContract = getPotteryDrawContract()
@@ -35,7 +36,7 @@ export const fetchLastVaultAddress = async () => {
   }
 }
 
-export const fetchPublicPotteryValue = async (potteryVaultAddress: string) => {
+export const fetchPublicPotteryValue = async (potteryVaultAddress: string, chainId: number) => {
   try {
     const calls = ['getStatus', 'totalLockCake', 'totalSupply', 'lockStartTime', 'getMaxTotalDeposit'].map(
       (method) => ({
@@ -47,6 +48,7 @@ export const fetchPublicPotteryValue = async (potteryVaultAddress: string) => {
     const [getStatus, [totalLockCake], [totalSupply], [lockStartTime], getMaxTotalDeposit] = await multicallv2(
       potteryVaultAbi,
       calls,
+      chainId
     )
     const [lastDrawId, totalPrize] = await potteryDrawContract.getPot(potteryVaultAddress)
 
@@ -73,9 +75,10 @@ export const fetchPublicPotteryValue = async (potteryVaultAddress: string) => {
   }
 }
 
-export const fetchTotalLockedValue = async (potteryVaultAddress: string) => {
+export const fetchTotalLockedValue = async (potteryVaultAddress: string, chainId: number) => {
   try {
-    const contract = getBep20Contract(bscTokens.cake.address)
+    const _token = chainId === ChainId.BSC_TESTNET ? ethTokensGoerli.bull : ethTokens.bull
+    const contract = getBep20Contract(_token.address)
     const totalLocked = await contract.balanceOf(potteryVaultAddress)
 
     return {

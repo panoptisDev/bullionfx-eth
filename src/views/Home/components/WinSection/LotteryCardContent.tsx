@@ -3,7 +3,7 @@ import { Flex, Text, Skeleton, Button, ArrowForwardIcon } from '@pancakeswap/uik
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import { useTranslation } from '@pancakeswap/localization'
 import useIntersectionObserver from 'hooks/useIntersectionObserver'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import Balance from 'components/Balance'
 import styled from 'styled-components'
 import { fetchLottery, fetchCurrentLotteryId } from 'state/lottery/helpers'
@@ -25,7 +25,7 @@ const LotteryCardContent = () => {
   const { t } = useTranslation()
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const [loadData, setLoadData] = useState(false)
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
   const { data: currentLotteryId } = useSWRImmutable(loadData ? ['currentLotteryId'] : null, fetchCurrentLotteryId, {
     refreshInterval: SLOW_INTERVAL,
   })

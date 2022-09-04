@@ -14,18 +14,18 @@ const ClaimPointsCallout: React.FC<React.PropsWithChildren<{ onSuccess?: () => v
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { profile, refresh: refreshProfile } = useProfile()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
 
   useEffect(() => {
     const fetchIfoClaims = async () => {
-      const ifoData = await getClaimableIfoData(account)
+      const ifoData = await getClaimableIfoData(account, chainId)
       setClaimableAchievement(ifoData)
     }
 
     if (account) {
       fetchIfoClaims()
     }
-  }, [account, dispatch, setClaimableAchievement])
+  }, [account, dispatch, setClaimableAchievement, chainId])
 
   const handleCollectSuccess = (achievement: Achievement) => {
     refreshProfile()

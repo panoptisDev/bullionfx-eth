@@ -9,12 +9,12 @@ const POLL_TIME_IN_SECONDS = 10
 
 const usePollPredictions = () => {
   const dispatch = useLocalDispatch()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const status = useGetPredictionsStatus()
 
   useSWR(
     status !== PredictionStatus.INITIAL ? ['predictions', account] : null,
-    () => dispatch(fetchPredictionData(account)),
+    () => dispatch(fetchPredictionData({ account, chainId })),
     {
       refreshInterval: POLL_TIME_IN_SECONDS * 1000,
       refreshWhenHidden: true,

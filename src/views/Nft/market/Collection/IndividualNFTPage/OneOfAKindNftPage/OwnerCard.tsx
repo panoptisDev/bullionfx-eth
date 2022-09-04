@@ -3,7 +3,7 @@ import { Flex, Card, Grid, SellIcon, Text, useModal, Box, BinanceIcon, Skeleton,
 import { useTranslation } from '@pancakeswap/localization'
 import useTheme from 'hooks/useTheme'
 import { NftToken } from 'state/nftMarket/types'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 import { formatNumber } from 'utils/formatBalance'
 import { multiplyPriceByAmount } from 'utils/prices'
 import useNftOwner from 'views/Nft/market/hooks/useNftOwner'
@@ -43,7 +43,7 @@ const OwnerCard: React.FC<React.PropsWithChildren<OwnerCardProps>> = ({
 }) => {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
 
   const { owner, isLoadingOwner } = useNftOwner(nft, isOwnNft)
 

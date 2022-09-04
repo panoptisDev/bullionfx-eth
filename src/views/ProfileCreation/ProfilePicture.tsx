@@ -30,7 +30,7 @@ const NftWrapper = styled.div`
 `
 
 const ProfilePicture: React.FC = () => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const [isApproved, setIsApproved] = useState(false)
   const [userProfileCreationNfts, setUserProfileCreationNfts] = useState(null)
   const { selectedNft, actions } = useContext(ProfileCreationContext)
@@ -57,7 +57,7 @@ const ProfilePicture: React.FC = () => {
               params: [nftRole, collectionAddress],
             }
           })
-          const collectionRolesRaw = await multicall(profileABI, collectionsNftRoleCalls)
+          const collectionRolesRaw = await multicall(profileABI, collectionsNftRoleCalls, chainId)
           const collectionRoles = collectionRolesRaw.flat()
           setUserProfileCreationNfts(
             nfts.filter((nft) => collectionRoles[nftsByCollection.indexOf(nft.collectionAddress)]),
@@ -70,7 +70,7 @@ const ProfilePicture: React.FC = () => {
     if (!isUserNftLoading) {
       fetchUserPancakeCollectibles()
     }
-  }, [nfts, profileContract, isUserNftLoading])
+  }, [nfts, profileContract, isUserNftLoading, chainId])
 
   const { t } = useTranslation()
   const { toastSuccess } = useToast()

@@ -2,14 +2,14 @@ import BigNumber from 'bignumber.js'
 import ifoPoolAbi from 'config/abi/ifoPool.json'
 import { multicallv2 } from 'utils/multicall'
 
-const fetchIfoPoolUser = async (account: string, ifoPoolAddress: string) => {
+const fetchIfoPoolUser = async (account: string, ifoPoolAddress: string, chainId) => {
   try {
     const calls = ['userInfo', 'getUserCredit'].map((method) => ({
       address: ifoPoolAddress,
       name: method,
       params: [account],
     }))
-    const [userContractResponse, creditResponse] = await multicallv2(ifoPoolAbi, calls)
+    const [userContractResponse, creditResponse] = await multicallv2(ifoPoolAbi, calls, { chainId })
 
     return {
       isLoading: false,

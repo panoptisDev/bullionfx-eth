@@ -2,7 +2,7 @@ import { useState, useCallback, Dispatch, SetStateAction } from 'react'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
 import { useAppDispatch } from 'state'
-import { useBUSDCakeAmount } from 'hooks/useBUSDPrice'
+import { useUSDCBullAmount } from 'hooks/useUSDCPrice'
 import { useVaultPoolContract } from 'hooks/useContract'
 import BigNumber from 'bignumber.js'
 import { getDecimalAmount } from 'utils/formatBalance'
@@ -45,7 +45,7 @@ export default function useLockedPool(hookArgs: HookArgs): HookReturn {
   const { t } = useTranslation()
   const { toastSuccess } = useToast()
   const [duration, setDuration] = useState(ONE_WEEK_DEFAULT)
-  const usdValueStaked = useBUSDCakeAmount(lockedAmount.toNumber())
+  const usdValueStaked = useUSDCBullAmount(lockedAmount.toNumber())
 
   const handleDeposit = useCallback(
     async (convertedStakeAmount: BigNumber, lockDuration: number) => {

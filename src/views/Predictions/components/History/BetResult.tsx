@@ -9,7 +9,7 @@ import { Bet, BetPosition } from 'state/types'
 import { fetchLedgerData, markAsCollected } from 'state/predictions'
 import { Result } from 'state/predictions/helpers'
 import { useGetIsClaimable } from 'state/predictions/hooks'
-import useBUSDPrice from 'hooks/useBUSDPrice'
+import useBUSDPrice from 'hooks/useUSDCPrice'
 import { getBlockExploreLink } from 'utils'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { useConfig } from 'views/Predictions/context/ConfigProvider'
@@ -39,7 +39,7 @@ const Divider = styled.hr`
 const BetResult: React.FC<React.PropsWithChildren<BetResultProps>> = ({ bet, result }) => {
   const { t } = useTranslation()
   const dispatch = useLocalDispatch()
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { isRefundable } = useIsRefundable(bet.round.epoch)
   const canClaim = useGetIsClaimable(bet.round.epoch)
   const { token } = useConfig()
@@ -114,7 +114,7 @@ const BetResult: React.FC<React.PropsWithChildren<BetResultProps>> = ({ bet, res
   const handleSuccess = async () => {
     // We have to mark the bet as claimed immediately because it does not update fast enough
     dispatch(markAsCollected({ [bet.round.epoch]: true }))
-    dispatch(fetchLedgerData({ account, epochs: [bet.round.epoch] }))
+    dispatch(fetchLedgerData({ account, epochs: [bet.round.epoch], chainId }))
   }
 
   return (

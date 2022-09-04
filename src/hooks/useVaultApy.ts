@@ -11,7 +11,6 @@ import { BIG_ZERO } from 'utils/bigNumber'
 import { BOOST_WEIGHT, DURATION_FACTOR, MAX_LOCK_DURATION } from 'config/constants/pools'
 import { multicallv2 } from '../utils/multicall'
 
-const masterChefAddress = getMasterChefAddress()
 
 // default
 const DEFAULT_PERFORMANCE_FEE_DECIMALS = 2
@@ -41,12 +40,13 @@ const getLockedApy = (flexibleApy: string, boostFactor: FixedNumber) =>
 
 const cakePoolPID = 0
 
-export function useVaultApy({ duration = MAX_LOCK_DURATION }: { duration?: number } = {}) {
+export function useVaultApy(chainId, { duration = MAX_LOCK_DURATION }: { duration?: number } = {}) {
   const {
     totalShares = BIG_ZERO,
     pricePerFullShare = BIG_ZERO,
     fees: { performanceFeeAsDecimal } = { performanceFeeAsDecimal: DEFAULT_PERFORMANCE_FEE_DECIMALS },
   } = useCakeVault()
+  const masterChefAddress = getMasterChefAddress(chainId)
 
   const totalSharesAsEtherBN = useMemo(() => FixedNumber.from(totalShares.toString()), [totalShares])
   const pricePerFullShareAsEtherBN = useMemo(() => FixedNumber.from(pricePerFullShare.toString()), [pricePerFullShare])
@@ -55,7 +55,7 @@ export function useVaultApy({ duration = MAX_LOCK_DURATION }: { duration?: numbe
     const calls = [
       {
         address: masterChefAddress,
-        name: 'cakePerBlock',
+        name: 'bullPerBlock',
         params: [false],
       },
       {
@@ -69,7 +69,7 @@ export function useVaultApy({ duration = MAX_LOCK_DURATION }: { duration?: numbe
       },
     ]
 
-    const [[specialFarmsPerBlock], cakePoolInfo, [totalSpecialAllocPoint]] = await multicallv2(masterChefAbi, calls)
+    const [[specialFarmsPerBlock], cakePoolInfo, [totalSpecialAllocPoint]] = await multicallv2(masterChefAbi, calls, { chainId })
 
     const cakePoolSharesInSpecialFarms = FixedNumber.from(cakePoolInfo.allocPoint).divUnsafe(
       FixedNumber.from(totalSpecialAllocPoint),

@@ -9,6 +9,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { distanceToNowStrict } from 'utils/timeHelper'
 import { DeserializedPublicData, DeserializedPotteryUserData } from 'state/types'
 import Balance from 'components/Balance'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const Container = styled(Flex)`
   flex-direction: column;
@@ -24,7 +25,8 @@ interface CardFooterProps {
 
 const CardFooter: React.FC<React.PropsWithChildren<CardFooterProps>> = ({ account, publicData, userData }) => {
   const { t } = useTranslation()
-  const { getBoostFactor } = useVaultApy()
+  const { chainId } = useActiveWeb3React()
+  const { getBoostFactor } = useVaultApy(chainId)
 
   const boostFactor = useMemo(() => getBoostFactor(weeksToSeconds(10)), [getBoostFactor])
   const boostFactorDisplay = useMemo(() => `X${Number(boostFactor).toFixed(2)}`, [boostFactor])

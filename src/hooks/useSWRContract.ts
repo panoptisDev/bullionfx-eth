@@ -87,11 +87,11 @@ const serializesContractKey = <T extends Contract = Contract>(
   const serializedKeys =
     key && contract && methodName
       ? {
-          address: contract.address,
-          interfaceFormat: contract.interface.format(FormatTypes.full) as string[],
-          methodName,
-          callData: contract.interface.encodeFunctionData(methodName, params),
-        }
+        address: contract.address,
+        interfaceFormat: contract.interface.format(FormatTypes.full) as string[],
+        methodName,
+        callData: contract.interface.encodeFunctionData(methodName, params),
+      }
       : null
   return serializedKeys
 }
@@ -134,8 +134,8 @@ export const immutableMiddleware: Middleware = (useSWRNext) => (key, fetcher, co
 }
 
 export function useSWRMulticall<Data>(abi: any[], calls: Call[], options?: MulticallOptions & SWRConfiguration) {
-  const { requireSuccess = true, ...config } = options || {}
-  return useSWR<Data>(calls, () => multicallv2(abi, calls, { requireSuccess }), {
+  const { requireSuccess = true, chainId, ...config } = options || {}
+  return useSWR<Data>(calls, () => multicallv2(abi, calls, { requireSuccess, chainId }), {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     ...config,
@@ -224,9 +224,9 @@ export const loggerMiddleware: Middleware = (useSWRNext) => {
     // Add logger to the original fetcher.
     const extendedFetcher = fetcher
       ? (...args: unknown[]) => {
-          console.debug('SWR Request:', key)
-          return fetcher(...args)
-        }
+        console.debug('SWR Request:', key)
+        return fetcher(...args)
+      }
       : null
 
     // Execute the hook with the new fetcher.

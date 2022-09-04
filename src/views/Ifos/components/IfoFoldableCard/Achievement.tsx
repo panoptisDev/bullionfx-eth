@@ -12,7 +12,7 @@ import {
   Link,
   TelegramIcon,
 } from '@pancakeswap/uikit'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 import { useTranslation } from '@pancakeswap/localization'
 import { PublicIfoData } from 'views/Ifos/types'
 import { Ifo } from 'config/constants/types'
@@ -74,7 +74,7 @@ const Container = styled(Flex)`
   }
 `
 
-const AchievementFlex = styled(Flex)<{ isFinished: boolean }>`
+const AchievementFlex = styled(Flex) <{ isFinished: boolean }>`
   ${({ isFinished }) => (isFinished ? 'filter: grayscale(100%)' : '')};
   text-align: left;
 `
@@ -116,7 +116,7 @@ const IfoAchievement: React.FC<React.PropsWithChildren<Props>> = ({ ifo, publicI
             <Text color="textSubtle" fontSize="12px">
               {t('Commit ~%amount% %symbol% in total to earn!', {
                 amount: minLpForAchievement,
-                symbol: ifo.currency === bscTokens.cake ? 'CAKE' : 'LP',
+                symbol: ifo.currency === ethTokens.bull ? 'BULL' : 'LP',
               })}
             </Text>
           ) : (

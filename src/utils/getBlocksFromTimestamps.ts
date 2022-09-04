@@ -2,7 +2,7 @@ import orderBy from 'lodash/orderBy'
 import { gql } from 'graphql-request'
 import { Block } from '../state/info/types'
 import { multiQuery } from '../views/Info/utils/infoQueryHelpers'
-import { BLOCKS_CLIENT, BLOCKS_CLIENT_TESTNET } from '../config/constants/endpoints'
+import { BLOCKS_CLIENT, BLOCKS_CLIENT_GOERLI } from '../config/constants/endpoints'
 import { ChainId } from '../../packages/swap-sdk/src/constants'
 
 const getBlockSubqueries = (timestamps: number[]) =>
@@ -33,7 +33,7 @@ export const getBlocksFromTimestamps = async (
     return []
   }
 
-  const blocksClient = chainId === ChainId.BSC_TESTNET ? BLOCKS_CLIENT_TESTNET : BLOCKS_CLIENT
+  const blocksClient = chainId === ChainId.BSC_TESTNET ? BLOCKS_CLIENT_GOERLI : BLOCKS_CLIENT
 
   const fetchedData: any = await multiQuery(
     blocksQueryConstructor,

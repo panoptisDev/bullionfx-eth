@@ -51,9 +51,6 @@ export interface TagInfo extends TagDetails {
  * An empty result, useful as a default.
  */
 export const EMPTY_LIST: TokenAddressMap = {
-  [ChainId.ETHEREUM]: {},
-  [ChainId.RINKEBY]: {},
-  [ChainId.GOERLI]: {},
   [ChainId.BSC]: {},
   [ChainId.BSC_TESTNET]: {},
 }
@@ -62,7 +59,7 @@ export enum GAS_PRICE {
   default = '5',
   fast = '6',
   instant = '7',
-  testnet = '10',
+  testnet = '2.5',
 }
 
 export const GAS_PRICE_GWEI = {
@@ -110,7 +107,7 @@ export interface DeserializedFarmUserData {
 
 export interface SerializedFarm extends SerializedFarmConfig {
   tokenPriceBusd?: string
-  quoteTokenPriceBusd?: string
+  quoteTokenPriceUsdc?: string
   tokenAmountTotal?: SerializedBigNumber
   quoteTokenAmountTotal?: SerializedBigNumber
   lpTotalInQuoteToken?: SerializedBigNumber
@@ -123,7 +120,7 @@ export interface SerializedFarm extends SerializedFarmConfig {
 
 export interface DeserializedFarm extends DeserializedFarmConfig {
   tokenPriceBusd?: string
-  quoteTokenPriceBusd?: string
+  quoteTokenPriceUsdc?: string
   tokenAmountTotal?: BigNumber
   quoteTokenAmountTotal?: BigNumber
   lpTotalInQuoteToken?: BigNumber
@@ -136,8 +133,8 @@ export interface DeserializedFarm extends DeserializedFarmConfig {
 
 export enum VaultKey {
   CakeVaultV1 = 'cakeVaultV1',
-  CakeVault = 'cakeVault',
-  CakeFlexibleSideVault = 'cakeFlexibleSideVault',
+  CakeVault = 'bullVault',
+  CakeFlexibleSideVault = 'bullFlexibleSideVault',
   IfoPool = 'ifoPool',
 }
 
@@ -310,8 +307,8 @@ export interface PublicIfoData {
 export interface PoolsState {
   data: SerializedPool[]
   ifo: IfoState
-  cakeVault: SerializedLockedCakeVault
-  cakeFlexibleSideVault: SerializedCakeVault
+  bullVault: SerializedLockedCakeVault
+  bullFlexibleSideVault: SerializedCakeVault
   userDataLoaded: boolean
   chainId: number
 }

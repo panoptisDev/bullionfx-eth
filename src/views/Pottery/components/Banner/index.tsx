@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useMemo } from 'react'
 import { Flex, Box, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import StakeToWinButton from 'views/Pottery/components/Banner/StakeToWinButton'
 import { BannerTimer } from 'views/Pottery/components/Timer'
 import { OutlineText, DarkTextStyle } from 'views/Pottery/components/TextStyle'
@@ -12,6 +12,7 @@ import { useVaultApy } from 'hooks/useVaultApy'
 import { weeksToSeconds } from 'views/Pools/components/utils/formatSecondsToWeeks'
 import Balance from 'components/Balance'
 import { usePotteryData } from 'state/pottery/hook'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const PotteryBanner = styled(Flex)`
   position: relative;
@@ -70,9 +71,10 @@ interface BannerProps {
 
 const Banner: React.FC<React.PropsWithChildren<BannerProps>> = ({ handleScroll }) => {
   const { t } = useTranslation()
-  const cakePriceBusd = usePriceCakeBusd()
+  const { chainId } = useActiveWeb3React()
+  const cakePriceBusd = usePriceBullUsdc()
   const { publicData } = usePotteryData()
-  const { getLockedApy } = useVaultApy()
+  const { getLockedApy } = useVaultApy(chainId)
 
   const prizeInBusd = publicData.totalPrize.times(cakePriceBusd)
   const prizeTotal = getBalanceNumber(prizeInBusd)

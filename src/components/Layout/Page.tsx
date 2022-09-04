@@ -3,7 +3,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { DEFAULT_META, getCustomMeta } from 'config/constants/meta'
-import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
+import { useBullUsdcPrice } from 'hooks/useUSDCPrice'
 import Container from './Container'
 
 const StyledPage = styled(Container)`
@@ -28,7 +28,7 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
     currentLanguage: { locale },
   } = useTranslation()
   const { pathname } = useRouter()
-  const cakePriceUsd = useCakeBusdPrice()
+  const cakePriceUsd = useBullUsdcPrice()
   const cakePriceUsdDisplay = cakePriceUsd ? `$${cakePriceUsd.toFixed(3)}` : '...'
 
   const pageMeta = getCustomMeta(pathname, t, locale) || {}

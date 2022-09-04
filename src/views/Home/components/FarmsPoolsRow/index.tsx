@@ -25,13 +25,13 @@ const Grid = styled.div`
   }
 `
 
-const FarmsPoolsRow = () => {
+const FarmsPoolsRow = (chainId) => {
   const [showFarms, setShowFarms] = useState(false)
   const { t } = useTranslation()
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const { topFarms } = useGetTopFarmsByApr(isIntersecting)
   const { topPools } = useGetTopPoolsByApr(isIntersecting)
-  const { lockedApy } = useVaultApy()
+  const { lockedApy } = useVaultApy(chainId)
 
   const timer = useRef<ReturnType<typeof setTimeout>>(null)
   const isLoaded = topFarms[0] && topPools[0]

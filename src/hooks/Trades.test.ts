@@ -1,5 +1,5 @@
 // import { renderHook } from '@testing-library/react-hooks'
-// import { bscTokens } from 'config/constants/tokens'
+// import { ethTokens } from 'config/constants/tokens'
 // import { createReduxWrapper } from 'testUtils'
 // import { Pair, TokenAmount, CurrencyAmount, Trade } from '@pancakeswap/sdk'
 // import * as UsePairs from './usePairs'
@@ -14,49 +14,49 @@ describe('Trade', () => {
   //     const mockUsePairs = jest.spyOn(UsePairs, 'usePairs')
   //     it('should filter only exist Pair', () => {
   //       mockUsePairs.mockReturnValue([
-  //         [PairState.EXISTS, new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1'))],
-  //         [PairState.INVALID, new Pair(new TokenAmount(bscTokens.busd, '1'), new TokenAmount(bscTokens.cake, '1'))],
-  //         [PairState.LOADING, new Pair(new TokenAmount(bscTokens.busd, '1'), new TokenAmount(bscTokens.wbnb, '1'))],
+  //         [PairState.EXISTS, new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1'))],
+  //         [PairState.INVALID, new Pair(new TokenAmount(ethTokens.busd, '1'), new TokenAmount(ethTokens.bull, '1'))],
+  //         [PairState.LOADING, new Pair(new TokenAmount(ethTokens.busd, '1'), new TokenAmount(ethTokens.weth, '1'))],
   //         [PairState.EXISTS, null],
   //       ])
   //       const { result } = renderHook(() => {
-  //         const pairs = Trades.useAllCommonPairs(bscTokens.wbnb, bscTokens.cake)
+  //         const pairs = Trades.useAllCommonPairs(ethTokens.weth, ethTokens.bull)
   //         return {
   //           pairs,
   //         }
   //       })
   //       expect(result.current.pairs).toStrictEqual([
-  //         new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1')),
+  //         new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1')),
   //       ])
   //     })
   //     it('should filter out duplicated Pair', () => {
   //       mockUsePairs.mockReturnValue([
-  //         [PairState.EXISTS, new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1'))],
-  //         [PairState.EXISTS, new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1'))],
-  //         [PairState.EXISTS, new Pair(new TokenAmount(bscTokens.cake, '1'), new TokenAmount(bscTokens.wbnb, '1'))],
+  //         [PairState.EXISTS, new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1'))],
+  //         [PairState.EXISTS, new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1'))],
+  //         [PairState.EXISTS, new Pair(new TokenAmount(ethTokens.bull, '1'), new TokenAmount(ethTokens.weth, '1'))],
   //         [PairState.EXISTS, null],
   //       ])
   //       const { result } = renderHook(() => {
-  //         const pairs = Trades.useAllCommonPairs(bscTokens.wbnb, bscTokens.cake)
+  //         const pairs = Trades.useAllCommonPairs(ethTokens.weth, ethTokens.bull)
   //         return {
   //           pairs,
   //         }
   //       })
   //       expect(result.current.pairs).toStrictEqual([
-  //         new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1')),
+  //         new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1')),
   //       ])
   //     })
   //     it('should get all pair combinations wbnb, cake', () => {
   //       mockUsePairs.mockClear()
   //       renderHook(() => {
-  //         Trades.useAllCommonPairs(bscTokens.wbnb, bscTokens.cake)
+  //         Trades.useAllCommonPairs(ethTokens.weth, ethTokens.bull)
   //       })
   //       expect(mockUsePairs).toMatchSnapshot()
   //     })
   //     it('should get all pair combinations, wbnb, wbnb', () => {
   //       mockUsePairs.mockClear()
   //       renderHook(() => {
-  //         Trades.useAllCommonPairs(bscTokens.wbnb, bscTokens.wbnb)
+  //         Trades.useAllCommonPairs(ethTokens.weth, ethTokens.weth)
   //       })
   //       expect(mockUsePairs).toMatchSnapshot()
   //     })
@@ -66,9 +66,9 @@ describe('Trade', () => {
   //     const mockTradeExactIn = jest.spyOn(Trade, 'bestTradeExactIn')
   //     const mockTradeExactOut = jest.spyOn(Trade, 'bestTradeExactOut')
   //     it('should call with maxHops 1 with singleHopOnly', () => {
-  //       const allowPairs = [new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1'))]
+  //       const allowPairs = [new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1'))]
   //       const argA = CurrencyAmount.ether('1000000')
-  //       const argB = bscTokens.cake
+  //       const argB = ethTokens.bull
   //       renderHook(
   //         () => {
   //           mockUseAllCommonPairs.mockReturnValue(allowPairs)
@@ -93,9 +93,9 @@ describe('Trade', () => {
   //       mockTradeExactOut.mockClear()
   //     })
   //     it('should call with 3 times without singleHopOnly', () => {
-  //       const allowPairs = [new Pair(new TokenAmount(bscTokens.wbnb, '1'), new TokenAmount(bscTokens.cake, '1'))]
+  //       const allowPairs = [new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1'))]
   //       const argA = CurrencyAmount.ether('1000000')
-  //       const argB = bscTokens.cake
+  //       const argB = ethTokens.bull
   //       renderHook(
   //         () => {
   //           mockUseAllCommonPairs.mockReturnValue(allowPairs)
@@ -119,3 +119,5 @@ describe('Trade', () => {
   //     })
   //   })
 })
+
+export { }

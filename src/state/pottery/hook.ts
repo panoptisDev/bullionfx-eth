@@ -18,9 +18,9 @@ export const usePotteryFetch = () => {
     if (potteryVaultAddress) {
       batch(() => {
         dispatch(fetchCakeVaultPublicData({ chainId }))
-        dispatch(fetchPublicPotteryDataAsync())
+        dispatch(fetchPublicPotteryDataAsync({ chainId }))
         if (account) {
-          dispatch(fetchPotteryUserDataAsync(account))
+          dispatch(fetchPotteryUserDataAsync({ account, chainId }))
           dispatch(fetchCakeVaultUserData({ account, chainId }))
         }
       })

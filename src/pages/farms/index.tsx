@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { FarmsPageLayout, FarmsContext } from 'views/Farms'
 import FarmCard from 'views/Farms/components/FarmCard/FarmCard'
 import { getDisplayApr } from 'views/Farms/components/getDisplayApr'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import ProxyFarmContainer, {
   YieldBoosterStateContext,
@@ -10,7 +10,7 @@ import ProxyFarmContainer, {
 
 const ProxyFarmCardContainer = ({ farm }) => {
   const { account } = useWeb3React()
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceBullUsdc()
 
   const { proxyFarm, shouldUseProxyFarm } = useContext(YieldBoosterStateContext)
   const finalFarm = shouldUseProxyFarm ? proxyFarm : farm
@@ -30,7 +30,7 @@ const ProxyFarmCardContainer = ({ farm }) => {
 const FarmsPage = () => {
   const { account } = useWeb3React()
   const { chosenFarmsMemoized } = useContext(FarmsContext)
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceBullUsdc()
   return (
     <>
       {chosenFarmsMemoized.map((farm) =>

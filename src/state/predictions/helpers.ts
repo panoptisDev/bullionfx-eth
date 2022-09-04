@@ -140,13 +140,13 @@ export const getBetHistory = async (
   return response.bets
 }
 
-export const getLedgerData = async (account: string, epochs: number[], address: string) => {
+export const getLedgerData = async (account: string, epochs: number[], address: string, chainId: number) => {
   const ledgerCalls = epochs.map((epoch) => ({
     address,
     name: 'ledger',
     params: [epoch, account],
   }))
-  const response = await multicallv2<PredictionsLedgerResponse[]>(predictionsAbi, ledgerCalls)
+  const response = await multicallv2<PredictionsLedgerResponse[]>(predictionsAbi, ledgerCalls, { chainId })
   return response
 }
 
@@ -223,13 +223,14 @@ export const getClaimStatuses = async (
   account: string,
   epochs: number[],
   address: string,
+  chainId: number
 ): Promise<PredictionsState['claimableStatuses']> => {
   const claimableCalls = epochs.map((epoch) => ({
     address,
     name: 'claimable',
     params: [epoch, account],
   }))
-  const claimableResponses = await multicallv2<[PredictionsClaimableResponse][]>(predictionsAbi, claimableCalls)
+  const claimableResponses = await multicallv2<[PredictionsClaimableResponse][]>(predictionsAbi, claimableCalls, { chainId })
 
   return claimableResponses.reduce((accum, claimableResponse, index) => {
     const epoch = epochs[index]
@@ -243,12 +244,12 @@ export const getClaimStatuses = async (
 }
 
 export type MarketData = Pick<PredictionsState, 'status' | 'currentEpoch' | 'intervalSeconds' | 'minBetAmount'>
-export const getPredictionData = async (address: string): Promise<MarketData> => {
+export const getPredictionData = async (address: string, chainId: number): Promise<MarketData> => {
   const staticCalls = ['currentEpoch', 'intervalSeconds', 'minBetAmount', 'paused'].map((method) => ({
     address,
     name: method,
   }))
-  const [[currentEpoch], [intervalSeconds], [minBetAmount], [paused]] = await multicallv2(predictionsAbi, staticCalls)
+  const [[currentEpoch], [intervalSeconds], [minBetAmount], [paused]] = await multicallv2(predictionsAbi, staticCalls, { chainId })
 
   return {
     status: paused ? PredictionStatus.PAUSED : PredictionStatus.LIVE,
@@ -258,13 +259,13 @@ export const getPredictionData = async (address: string): Promise<MarketData> =>
   }
 }
 
-export const getRoundsData = async (epochs: number[], address: string): Promise<PredictionsRoundsResponse[]> => {
+export const getRoundsData = async (epochs: number[], address: string, chainId: number): Promise<PredictionsRoundsResponse[]> => {
   const calls = epochs.map((epoch) => ({
     address,
     name: 'rounds',
     params: [epoch],
   }))
-  const response = await multicallv2<PredictionsRoundsResponse[]>(predictionsAbi, calls)
+  const response = await multicallv2<PredictionsRoundsResponse[]>(predictionsAbi, calls, { chainId })
   return response
 }
 

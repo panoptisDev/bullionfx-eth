@@ -11,7 +11,7 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import { vaultPoolConfig } from 'config/constants/pools'
 import { useSigner } from 'wagmi'
 import ifoPoolAbi from 'config/abi/ifoPool.json'
-import cakeVaultAbi from 'config/abi/cakeVaultV2.json'
+import bullVaultAbi from 'config/abi/bullVaultV2.json'
 import { getContract } from 'utils/contractHelpers'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { useVaultPoolByKeyV1, ifoPoolV1Contract, cakeVaultAddress } from 'views/Migration/hook/V1/Pool/useFetchIfoPool'
@@ -37,7 +37,7 @@ const UnstakeButton: React.FC<React.PropsWithChildren<UnstakeButtonProps>> = ({ 
 
   const vaultPoolContract = useMemo(() => {
     return vaultKey === VaultKey.CakeVaultV1
-      ? getContract(cakeVaultAbi, cakeVaultAddress, chainId, signer)
+      ? getContract(bullVaultAbi, cakeVaultAddress, chainId, signer)
       : getContract(ifoPoolAbi, ifoPoolV1Contract, chainId, signer)
   }, [signer, vaultKey, chainId])
 

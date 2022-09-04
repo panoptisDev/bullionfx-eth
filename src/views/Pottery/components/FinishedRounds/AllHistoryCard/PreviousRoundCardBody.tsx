@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import { useTranslation } from '@pancakeswap/localization'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceBullUsdc } from 'state/farms/hooks'
 import { PotteryRoundInfo } from 'state/types'
 import Divider from 'components/Divider'
 import { getDrawnDate } from 'views/Lottery/helpers'
@@ -59,7 +59,7 @@ const PreviousRoundCardBody: React.FC<React.PropsWithChildren<PreviousRoundCardB
     currentLanguage: { locale },
   } = useTranslation()
   const { isFetched, roundId, prizePot, totalPlayers, txid, winners, lockDate } = finishedRoundInfo
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceBullUsdc()
 
   const prizeAsBn = new BigNumber(prizePot)
   const prize = getBalanceNumber(prizeAsBn)

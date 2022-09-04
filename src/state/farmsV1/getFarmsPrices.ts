@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { BIG_ONE, BIG_ZERO } from 'utils/bigNumber'
 import { filterFarmsByQuoteToken } from 'utils/farmsPriceHelpers'
 import { SerializedFarm } from 'state/types'
-import { bscTokens } from 'config/constants/tokens'
+import { ethTokens } from 'config/constants/tokens'
 
 const getFarmFromTokenSymbol = (
   farms: SerializedFarm[],
@@ -17,17 +17,16 @@ const getFarmFromTokenSymbol = (
 const getFarmBaseTokenPrice = (
   farm: SerializedFarm,
   quoteTokenFarm: SerializedFarm,
-  bnbPriceBusd: BigNumber,
 ): BigNumber => {
   const hasTokenPriceVsQuote = Boolean(farm.tokenPriceVsQuote)
 
-  if (farm.quoteToken.symbol === bscTokens.busd.symbol) {
+  if (farm.quoteToken.symbol === ethTokens.usdc.symbol) {
     return hasTokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : BIG_ZERO
   }
 
-  if (farm.quoteToken.symbol === bscTokens.wbnb.symbol) {
-    return hasTokenPriceVsQuote ? bnbPriceBusd.times(farm.tokenPriceVsQuote) : BIG_ZERO
-  }
+  // if (farm.quoteToken.symbol === ethTokens.weth.symbol) {
+  //   return hasTokenPriceVsQuote ? bnbPriceBusd.times(farm.tokenPriceVsQuote) : BIG_ZERO
+  // }
 
   // We can only calculate profits without a quoteTokenFarm for BUSD/BNB farms
   if (!quoteTokenFarm) {
@@ -39,14 +38,14 @@ const getFarmBaseTokenPrice = (
   // If the farm's quote token isn't BUSD or WBNB, we then use the quote token, of the original farm's quote token
   // i.e. for farm PNT - pBTC we use the pBTC farm's quote token - BNB, (pBTC - BNB)
   // from the BNB - pBTC price, we can calculate the PNT - BUSD price
-  if (quoteTokenFarm.quoteToken.symbol === bscTokens.wbnb.symbol) {
-    const quoteTokenInBusd = bnbPriceBusd.times(quoteTokenFarm.tokenPriceVsQuote)
-    return hasTokenPriceVsQuote && quoteTokenInBusd
-      ? new BigNumber(farm.tokenPriceVsQuote).times(quoteTokenInBusd)
-      : BIG_ZERO
-  }
+  // if (quoteTokenFarm.quoteToken.symbol === ethTokens.weth.symbol) {
+  //   const quoteTokenInBusd = bnbPriceBusd.times(quoteTokenFarm.tokenPriceVsQuote)
+  //   return hasTokenPriceVsQuote && quoteTokenInBusd
+  //     ? new BigNumber(farm.tokenPriceVsQuote).times(quoteTokenInBusd)
+  //     : BIG_ZERO
+  // }
 
-  if (quoteTokenFarm.quoteToken.symbol === bscTokens.busd.symbol) {
+  if (quoteTokenFarm.quoteToken.symbol === ethTokens.usdc.symbol) {
     const quoteTokenInBusd = quoteTokenFarm.tokenPriceVsQuote
     return hasTokenPriceVsQuote && quoteTokenInBusd
       ? new BigNumber(farm.tokenPriceVsQuote).times(quoteTokenInBusd)
@@ -91,13 +90,13 @@ const getFarmsPrices = (farms: SerializedFarm[]) => {
 
   const farmsWithPrices = farms.map((farm) => {
     const quoteTokenFarm = getFarmFromTokenSymbol(farms, farm.quoteToken.symbol)
-    const tokenPriceBusd = getFarmBaseTokenPrice(farm, quoteTokenFarm, bnbPriceBusd)
-    const quoteTokenPriceBusd = getFarmQuoteTokenPrice(farm, quoteTokenFarm, bnbPriceBusd)
+    const tokenPriceBusd = getFarmBaseTokenPrice(farm, quoteTokenFarm)
+    const quoteTokenPriceUsdc = getFarmQuoteTokenPrice(farm, quoteTokenFarm, bnbPriceBusd)
 
     return {
       ...farm,
       tokenPriceBusd: tokenPriceBusd.toJSON(),
-      quoteTokenPriceBusd: quoteTokenPriceBusd.toJSON(),
+      quoteTokenPriceUsdc: quoteTokenPriceUsdc.toJSON(),
     }
   })
 

@@ -55,7 +55,7 @@ export const poolsWithVaultSelector = createSelector(
             ...cakePool,
             ...deserializedFlexibleSideCakeVault,
             vaultKey: VaultKey.CakeFlexibleSideVault,
-            userData: { ...cakePool.userData, ...deserializedFlexibleSideCakeVault.userData },
+            userData: { ...cakePool?.userData, ...deserializedFlexibleSideCakeVault.userData },
           },
         ]
         : []

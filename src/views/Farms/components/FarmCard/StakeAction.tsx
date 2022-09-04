@@ -7,7 +7,7 @@ import { ToastDescriptionWithTx } from 'components/Toast'
 import { useTranslation } from '@pancakeswap/localization'
 
 import { useRouter } from 'next/router'
-import { useLpTokenPrice, usePriceCakeBusd } from 'state/farms/hooks'
+import { useLpTokenPrice, usePriceBullUsdc } from 'state/farms/hooks'
 import { TransactionResponse } from '@ethersproject/providers'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
@@ -55,7 +55,7 @@ const StakeAction: React.FC<React.PropsWithChildren<FarmCardActionsProps>> = ({
 }) => {
   const { t } = useTranslation()
   const { tokenBalance, stakedBalance } = userData
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceBullUsdc()
   const router = useRouter()
   const lpPrice = useLpTokenPrice(lpSymbol)
   const { toastSuccess } = useToast()

@@ -34,8 +34,8 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
     earningTokenPrice,
     vaultKey === VaultKey.CakeVault
       ? (vaultData as DeserializedLockedCakeVault).userData.currentPerformanceFee
-          .plus((vaultData as DeserializedLockedCakeVault).userData.currentOverdueFee)
-          .plus((vaultData as DeserializedLockedCakeVault).userData.userBoostedShare)
+        .plus((vaultData as DeserializedLockedCakeVault).userData.currentOverdueFee)
+        .plus((vaultData as DeserializedLockedCakeVault).userData.userBoostedShare)
       : null,
   )
 
@@ -52,7 +52,7 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
 
   const actionTitle = (
     <Text fontSize="12px" bold color="secondary" as="span" textTransform="uppercase">
-      {t('Recent CAKE profit')}
+      {t('Recent BULL profit')}
     </Text>
   )
 

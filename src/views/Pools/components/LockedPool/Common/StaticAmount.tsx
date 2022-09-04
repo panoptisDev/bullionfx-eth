@@ -2,7 +2,9 @@ import { Text, Flex, Image, Box } from '@pancakeswap/uikit'
 import { BalanceWithLoading } from 'components/Balance'
 import Divider from 'components/Divider'
 import { useTranslation } from '@pancakeswap/localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { StaticAmountPropsType } from '../types'
+import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
 
 const StaticAmount: React.FC<React.PropsWithChildren<StaticAmountPropsType>> = ({
   stakingSymbol,
@@ -11,11 +13,13 @@ const StaticAmount: React.FC<React.PropsWithChildren<StaticAmountPropsType>> = (
   usdValueStaked,
 }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
+  const _url = chainId === ChainId.BSC_TESTNET ? `/images/tokens/testnet/${stakingAddress}.png` : `/images/tokens/${stakingAddress}.png`
 
   return (
     <>
       <Text color="textSubtle" textTransform="uppercase" bold fontSize="12px">
-        {t('Add CAKE to lock')}
+        {t('Add BULL to lock')}
       </Text>
       <Flex alignItems="center" justifyContent="space-between" mb="16px">
         <Box>
@@ -30,7 +34,7 @@ const StaticAmount: React.FC<React.PropsWithChildren<StaticAmountPropsType>> = (
           />
         </Box>
         <Flex alignItems="center" minWidth="70px">
-          <Image src={`/images/tokens/${stakingAddress}.png`} width={24} height={24} alt={stakingSymbol} />
+          <Image src={_url} width={24} height={24} alt={stakingSymbol} />
           <Text ml="4px" bold>
             {stakingSymbol}
           </Text>

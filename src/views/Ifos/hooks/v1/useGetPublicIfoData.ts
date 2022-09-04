@@ -36,13 +36,13 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
     },
   })
   const fetchIfoData = useCallback(
-    async (currentBlock: number) => {
+    async (currentBlock: number, chainId: number) => {
       const ifoCalls = ['startBlock', 'endBlock', 'raisingAmount', 'totalAmount'].map((method) => ({
         address,
         name: method,
       }))
 
-      const [startBlock, endBlock, raisingAmount, totalAmount] = await multicallv2(ifoV1Abi, ifoCalls)
+      const [startBlock, endBlock, raisingAmount, totalAmount] = await multicallv2(ifoV1Abi, ifoCalls, { chainId })
 
       const startBlockNum = startBlock ? startBlock[0].toNumber() : 0
       const endBlockNum = endBlock ? endBlock[0].toNumber() : 0

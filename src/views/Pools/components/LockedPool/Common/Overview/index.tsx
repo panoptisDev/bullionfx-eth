@@ -7,6 +7,7 @@ import { useVaultApy } from 'hooks/useVaultApy'
 import { useTranslation } from '@pancakeswap/localization'
 import _toNumber from 'lodash/toNumber'
 import { convertTimeToSeconds } from 'utils/timeHelper'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import formatSecondsToWeeks from '../../../utils/formatSecondsToWeeks'
 import TextRow from './TextRow'
 import BalanceRow from './BalanceRow'
@@ -28,7 +29,8 @@ const Overview: React.FC<React.PropsWithChildren<OverviewPropsType>> = ({
   showLockWarning,
   ceiling,
 }) => {
-  const { getLockedApy, getBoostFactor } = useVaultApy()
+  const { chainId } = useActiveWeb3React()
+  const { getLockedApy, getBoostFactor } = useVaultApy(chainId)
   const { t } = useTranslation()
 
   const lockedApy = useMemo(() => getLockedApy(duration), [getLockedApy, duration])
@@ -76,7 +78,7 @@ const Overview: React.FC<React.PropsWithChildren<OverviewPropsType>> = ({
         </Flex>
         <LightGreyCard>
           <BalanceRow title={t('Cake to be locked')} value={lockedAmount} newValue={newLockedAmount} decimals={2} />
-          <BalanceRow title="iCake" decimals={2} value={formattediCake} newValue={newFormattediCake} />
+          <BalanceRow title="IBull" decimals={2} value={formattediCake} newValue={newFormattediCake} />
           <BalanceRow
             title="apy"
             unit="%"

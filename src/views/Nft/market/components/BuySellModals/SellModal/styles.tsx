@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Modal, Box, Flex, Text, BinanceIcon, Input } from '@pancakeswap/uikit'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice } from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { SellingStage } from './types'
 
@@ -15,7 +15,7 @@ export const stagesWithBackButton = [
   SellingStage.CONFIRM_TRANSFER,
 ]
 
-export const StyledModal = styled(Modal)<{ stage: SellingStage }>`
+export const StyledModal = styled(Modal) <{ stage: SellingStage }>`
   width: 360px;
   & > div:last-child {
     padding: 0;
@@ -42,7 +42,7 @@ interface BnbAmountCellProps {
 }
 
 export const BnbAmountCell: React.FC<React.PropsWithChildren<BnbAmountCellProps>> = ({ bnbAmount }) => {
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
   if (!bnbAmount || bnbAmount === 0) {
     return (
       <Flex alignItems="center" justifyContent="flex-end">

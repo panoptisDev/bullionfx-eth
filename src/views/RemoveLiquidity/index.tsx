@@ -135,8 +135,8 @@ export default function RemoveLiquidity() {
     [Field.LIQUIDITY_PERCENT]: parsedAmounts[Field.LIQUIDITY_PERCENT].equalTo('0')
       ? '0'
       : parsedAmounts[Field.LIQUIDITY_PERCENT].lessThan(new Percent('1', '100'))
-      ? '<1'
-      : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
+        ? '<1'
+        : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
     [Field.LIQUIDITY]:
       independentField === Field.LIQUIDITY ? typedValue : parsedAmounts[Field.LIQUIDITY]?.toSignificant(6) ?? '',
     [Field.CURRENCY_A]:
@@ -175,7 +175,7 @@ export default function RemoveLiquidity() {
       { name: 'verifyingContract', type: 'address' },
     ]
     const domain = {
-      name: 'Pancake LPs',
+      name: 'Bull LPs',
       version: '1',
       chainId,
       verifyingContract: pair.liquidityToken.address,
@@ -443,9 +443,8 @@ export default function RemoveLiquidity() {
         .then((response: TransactionResponse) => {
           setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response.hash })
           addTransaction(response, {
-            summary: `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
-              currencyA?.symbol
-            } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`,
+            summary: `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${currencyA?.symbol
+              } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`,
             type: 'remove-liquidity',
           })
         })
@@ -483,7 +482,7 @@ export default function RemoveLiquidity() {
   const oneCurrencyIsNative = currencyA?.isNative || currencyB?.isNative
   const oneCurrencyIsWNative = Boolean(
     chainId &&
-      ((currencyA && WNATIVE[chainId]?.equals(currencyA)) || (currencyB && WNATIVE[chainId]?.equals(currencyB))),
+    ((currencyA && WNATIVE[chainId]?.equals(currencyA)) || (currencyB && WNATIVE[chainId]?.equals(currencyB))),
   )
 
   const handleSelectCurrencyA = useCallback(
@@ -673,17 +672,15 @@ export default function RemoveLiquidity() {
                     <RowBetween style={{ justifyContent: 'flex-end', fontSize: '14px' }}>
                       {oneCurrencyIsNative ? (
                         <StyledInternalLink
-                          href={`/remove/${currencyA?.isNative ? WNATIVE[chainId]?.address : currencyIdA}/${
-                            currencyB?.isNative ? WNATIVE[chainId]?.address : currencyIdB
-                          }`}
+                          href={`/remove/${currencyA?.isNative ? WNATIVE[chainId]?.address : currencyIdA}/${currencyB?.isNative ? WNATIVE[chainId]?.address : currencyIdB
+                            }`}
                         >
                           {t('Receive %currency%', { currency: WNATIVE[chainId]?.symbol })}
                         </StyledInternalLink>
                       ) : oneCurrencyIsWNative ? (
                         <StyledInternalLink
-                          href={`/remove/${
-                            currencyA && currencyA.equals(WNATIVE[chainId]) ? native?.symbol : currencyIdA
-                          }/${currencyB && currencyB.equals(WNATIVE[chainId]) ? native?.symbol : currencyIdB}`}
+                          href={`/remove/${currencyA && currencyA.equals(WNATIVE[chainId]) ? native?.symbol : currencyIdA
+                            }/${currencyB && currencyB.equals(WNATIVE[chainId]) ? native?.symbol : currencyIdB}`}
                         >
                           {t('Receive %currency%', { currency: native?.symbol })}
                         </StyledInternalLink>

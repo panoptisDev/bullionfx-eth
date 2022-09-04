@@ -24,7 +24,7 @@ import { REWARD_RATE } from 'state/predictions/config'
 import { fetchNodeHistory, markAsCollected } from 'state/predictions'
 import { Bet } from 'state/types'
 import { useTranslation } from '@pancakeswap/localization'
-import useBUSDPrice from 'hooks/useBUSDPrice'
+import useBUSDPrice from 'hooks/useUSDCPrice'
 import useToast from 'hooks/useToast'
 import { usePredictionsContract } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -93,7 +93,7 @@ const CollectRoundWinningsModal: React.FC<React.PropsWithChildren<CollectRoundWi
   token,
   isV1Claim,
 }) => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { t } = useTranslation()
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError, loading: isPendingTx } = useCatchTxError()
@@ -109,9 +109,9 @@ const CollectRoundWinningsModal: React.FC<React.PropsWithChildren<CollectRoundWi
   useEffect(() => {
     // Fetch history if they have not opened the history pane yet
     if (history.length === 0 && !isV1Claim) {
-      dispatch(fetchNodeHistory({ account }))
+      dispatch(fetchNodeHistory({ account, chainId }))
     }
-  }, [account, history, dispatch, isV1Claim])
+  }, [account, history, dispatch, isV1Claim, chainId])
 
   const handleClick = async () => {
     const receipt = await fetchWithCatchTxError(() => {

@@ -17,7 +17,7 @@ import styled from 'styled-components'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import { useTranslation } from '@pancakeswap/localization'
 import useTotalSupply from 'hooks/useTotalSupply'
-import useBUSDPrice from 'hooks/useBUSDPrice'
+import useBUSDPrice from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { BIG_INT_ZERO } from 'config/constants/exchange'
@@ -53,21 +53,21 @@ const useLPValues = (account, pair, currency0, currency1) => {
 
   const poolTokenPercentage =
     !!userPoolBalance &&
-    !!totalPoolTokens &&
-    JSBI.greaterThanOrEqual(totalPoolTokens.quotient, userPoolBalance.quotient)
+      !!totalPoolTokens &&
+      JSBI.greaterThanOrEqual(totalPoolTokens.quotient, userPoolBalance.quotient)
       ? new Percent(userPoolBalance.quotient, totalPoolTokens.quotient)
       : undefined
 
   const [token0Deposited, token1Deposited] =
     !!pair &&
-    !!totalPoolTokens &&
-    !!userPoolBalance &&
-    // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
-    JSBI.greaterThanOrEqual(totalPoolTokens.quotient, userPoolBalance.quotient)
+      !!totalPoolTokens &&
+      !!userPoolBalance &&
+      // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
+      JSBI.greaterThanOrEqual(totalPoolTokens.quotient, userPoolBalance.quotient)
       ? [
-          pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
-          pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
-        ]
+        pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
+        pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
+      ]
       : [undefined, undefined]
 
   const token0USDValue =

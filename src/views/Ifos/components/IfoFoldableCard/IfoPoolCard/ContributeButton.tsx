@@ -8,6 +8,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useToast from 'hooks/useToast'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import GetTokenModal from './GetTokenModal'
 import ContributeModal from './ContributeModal'
 
@@ -25,11 +26,12 @@ const ContributeButton: React.FC<React.PropsWithChildren<Props>> = ({ poolId, if
   const { t } = useTranslation()
   const { toastSuccess } = useToast()
   const currentBlock = useCurrentBlock()
+  const { chainId } = useActiveWeb3React()
   const { balance: userCurrencyBalance } = useTokenBalance(ifo.currency.address)
 
   // Refetch all the data, and display a message when fetching is done
   const handleContributeSuccess = async (amount: BigNumber, txHash: string) => {
-    await Promise.all([publicIfoData.fetchIfoData(currentBlock), walletIfoData.fetchIfoData()])
+    await Promise.all([publicIfoData.fetchIfoData(currentBlock, chainId), walletIfoData.fetchIfoData(chainId)])
     toastSuccess(
       t('Success!'),
       <ToastDescriptionWithTx txHash={txHash}>

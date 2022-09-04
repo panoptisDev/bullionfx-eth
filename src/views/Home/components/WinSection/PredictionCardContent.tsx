@@ -6,7 +6,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { formatLocalisedCompactNumber } from 'utils/formatBalance'
 import useIntersectionObserver from 'hooks/useIntersectionObserver'
 import { getTotalWon } from 'state/predictions/helpers'
-import { useBNBBusdPrice, useCakeBusdPrice } from 'hooks/useBUSDPrice'
+import { useETHUsdcPrice, useBullUsdcPrice } from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 import useSWR from 'swr'
 import { SLOW_INTERVAL } from 'config/constants'
@@ -19,7 +19,7 @@ const PredictionCardHeader: React.FC<React.PropsWithChildren<{ preText: string; 
   preText,
   bnbWon,
 }) => {
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
   const bnbWonInUsd = multiplyPriceByAmount(bnbBusdPrice, bnbWon)
 
   const localisedBnbUsdString = formatLocalisedCompactNumber(bnbWonInUsd)
@@ -36,8 +36,8 @@ const PredictionCardContent = () => {
   const { t } = useTranslation()
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const [loadData, setLoadData] = useState(false)
-  const bnbBusdPrice = useBNBBusdPrice()
-  const cakePriceBusd = useCakeBusdPrice()
+  const bnbBusdPrice = useETHUsdcPrice()
+  const cakePriceBusd = useBullUsdcPrice()
 
   const { data } = useSWR(loadData ? ['prediction', 'tokenWon'] : null, getTotalWon, {
     refreshInterval: SLOW_INTERVAL,

@@ -34,7 +34,7 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
     multiplier,
     isCommunity,
     auctionHostingStartSeconds,
-    quoteTokenPriceBusd,
+    quoteTokenPriceUsdc,
     tokenPriceBusd,
     boosted,
   } = farm
@@ -63,7 +63,7 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
     multiplier,
     isCommunity: isFarmCommunity,
     auctionHostingEndDate: auctionHostingEndDate?.toJSON(),
-    quoteTokenPriceBusd,
+    quoteTokenPriceUsdc,
     tokenPriceBusd,
     token: deserializeToken(farm.token),
     quoteToken: deserializeToken(farm.quoteToken),
@@ -77,8 +77,8 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
     boosted,
   }
 }
-const selectCakeFarm = (state: State) => {
-  return state.farms.chainId === ChainId.BSC_TESTNET ? state.farms.data.find((f) => f.pid === 2) : state.farms.data.find((f) => f.pid === 2)
+const selectBullFarm = (state: State) => {
+  return state.farms.chainId === ChainId.BSC_TESTNET ? state.farms.data.find((f) => f.pid === 1) : state.farms.data.find((f) => f.pid === 1)
 }
 const selectFarmByKey = (key: string, value: string | number) => (state: State) =>
   state.farms.data.find((f) => f[key] === value)
@@ -103,9 +103,9 @@ export const makeUserFarmFromPidSelector = (pid: number) =>
     }
   })
 
-export const priceCakeFromPidSelector = createSelector([selectCakeFarm], (cakeBnbFarm) => {
-  const cakePriceBusdAsString = cakeBnbFarm?.tokenPriceBusd || cakeBnbFarm?.tokenPriceVsQuote
-  return new BigNumber(cakePriceBusdAsString)
+export const priceBullFromPidSelector = createSelector([selectBullFarm], (bullUsdcFarm) => {
+  const bullPriceUsdcAsString = bullUsdcFarm?.tokenPriceBusd || bullUsdcFarm?.tokenPriceVsQuote
+  return new BigNumber(bullPriceUsdcAsString)
 })
 
 export const farmFromLpSymbolSelector = (lpSymbol: string) =>

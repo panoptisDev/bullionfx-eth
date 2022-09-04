@@ -18,7 +18,7 @@ import { StakingApy } from './StakingApy'
 import VaultCardActions from './VaultCardActions'
 import LockedStakingApy from '../LockedPool/LockedStakingApy'
 
-const StyledCardBody = styled(CardBody)<{ isLoading: boolean }>`
+const StyledCardBody = styled(CardBody) <{ isLoading: boolean }>`
   min-height: ${({ isLoading }) => (isLoading ? '0' : '254px')};
 `
 
@@ -38,6 +38,7 @@ interface CakeVaultDetailProps {
   defaultFooterExpanded?: boolean
   showICake?: boolean
   performanceFeeAsDecimal: number
+  chainId: number
 }
 
 export const CakeVaultDetail: React.FC<React.PropsWithChildren<CakeVaultDetailProps>> = ({
@@ -49,6 +50,7 @@ export const CakeVaultDetail: React.FC<React.PropsWithChildren<CakeVaultDetailPr
   showICake,
   performanceFeeAsDecimal,
   defaultFooterExpanded,
+  chainId
 }) => {
   const { t } = useTranslation()
 
@@ -59,17 +61,18 @@ export const CakeVaultDetail: React.FC<React.PropsWithChildren<CakeVaultDetailPr
           <VaultPositionTagWithLabel userData={(vaultPool as DeserializedLockedCakeVault).userData} />
         )}
         {account &&
-        pool.vaultKey === VaultKey.CakeVault &&
-        (vaultPool as DeserializedLockedCakeVault).userData.locked ? (
+          pool.vaultKey === VaultKey.CakeVault &&
+          (vaultPool as DeserializedLockedCakeVault).userData.locked ? (
           <LockedStakingApy
             userData={(vaultPool as DeserializedLockedCakeVault).userData}
             stakingToken={pool?.stakingToken}
             stakingTokenBalance={pool?.userData?.stakingTokenBalance}
             showICake={showICake}
+            chainId={chainId}
           />
         ) : (
           <>
-            <StakingApy pool={pool} />
+            <StakingApy pool={pool} chainId={chainId} />
             <FlexGap mt="16px" gap="24px" flexDirection={accountHasSharesStaked ? 'column-reverse' : 'column'}>
               <Box>
                 {account && (
@@ -86,6 +89,7 @@ export const CakeVaultDetail: React.FC<React.PropsWithChildren<CakeVaultDetailPr
                     accountHasSharesStaked={accountHasSharesStaked}
                     isLoading={isLoading}
                     performanceFee={performanceFeeAsDecimal}
+                    chainId={chainId}
                   />
                 ) : (
                   <>
@@ -112,7 +116,7 @@ const CakeVaultCard: React.FC<React.PropsWithChildren<CakeVaultProps>> = ({
   showICake = false,
   ...props
 }) => {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
 
   const vaultPool = useVaultPoolByKey(pool.vaultKey)
 
@@ -146,6 +150,7 @@ const CakeVaultCard: React.FC<React.PropsWithChildren<CakeVaultProps>> = ({
         showICake={showICake}
         performanceFeeAsDecimal={performanceFeeAsDecimal}
         defaultFooterExpanded={defaultFooterExpanded}
+        chainId={chainId}
       />
     </StyledCard>
   )

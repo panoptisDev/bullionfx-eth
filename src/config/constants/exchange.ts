@@ -1,38 +1,21 @@
-import { ChainId, JSBI, Percent, Token, WNATIVE, WBNB } from '@pancakeswap/sdk'
+import { ChainId, JSBI, Percent, Token, WNATIVE, WETH9 } from '@pancakeswap/sdk'
 import { BigNumber } from '@ethersproject/bignumber'
-import { bscTokens, bscTestnetTokens, USDC, USDT, BUSD } from './tokens'
+import { BULL, ethTokens, ethTokensGoerli, GOLD, USDC } from './tokens'
 import { ChainMap, ChainTokenList } from './types'
 
 export const ROUTER_ADDRESS: ChainMap<string> = {
-  [ChainId.ETHEREUM]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
-  [ChainId.RINKEBY]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
-  [ChainId.GOERLI]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
-  [ChainId.BSC]: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-  // [ChainId.BSC_TESTNET]: '0xD99D1c33F9fC3444f8101754aBC46c52416550D1',
-  [ChainId.BSC_TESTNET]: '0x1D32bf082Cc2C780c6Db94e6d35700fdCA3dB0eb', // dex-bull testnet
+  [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0x02c6594bD3ca0c59A8d801C297Ee5Df4B915F104',
 }
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
-  [ChainId.ETHEREUM]: [
-    WNATIVE[ChainId.ETHEREUM],
-    USDC[ChainId.ETHEREUM],
-    USDT[ChainId.ETHEREUM],
-    BUSD[ChainId.ETHEREUM],
-    WBNB[ChainId.ETHEREUM],
-  ],
-  [ChainId.RINKEBY]: [WNATIVE[ChainId.GOERLI], USDC[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
-  [ChainId.GOERLI]: [WNATIVE[ChainId.RINKEBY], USDC[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
   [ChainId.BSC]: [
-    bscTokens.wbnb,
-    bscTokens.cake,
-    bscTokens.busd,
-    bscTokens.usdt,
-    bscTokens.btcb,
-    bscTokens.eth,
-    bscTokens.usdc,
+    WNATIVE[ChainId.BSC],
+    USDC[ChainId.BSC],
+    WETH9[ChainId.BSC],
   ],
-  [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.bull, bscTestnetTokens.busd],
+  [ChainId.BSC_TESTNET]: [WNATIVE[ChainId.BSC_TESTNET], USDC[ChainId.BSC_TESTNET], WETH9[ChainId.BSC_TESTNET]],
 }
 
 /**
@@ -54,40 +37,25 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WBNB[ChainId.ETHEREUM], BUSD[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
-  [ChainId.RINKEBY]: [USDC[ChainId.RINKEBY], WNATIVE[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
-  [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
-  [ChainId.BSC]: [bscTokens.busd, bscTokens.cake, bscTokens.btcb],
-  [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.bull, bscTestnetTokens.busd],
+  [ChainId.BSC]: [BULL[ChainId.BSC], GOLD[ChainId.BSC], USDC[ChainId.BSC], WNATIVE[ChainId.BSC]],
+  [ChainId.BSC_TESTNET]: [BULL[ChainId.BSC_TESTNET], GOLD[ChainId.BSC_TESTNET], USDC[ChainId.BSC_TESTNET], WNATIVE[ChainId.BSC_TESTNET]],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
-  [ChainId.ETHEREUM]: [
-    USDC[ChainId.ETHEREUM],
-    WNATIVE[ChainId.ETHEREUM],
-    BUSD[ChainId.ETHEREUM],
-    USDT[ChainId.ETHEREUM],
-    WBNB[ChainId.ETHEREUM],
+  [ChainId.BSC]: [
+    USDC[ChainId.BSC],
+    WNATIVE[ChainId.BSC],
   ],
-  [ChainId.RINKEBY]: [USDC[ChainId.RINKEBY], WNATIVE[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
-  [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
-  [ChainId.BSC]: [bscTokens.wbnb, bscTokens.dai, bscTokens.busd, bscTokens.usdt, bscTokens.cake],
-  [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.bull, bscTestnetTokens.busd],
+  [ChainId.BSC_TESTNET]: [USDC[ChainId.BSC_TESTNET], WNATIVE[ChainId.BSC_TESTNET]],
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
-  [ChainId.ETHEREUM]: [
-    [WNATIVE[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM]],
-    [WBNB[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM]],
-    [WBNB[ChainId.ETHEREUM], BUSD[ChainId.ETHEREUM]],
-    [WBNB[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
-    [WBNB[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
-  ],
   [ChainId.BSC]: [
-    [bscTokens.cake, bscTokens.wbnb],
-    [bscTokens.busd, bscTokens.usdt],
-    [bscTokens.dai, bscTokens.usdt],
+    [ethTokens.bull, USDC[ChainId.BSC]],
+  ],
+  [ChainId.BSC_TESTNET]: [
+    [ethTokensGoerli.bull, USDC[ChainId.BSC_TESTNET]],
   ],
 }
 
@@ -117,9 +85,9 @@ export const BASE_FEE = new Percent(JSBI.BigInt(25), BIPS_BASE)
 export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
 
 // BNB
-export const DEFAULT_INPUT_CURRENCY = 'BNB'
+export const DEFAULT_INPUT_CURRENCY = 'USDC'
 // CAKE
-export const DEFAULT_OUTPUT_CURRENCY = '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'
+export const DEFAULT_OUTPUT_CURRENCY = '0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f'
 
 // Handler string is passed to Gelato to use PCS router
 export const GELATO_HANDLER = 'pancakeswap'

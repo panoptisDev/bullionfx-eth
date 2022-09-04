@@ -10,16 +10,13 @@ const getPriceSubqueries = (tokenAddress: string, blocks: any) =>
   blocks.map(
     (block: any) => `
       t${block.timestamp}:token(id:"${tokenAddress}", block: { number: ${block.number} }) { 
-        derivedBNB
-      }
-      b${block.timestamp}: bundle(id:"1", block: { number: ${block.number} }) { 
-        bnbPrice
+        derivedUSD
       }
     `,
   )
 
 /**
- * Price data for token and bnb based on block number
+ * Price data for token and eth based on block number
  */
 const priceQueryConstructor = (subqueries: string[]) => {
   return gql`
@@ -71,7 +68,6 @@ const fetchTokenPriceData = async (
     // format token BNB price results
     const tokenPrices: {
       timestamp: string
-      derivedBNB: number
       priceUSD: number
     }[] = []
 
@@ -82,24 +78,23 @@ const fetchTokenPriceData = async (
       if (timestamp) {
         tokenPrices.push({
           timestamp,
-          derivedBNB: prices[priceKey]?.derivedBNB ? parseFloat(prices[priceKey].derivedBNB) : 0,
-          priceUSD: 0,
+          priceUSD: prices[priceKey]?.derivedUSD ? parseFloat(prices[priceKey].derivedUSD) : 0,
         })
       }
     })
 
     // Go through BNB USD prices and calculate Token price based on it
-    Object.keys(prices).forEach((priceKey) => {
-      const timestamp = priceKey.split('b')[1]
-      // if its Token price e.g. `t123` split('b')[1] will be undefined and skip Token price entry
-      if (timestamp) {
-        const tokenPriceIndex = tokenPrices.findIndex((tokenPrice) => tokenPrice.timestamp === timestamp)
-        if (tokenPriceIndex >= 0) {
-          const { derivedBNB } = tokenPrices[tokenPriceIndex]
-          tokenPrices[tokenPriceIndex].priceUSD = parseFloat(prices[priceKey]?.bnbPrice ?? 0) * derivedBNB
-        }
-      }
-    })
+    // Object.keys(prices).forEach((priceKey) => {
+    //   const timestamp = priceKey.split('b')[1]
+    //   // if its Token price e.g. `t123` split('b')[1] will be undefined and skip Token price entry
+    //   if (timestamp) {
+    //     const tokenPriceIndex = tokenPrices.findIndex((tokenPrice) => tokenPrice.timestamp === timestamp)
+    //     if (tokenPriceIndex >= 0) {
+    //       const { derivedUSD } = tokenPrices[tokenPriceIndex]
+    //       tokenPrices[tokenPriceIndex].priceUSD = parseFloat(prices[priceKey]?.bnbPrice ?? 0) * derivedETH
+    //     }
+    //   }
+    // })
 
     // graphql-request does not guarantee same ordering of batched requests subqueries, hence sorting by timestamp from oldest to newest
     const sortedTokenPrices = orderBy(tokenPrices, (tokenPrice) => parseInt(tokenPrice.timestamp, 10))
