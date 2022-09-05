@@ -26,31 +26,28 @@ export default function useGasOverhead(
   const gasPrice = useGasPrice()
   const requiredGas = formatUnits(gasPrice ? BigNumber.from(gasPrice).mul(GENERIC_GAS_LIMIT_ORDER_EXECUTION) : '0')
   const requiredGasAsCurrencyAmount = tryParseAmount(requiredGas, native)
-
-  const inputIsBNB = inputAmount?.currency.symbol === 'BNB'
-
-  const gasCostInInputTokens = useTradeExactIn(requiredGasAsCurrencyAmount, inputIsBNB ? null : inputAmount?.currency)
+  const inputIsETH = inputAmount?.currency.symbol === 'ETH'
+  const gasCostInInputTokens = useTradeExactIn(requiredGasAsCurrencyAmount, inputIsETH ? null : inputAmount?.currency)
 
   const bufferedOutputAmount = useMemo(() => {
-    if (inputIsBNB) return requiredGasAsCurrencyAmount
+    if (inputIsETH) return requiredGasAsCurrencyAmount
     if (!gasCostInInputTokens || !gasCostInInputTokens?.outputAmount) return undefined
     // Add 2000 BPS on top (20%) to account for gas price fluctuations
 
     return gasCostInInputTokens.outputAmount.add(gasCostInInputTokens.outputAmount.multiply(2000).divide(10000))
-  }, [gasCostInInputTokens, requiredGasAsCurrencyAmount, inputIsBNB])
+  }, [gasCostInInputTokens, requiredGasAsCurrencyAmount, inputIsETH])
 
   const realInputAmount = useMemo(
     () => bufferedOutputAmount && inputAmount && inputAmount.subtract(bufferedOutputAmount),
     [bufferedOutputAmount, inputAmount],
   )
-
   const realExecutionPrice = useMemo(() => {
-    if (!inputAmount || (!gasCostInInputTokens && !inputIsBNB) || !realInputAmount || !outputAmount) return null
+    if (!inputAmount || (!gasCostInInputTokens && !inputIsETH) || !realInputAmount || !outputAmount) return null
 
-    if (inputIsBNB && requiredGasAsCurrencyAmount.greaterThan(inputAmount.asFraction)) return undefined
+    if (inputIsETH && requiredGasAsCurrencyAmount.greaterThan(inputAmount.asFraction)) return undefined
     if (gasCostInInputTokens && gasCostInInputTokens.outputAmount.greaterThan(inputAmount.asFraction)) return undefined
     return getPriceForOneToken(realInputAmount, outputAmount)
-  }, [realInputAmount, outputAmount, inputAmount, gasCostInInputTokens, inputIsBNB, requiredGasAsCurrencyAmount])
+  }, [realInputAmount, outputAmount, inputAmount, gasCostInInputTokens, inputIsETH, requiredGasAsCurrencyAmount])
 
   const realExecutionPriceAsString = useMemo(() => {
     if (!realExecutionPrice) return 'never executes'
@@ -60,8 +57,8 @@ export default function useGasOverhead(
   return chainId
     ? { realExecutionPrice, gasPrice, realExecutionPriceAsString }
     : {
-        realExecutionPrice: undefined,
-        realExecutionPriceAsString: undefined,
-        gasPrice: undefined,
-      }
+      realExecutionPrice: undefined,
+      realExecutionPriceAsString: undefined,
+      gasPrice: undefined,
+    }
 }

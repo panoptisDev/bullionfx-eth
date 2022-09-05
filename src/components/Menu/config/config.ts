@@ -50,12 +50,11 @@ const config: (t: ContextApi['t'], isDark: boolean, languageCode?: string, chain
             label: t('Swap'),
             href: '/swap',
           },
-          // {
-          //   label: t('Limit'),
-          //   href: '/limit-orders',
-          //   supportChainIds: [ChainId.BSC],
-          //   image: '/images/decorations/3d-coin.png',
-          // },
+          {
+            label: t('Limit'),
+            href: '/limit-orders',
+            image: '/images/decorations/3d-coin.png',
+          },
           {
             label: t('Liquidity'),
             href: '/liquidity',

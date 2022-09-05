@@ -99,6 +99,21 @@ export const livePoolsTestnet: SerializedPoolConfig[] = [
     isFinished: false,
   },
   {
+    sousId: 2,
+    stakingToken: serializedTokensTestnet.gold,
+    earningToken: serializedTokensTestnet.bull,
+    contractAddress: {
+      5: '0x5b19fa6Cd8B998D5024A1b6A30Ea1ee840404bE4',
+      1: '',
+    },
+    poolCategory: PoolCategory.CORE,
+    tokenPerBlock: '0.05',
+    isFinished: false,
+  },
+]
+
+export const finishedPoolsTestnet: SerializedPoolConfig[] = [
+  {
     sousId: 1,
     stakingToken: serializedTokensTestnet.gold,
     earningToken: serializedTokensTestnet.bull,
@@ -108,14 +123,13 @@ export const livePoolsTestnet: SerializedPoolConfig[] = [
     },
     poolCategory: PoolCategory.CORE,
     tokenPerBlock: '0.05',
-    isFinished: false,
+    isFinished: true,
   },
 ]
-
 // known finished pools
 const finishedPools = [
 ].map((p) => ({ ...p, isFinished: true }))
 
-export const poolsTestnet = [...livePoolsTestnet]
+export const poolsTestnet = [...livePoolsTestnet, ...finishedPoolsTestnet]
 
 export default [...livePools, ...finishedPools]

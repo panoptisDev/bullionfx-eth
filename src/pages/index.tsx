@@ -36,7 +36,7 @@ const tvl = 6082955532.115718
 export const getStaticProps: GetStaticProps = async () => {
   const totalTxQuery = gql`
     query TotalTransactions($id: ID!, $block: Block_height) {
-      pancakeFactory(id: $id, block: $block) {
+      bullionFXFactory(id: $id, block: $block) {
         totalTransactions
       }
     }
@@ -69,13 +69,13 @@ export const getStaticProps: GetStaticProps = async () => {
       })
 
       if (
-        totalTx?.pancakeFactory?.totalTransactions &&
-        totalTx30DaysAgo?.pancakeFactory?.totalTransactions &&
-        parseInt(totalTx.pancakeFactory.totalTransactions) > parseInt(totalTx30DaysAgo.pancakeFactory.totalTransactions)
+        totalTx?.bullionFXFactory?.totalTransactions &&
+        totalTx30DaysAgo?.bullionFXFactory?.totalTransactions &&
+        parseInt(totalTx.bullionFXFactory.totalTransactions) > parseInt(totalTx30DaysAgo.bullionFXFactory.totalTransactions)
       ) {
         results.totalTx30Days =
-          parseInt(totalTx.pancakeFactory.totalTransactions) -
-          parseInt(totalTx30DaysAgo.pancakeFactory.totalTransactions)
+          parseInt(totalTx.bullionFXFactory.totalTransactions) -
+          parseInt(totalTx30DaysAgo.bullionFXFactory.totalTransactions)
       }
     } catch (error) {
       if (process.env.NODE_ENV === 'production') {

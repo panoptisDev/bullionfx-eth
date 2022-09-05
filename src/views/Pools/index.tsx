@@ -75,19 +75,19 @@ const ControlStretch = styled(Flex)`
   }
 `
 
-const FinishedTextContainer = styled(Flex)`
-  padding-bottom: 32px;
-  flex-direction: column;
-  ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
-  }
-`
+// const FinishedTextContainer = styled(Flex)`
+//   padding-bottom: 32px;
+//   flex-direction: column;
+//   ${({ theme }) => theme.mediaQueries.md} {
+//     flex-direction: row;
+//   }
+// `
 
-const FinishedTextLink = styled(Link)`
-  font-weight: 400;
-  white-space: nowrap;
-  text-decoration: underline;
-`
+// const FinishedTextLink = styled(Link)`
+//   font-weight: 400;
+//   white-space: nowrap;
+//   text-decoration: underline;
+// `
 
 const NUMBER_OF_POOLS_VISIBLE = 12
 
@@ -220,8 +220,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       })
     }
   }, [isIntersecting])
-  // const showFinishedPools = router.pathname.includes('history')
-  const showFinishedPools = false
+  const showFinishedPools = router.pathname.includes('history')
 
   const handleChangeSearchQuery = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(event.target.value),
@@ -328,7 +327,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             </LabelWrapper>
           </FilterContainer>
         </PoolControls>
-        {showFinishedPools && (
+        {/* {showFinishedPools && (
           <FinishedTextContainer>
             <Text fontSize={['16px', null, '20px']} color="failure" pr="4px">
               {t('Looking for v1 BULL syrup pools?')}
@@ -337,7 +336,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               {t('Go to migration page')}.
             </FinishedTextLink>
           </FinishedTextContainer>
-        )}
+        )} */}
         {account && !userDataLoaded && stakedOnly && (
           <Flex justifyContent="center" mb="4px">
             <Loading />

@@ -11,6 +11,8 @@ import {
   INIT_CODE_HASH_MAP,
   MINIMUM_LIQUIDITY,
   ONE,
+  SUSHISWAP_FACTORY_ADDRESS_MAP,
+  SUSHISWAP_PAIR_CODE_HASH_MAP,
   ZERO,
   _10000,
   _9975,
@@ -26,18 +28,26 @@ import { Token } from './token'
 
 export const computePairAddress = ({
   factoryAddress,
+  sushiFactoryAddress,
   tokenA,
   tokenB,
 }: {
   factoryAddress: string
+  sushiFactoryAddress: string
   tokenA: Token
   tokenB: Token
 }): string => {
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
-  return getCreate2Address(
+  const bullPairAddress = getCreate2Address(
     factoryAddress,
     keccak256(['bytes'], [pack(['address', 'address'], [token0.address, token1.address])]),
     INIT_CODE_HASH_MAP[token0.chainId]
+  )
+  if (bullPairAddress) return bullPairAddress
+  return getCreate2Address(
+    sushiFactoryAddress,
+    keccak256(['bytes'], [pack(['address', 'address'], [token0.address, token1.address])]),
+    SUSHISWAP_PAIR_CODE_HASH_MAP[token0.chainId]
   )
 }
 
@@ -45,7 +55,7 @@ export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: [CurrencyAmount<Token>, CurrencyAmount<Token>]
   public static getAddress(tokenA: Token, tokenB: Token): string {
-    return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
+    return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], sushiFactoryAddress: SUSHISWAP_FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
   }
 
   public constructor(currencyAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>) {

@@ -259,7 +259,6 @@ const LimitOrders = () => {
     setApprovalSubmitted(false)
     handleSwitchTokens()
   }, [handleSwitchTokens])
-
   const { realExecutionPriceAsString } = useGasOverhead(parsedAmounts.input, parsedAmounts.output, rateType)
 
   const [showConfirmModal] = useModal(

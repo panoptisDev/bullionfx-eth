@@ -12,6 +12,7 @@ import { useTradeExactIn, useTradeExactOut } from 'hooks/Trades'
 import getPriceForOneToken from 'views/LimitOrders/utils/getPriceForOneToken'
 import { isAddress } from 'utils'
 import tryParseAmount from 'utils/tryParseAmount'
+import { USDC, BULL } from 'config/constants/tokens'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { replaceLimitOrdersState, selectCurrency, setRateType, switchCurrencies, typeInput } from './actions'
 import { Field, Rate, OrderState } from './types'
@@ -389,8 +390,8 @@ export const useDerivedOrderInfo = (): DerivedOrderInfo => {
       independentField === Field.PRICE
         ? typedValue
         : rateType === Rate.MUL
-        ? price?.toSignificant(6) ?? ''
-        : price?.invert().toSignificant(6) ?? '',
+          ? price?.toSignificant(6) ?? ''
+          : price?.invert().toSignificant(6) ?? '',
   }
 
   // Get raw amounts that will be used in smart contract call
@@ -402,8 +403,8 @@ export const useDerivedOrderInfo = (): DerivedOrderInfo => {
 
       output: outputCurrency
         ? parsedAmounts.output
-            ?.multiply(JSBI.exponentiate(BIG_INT_TEN, JSBI.BigInt(outputCurrency.decimals)))
-            .toFixed(0)
+          ?.multiply(JSBI.exponentiate(BIG_INT_TEN, JSBI.BigInt(outputCurrency.decimals)))
+          .toFixed(0)
         : undefined,
     }),
     [inputCurrency, outputCurrency, parsedAmounts],
@@ -460,9 +461,13 @@ function parseCurrencyFromURLParameter(urlParam: any): string {
 // TODO: combine with swap's version but use generic type. Same for helpers above
 // Note: swap has recipient and other things. Merging these 2 would probably be much easier if we get rid of recipient
 // Also the whole thing doesn't make sense, in swap inputValue is not initialized but typedValue is. WTF
-const queryParametersToSwapState = (parsedQs: ParsedUrlQuery): OrderState => {
-  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || DEFAULT_INPUT_CURRENCY
-  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || DEFAULT_OUTPUT_CURRENCY
+const queryParametersToSwapState = (
+  parsedQs: ParsedUrlQuery,
+  defaultInputCurrency?: string,
+  defaultOutputCurrency?: string,
+): OrderState => {
+  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || (defaultInputCurrency ?? DEFAULT_INPUT_CURRENCY)
+  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || (defaultOutputCurrency ?? DEFAULT_OUTPUT_CURRENCY)
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
       inputCurrency = ''
@@ -499,7 +504,7 @@ export const useDefaultsFromURLSearch = ():
 
   useEffect(() => {
     if (!chainId) return
-    const parsed = queryParametersToSwapState(query)
+    const parsed = queryParametersToSwapState(query, USDC[chainId]?.address, BULL[chainId]?.address)
 
     dispatch(replaceLimitOrdersState(parsed))
 
