@@ -1,6 +1,6 @@
 import { Currency, CurrencyAmount, Fraction, JSBI, Percent, Trade, TradeType } from '@pancakeswap/sdk'
 import IBullRouter02ABI from 'config/abi/IBullRouter02.json'
-import { IPancakeRouter02 } from 'config/abi/types/IPancakeRouter02'
+import { IBullRouter02 } from 'config/abi/types/IBullRouter02'
 import {
   ALLOWED_PRICE_IMPACT_HIGH,
   ALLOWED_PRICE_IMPACT_LOW,
@@ -32,7 +32,7 @@ export function calculateSlippageAmount(value: CurrencyAmount<Currency>, slippag
 
 export function useRouterContract() {
   const chainId = useActiveChainId()
-  return useContract<IPancakeRouter02>(ROUTER_ADDRESS[chainId], IBullRouter02ABI, true)
+  return useContract<IBullRouter02>(ROUTER_ADDRESS[chainId], IBullRouter02ABI, true)
 }
 
 // computes price breakdown for the trade
