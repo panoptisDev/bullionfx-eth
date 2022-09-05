@@ -70,7 +70,7 @@ import multiCallAbi from '../config/abi/Multicall.json'
 import WETH_ABI from '../config/abi/weth.json'
 import { getContract } from '../utils'
 
-import { IPancakePair } from '../config/abi/types/IPancakePair'
+import { IBullPair } from '../config/abi/types/IBullPair'
 import { VaultKey } from '../state/types'
 
 /**
@@ -332,7 +332,7 @@ export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossi
   return useContract<Erc20Bytes32>(tokenAddress, ERC20_BYTES32_ABI, withSignerIfPossible)
 }
 
-export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): IPancakePair | null {
+export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): IBullPair | null {
   return useContract(pairAddress, IBullPairABI, withSignerIfPossible)
 }
 
