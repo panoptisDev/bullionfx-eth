@@ -75,12 +75,12 @@ const fetchBnbPrices = async (
 /**
  * Returns BNB prices at current, 24h, 48h, and 7d intervals
  */
-export const useBnbPrices = (): BnbPrices | undefined => {
+export const useBnbPrices = (chainId: number): BnbPrices | undefined => {
   const [prices, setPrices] = useState<BnbPrices | undefined>()
   const [error, setError] = useState(false)
 
   const [t24, t48, tWeek] = getDeltaTimestamps()
-  const { blocks, error: blockError } = useBlocksFromTimestamps([t24, t48, tWeek])
+  const { blocks, error: blockError } = useBlocksFromTimestamps([t24, t48, tWeek], chainId)
 
   useEffect(() => {
     const fetch = async () => {

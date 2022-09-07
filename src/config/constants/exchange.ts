@@ -42,8 +42,8 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.BSC]: [BULL[ChainId.BSC], GOLD[ChainId.BSC], USDC[ChainId.BSC], WNATIVE[ChainId.BSC]],
-  [ChainId.BSC_TESTNET]: [BULL[ChainId.BSC_TESTNET], GOLD[ChainId.BSC_TESTNET], USDC[ChainId.BSC_TESTNET], WNATIVE[ChainId.BSC_TESTNET]],
+  [ChainId.BSC]: [BULL[ChainId.BSC], GOLD[ChainId.BSC], USDC[ChainId.BSC]],
+  [ChainId.BSC_TESTNET]: [BULL[ChainId.BSC_TESTNET], GOLD[ChainId.BSC_TESTNET], USDC[ChainId.BSC_TESTNET]],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -86,7 +86,7 @@ export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), BIP
 export const ZERO_PERCENT = new Percent('0')
 export const ONE_HUNDRED_PERCENT = new Percent('1')
 
-export const BASE_FEE = new Percent(JSBI.BigInt(25), BIPS_BASE)
+export const BASE_FEE = new Percent(JSBI.BigInt(30), BIPS_BASE)
 export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
 
 // BNB

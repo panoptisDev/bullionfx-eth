@@ -7,7 +7,9 @@ import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { useRouter } from 'next/router'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getDisplayApr } from '../getDisplayApr'
+// import numberOrNull from 'utils/numberOrNull'
 
 import Row, { RowProps } from './Row'
 import { DesktopColumnSchema, FarmWithStakedValue } from '../types'
@@ -70,6 +72,7 @@ const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cake
   const tableWrapperEl = useRef<HTMLDivElement>(null)
   const { query } = useRouter()
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
 
   const columns = useMemo(
     () =>
@@ -190,10 +193,10 @@ const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cake
               {sortedRows.map((row) => {
                 return row?.details?.boosted ? (
                   <ProxyFarmContainer key={`table-row-${row.farm.pid}`} farm={row.details}>
-                    <Row {...row} userDataReady={userDataReady} />
+                    <Row {...row} userDataReady={userDataReady} chainId={chainId} />
                   </ProxyFarmContainer>
                 ) : (
-                  <Row {...row} userDataReady={userDataReady} key={`table-row-${row.farm.pid}`} />
+                  <Row {...row} userDataReady={userDataReady} key={`table-row-${row.farm.pid}`} chainId={chainId} />
                 )
               })}
             </TableBody>

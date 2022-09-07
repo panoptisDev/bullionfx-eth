@@ -1,12 +1,13 @@
-import { Currency, JSBI } from '@pancakeswap/sdk'
+import { ChainId, Currency, JSBI } from '@pancakeswap/sdk'
 import { AddIcon, Button, ChevronDownIcon, Text, useModal } from '@pancakeswap/uikit'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import { BIG_INT_ZERO } from 'config/constants/exchange'
-import useNativeCurrency from 'hooks/useNativeCurrency'
+// import useNativeCurrency from 'hooks/useNativeCurrency'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { ethTokens, ethTokensGoerli } from 'config/constants/tokens'
 import { AppBody, AppHeader } from '../../components/App'
 import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
@@ -35,12 +36,13 @@ const StyledButton = styled(Button)`
 `
 
 export default function PoolFinder() {
-  const { account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { t } = useTranslation()
-  const native = useNativeCurrency()
+  // const native = useNativeCurrency()
+  const bull = chainId === ChainId.BSC_TESTNET ? ethTokensGoerli.bull : ethTokens.bull
 
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1)
-  const [currency0, setCurrency0] = useState<Currency | null>(() => native)
+  const [currency0, setCurrency0] = useState<Currency | null>(() => bull)
   const [currency1, setCurrency1] = useState<Currency | null>(null)
 
   const [pairState, pair] = usePair(currency0 ?? undefined, currency1 ?? undefined)
@@ -55,9 +57,9 @@ export default function PoolFinder() {
     pairState === PairState.NOT_EXISTS ||
     Boolean(
       pairState === PairState.EXISTS &&
-        pair &&
-        JSBI.equal(pair.reserve0.quotient, BIG_INT_ZERO) &&
-        JSBI.equal(pair.reserve1.quotient, BIG_INT_ZERO),
+      pair &&
+      JSBI.equal(pair.reserve0.quotient, BIG_INT_ZERO) &&
+      JSBI.equal(pair.reserve1.quotient, BIG_INT_ZERO),
     )
 
   const position = useTokenBalance(account ?? undefined, pair?.liquidityToken)

@@ -23,6 +23,7 @@ export interface ActionPanelProps {
   details: FarmWithStakedValue
   userDataReady: boolean
   expanded: boolean
+  chainId: number
 }
 
 const expandAnimation = keyframes`
@@ -114,6 +115,7 @@ const ActionPanel: React.FunctionComponent<React.PropsWithChildren<ActionPanelPr
   liquidity,
   userDataReady,
   expanded,
+  chainId
 }) => {
   const { proxyFarm, shouldUseProxyFarm } = useContext(YieldBoosterStateContext)
 
@@ -132,9 +134,9 @@ const ActionPanel: React.FunctionComponent<React.PropsWithChildren<ActionPanelPr
     quoteTokenAddress: quoteToken.address,
     tokenAddress: token.address,
   })
-  const lpAddress = getAddress(farm.lpAddresses)
-  const bsc = getBlockExploreLink(lpAddress, 'address')
-  const info = `/info/pool/${lpAddress}`
+  const lpAddress = getAddress(farm.lpAddresses, chainId)
+  const bsc = getBlockExploreLink(lpAddress, 'address', chainId)
+  // const info = `/info/pool/${lpAddress}`
 
   return (
     <Container expanded={expanded}>
@@ -177,7 +179,7 @@ const ActionPanel: React.FunctionComponent<React.PropsWithChildren<ActionPanelPr
           </StakeContainer>
         )}
         <StyledLinkExternal href={bsc}>{t('View Contract')}</StyledLinkExternal>
-        <StyledLinkExternal href={info}>{t('See Pair Info')}</StyledLinkExternal>
+        <StyledLinkExternal href='#'>{t('See Pair Info')}</StyledLinkExternal>
       </InfoContainer>
       <ActionContainer>
         {shouldUseProxyFarm ? (

@@ -6,6 +6,7 @@ import useTopPoolAddresses from 'state/info/queries/pools/topPools'
 import usePoolDatas from 'state/info/queries/pools/poolData'
 import useFetchedTokenDatas from 'state/info/queries/tokens/tokenData'
 import useTopTokenAddresses from 'state/info/queries/tokens/topTokens'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import {
   useProtocolData,
   useProtocolChartData,
@@ -19,11 +20,11 @@ import {
 } from './hooks'
 
 export const ProtocolUpdater: React.FC<React.PropsWithChildren> = () => {
+  const { chainId } = useActiveWeb3React()
   const [protocolData, setProtocolData] = useProtocolData()
-  const { data: fetchedProtocolData, error } = useFetchProtocolData()
-
+  const { data: fetchedProtocolData, error } = useFetchProtocolData(chainId)
   const [chartData, updateChartData] = useProtocolChartData()
-  const { data: fetchedChartData, error: chartError } = useFetchGlobalChartData()
+  const { data: fetchedChartData, error: chartError } = useFetchGlobalChartData(chainId)
 
   const [transactions, updateTransactions] = useProtocolTransactions()
 
@@ -43,7 +44,7 @@ export const ProtocolUpdater: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await fetchTopTransactions()
+      const data = await fetchTopTransactions(chainId)
       if (data) {
         updateTransactions(data)
       }
@@ -51,12 +52,13 @@ export const ProtocolUpdater: React.FC<React.PropsWithChildren> = () => {
     if (!transactions) {
       fetch()
     }
-  }, [transactions, updateTransactions])
+  }, [transactions, updateTransactions, chainId])
 
   return null
 }
 
 export const PoolUpdater: React.FC<React.PropsWithChildren> = () => {
+  const { chainId } = useActiveWeb3React()
   const updatePoolData = useUpdatePoolData()
   const addPoolKeys = useAddPoolKeys()
 
@@ -82,7 +84,7 @@ export const PoolUpdater: React.FC<React.PropsWithChildren> = () => {
   }, [allPoolData])
 
   // fetch data for unfetched pools and update them
-  const { error: poolDataError, data: poolDatas } = usePoolDatas(unfetchedPoolAddresses)
+  const { error: poolDataError, data: poolDatas } = usePoolDatas(unfetchedPoolAddresses, chainId)
   useEffect(() => {
     if (poolDatas && !poolDataError) {
       updatePoolData(Object.values(poolDatas))
@@ -93,6 +95,7 @@ export const PoolUpdater: React.FC<React.PropsWithChildren> = () => {
 }
 
 export const TokenUpdater = (): null => {
+  const { chainId } = useActiveWeb3React()
   const updateTokenDatas = useUpdateTokenData()
   const addTokenKeys = useAddTokenKeys()
 
@@ -118,7 +121,7 @@ export const TokenUpdater = (): null => {
   }, [allTokenData])
 
   // fetch data for unfetched tokens and update them
-  const { error: tokenDataError, data: tokenDatas } = useFetchedTokenDatas(unfetchedTokenAddresses)
+  const { error: tokenDataError, data: tokenDatas } = useFetchedTokenDatas(unfetchedTokenAddresses, chainId)
   useEffect(() => {
     if (tokenDatas && !tokenDataError) {
       updateTokenDatas(Object.values(tokenDatas))

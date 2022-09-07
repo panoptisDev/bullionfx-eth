@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState, useMemo, useRef, createContext } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { Image, Heading, Toggle, Text, Button, ArrowForwardIcon, Flex, Link, Box } from '@pancakeswap/uikit'
+import { Image, Heading, Toggle, Text, Button, ArrowForwardIcon, Flex, Box } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import styled from 'styled-components'
@@ -125,19 +125,19 @@ const StyledImage = styled(Image)`
   margin-top: 58px;
 `
 
-const FinishedTextContainer = styled(Flex)`
-  padding-bottom: 32px;
-  flex-direction: column;
-  ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
-  }
-`
+// const FinishedTextContainer = styled(Flex)`
+//   padding-bottom: 32px;
+//   flex-direction: column;
+//   ${({ theme }) => theme.mediaQueries.md} {
+//     flex-direction: row;
+//   }
+// `
 
-const FinishedTextLink = styled(Link)`
-  font-weight: 400;
-  white-space: nowrap;
-  text-decoration: underline;
-`
+// const FinishedTextLink = styled(Link)`
+//   font-weight: 400;
+//   white-space: nowrap;
+//   text-decoration: underline;
+// `
 
 const NUMBER_OF_FARMS_VISIBLE = 12
 
@@ -401,7 +401,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
             </LabelWrapper>
           </FilterContainer>
         </ControlContainer>
-        {isInactive && (
+        {/* {isInactive && (
           <FinishedTextContainer>
             <Text fontSize={['16px', null, '20px']} color="failure" pr="4px">
               {t("Don't see the farm you are staking?")}
@@ -423,7 +423,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
               </FinishedTextLink>
             </Flex>
           </FinishedTextContainer>
-        )}
+        )} */}
         {viewMode === ViewMode.TABLE ? (
           <Table farms={chosenFarmsMemoized} cakePrice={cakePrice} userDataReady={userDataReady} />
         ) : (

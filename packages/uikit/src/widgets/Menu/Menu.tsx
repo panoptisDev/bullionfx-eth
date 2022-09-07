@@ -12,7 +12,7 @@ import CakePrice from "../../components/CakePrice/CakePrice";
 import Logo from "./components/Logo";
 import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_MOBILE } from "./config";
 import { NavProps } from "./types";
-import LangSelector from "../../components/LangSelector/LangSelector";
+// import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
 
 const Wrapper = styled.div`
@@ -140,7 +140,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                   <CakePrice showSkeleton={false} cakePriceUsd={cakePriceUsd} />
                 </Box>
               )}
-              <Box mt="4px">
+              {/* <Box mt="4px">
                 <LangSelector
                   currentLang={currentLang}
                   langs={langs}
@@ -149,7 +149,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                   color="textSubtle"
                   hideLanguage
                 />
-              </Box>
+              </Box> */}
               {rightSide}
             </Flex>
           </StyledNav>

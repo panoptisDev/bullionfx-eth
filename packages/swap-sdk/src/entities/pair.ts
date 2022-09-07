@@ -28,12 +28,10 @@ import { Token } from './token'
 
 export const computePairAddress = ({
   factoryAddress,
-  sushiFactoryAddress,
   tokenA,
   tokenB,
 }: {
   factoryAddress: string
-  sushiFactoryAddress: string
   tokenA: Token
   tokenB: Token
 }): string => {
@@ -43,21 +41,36 @@ export const computePairAddress = ({
     keccak256(['bytes'], [pack(['address', 'address'], [token0.address, token1.address])]),
     INIT_CODE_HASH_MAP[token0.chainId]
   )
-  if (bullPairAddress) return bullPairAddress
-  return getCreate2Address(
-    sushiFactoryAddress,
+  return bullPairAddress
+}
+
+export const computeSushiPairAddress = ({
+  factoryAddress,
+  tokenA,
+  tokenB,
+}: {
+  factoryAddress: string
+  tokenA: Token
+  tokenB: Token
+}): string => {
+  const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
+  const bullPairAddress = getCreate2Address(
+    factoryAddress,
     keccak256(['bytes'], [pack(['address', 'address'], [token0.address, token1.address])]),
     SUSHISWAP_PAIR_CODE_HASH_MAP[token0.chainId]
   )
+  return bullPairAddress
 }
 
 export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: [CurrencyAmount<Token>, CurrencyAmount<Token>]
   public static getAddress(tokenA: Token, tokenB: Token): string {
-    return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], sushiFactoryAddress: SUSHISWAP_FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
+    return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
   }
-
+  public static getSushiAddress(tokenA: Token, tokenB: Token): string {
+    return computeSushiPairAddress({ factoryAddress: SUSHISWAP_FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
+  }
   public constructor(currencyAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>) {
     const tokenAmounts = currencyAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [currencyAmountA, tokenAmountB]
@@ -66,8 +79,8 @@ export class Pair {
       tokenAmounts[0].currency.chainId,
       Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
       18,
-      'Cake-LP',
-      'Pancake LPs'
+      'Bull-LP',
+      'BullionFX LPs'
     )
     this.tokenAmounts = tokenAmounts as [CurrencyAmount<Token>, CurrencyAmount<Token>]
   }

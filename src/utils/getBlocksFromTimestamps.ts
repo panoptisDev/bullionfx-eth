@@ -25,14 +25,13 @@ const blocksQueryConstructor = (subqueries: string[]) => {
  */
 export const getBlocksFromTimestamps = async (
   timestamps: number[],
+  chainId: number,
   sortDirection: 'asc' | 'desc' = 'desc',
-  skipCount = 500,
-  chainId?: number
+  skipCount = 500
 ): Promise<Block[]> => {
   if (timestamps?.length === 0) {
     return []
   }
-
   const blocksClient = chainId === ChainId.BSC_TESTNET ? BLOCKS_CLIENT_GOERLI : BLOCKS_CLIENT
 
   const fetchedData: any = await multiQuery(

@@ -1,8 +1,8 @@
 import { memo } from 'react'
 import styled from 'styled-components'
-import { Flex, Svg, Image, Button } from '@pancakeswap/uikit'
-import { useTranslation } from '@pancakeswap/localization'
-import { EXCHANGE_DOCS_URLS } from 'config/constants'
+import { Flex } from '@pancakeswap/uikit'
+// import { useTranslation } from '@pancakeswap/localization'
+// import { EXCHANGE_DOCS_URLS } from 'config/constants'
 
 const Wrapper = memo(styled.div<{ $isSide: boolean }>`
   width: 100%;
@@ -19,30 +19,30 @@ const Wrapper = memo(styled.div<{ $isSide: boolean }>`
   }
 `)
 
-const BubbleWrapper = styled(Flex)`
-  svg {
-    fill: ${({ theme }) => theme.colors.textSubtle};
-    transition: background-color 0.2s, opacity 0.2s;
-  }
-  &:hover {
-    svg {
-      opacity: 0.65;
-    }
-  }
-  &:active {
-    svg {
-      opacity: 0.85;
-    }
-  }
-`
+// const BubbleWrapper = styled(Flex)`
+//   svg {
+//     fill: ${({ theme }) => theme.colors.textSubtle};
+//     transition: background-color 0.2s, opacity 0.2s;
+//   }
+//   &:hover {
+//     svg {
+//       opacity: 0.65;
+//     }
+//   }
+//   &:active {
+//     svg {
+//       opacity: 0.85;
+//     }
+//   }
+// `
 
 type FooterVariant = 'default' | 'side'
 
 const Footer: React.FC<React.PropsWithChildren<{ variant?: FooterVariant; helpUrl?: string }>> = ({
   variant = 'default',
-  helpUrl = EXCHANGE_DOCS_URLS,
+  // helpUrl = EXCHANGE_DOCS_URLS,
 }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const isSide = variant === 'side'
   return (
     <Wrapper $isSide={isSide}>
@@ -64,7 +64,7 @@ const Footer: React.FC<React.PropsWithChildren<{ variant?: FooterVariant; helpUr
         </LinkExternal>
       </Flex> */}
       {isSide && <Flex flexGrow={1} />}
-      <Flex
+      {/* <Flex
         flexGrow={isSide ? 0 : 1}
         alignItems="center"
         width={['100%', '100%', '100%', isSide ? '100%' : 'auto']}
@@ -79,7 +79,7 @@ const Footer: React.FC<React.PropsWithChildren<{ variant?: FooterVariant; helpUr
           </Svg>
         </BubbleWrapper>
         <Image src="/images/help.png" alt="Get some help" width={160} height={108} />
-      </Flex>
+      </Flex> */}
     </Wrapper>
   )
 }

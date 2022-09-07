@@ -30,6 +30,7 @@ const fetchTokenPriceData = async (
   address: string,
   interval: number,
   startTimestamp: number,
+  chainId: number
 ): Promise<{
   data?: PriceChartEntry[]
   error: boolean
@@ -43,7 +44,7 @@ const fetchTokenPriceData = async (
     time += interval
   }
   try {
-    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500)
+    const blocks = await getBlocksFromTimestamps(timestamps, chainId, 'asc', 500)
     if (!blocks || blocks.length === 0) {
       console.error('Error fetching blocks for timestamps', timestamps)
       return {

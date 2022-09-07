@@ -8,6 +8,7 @@ import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import { FarmWithStakedValue } from '../types'
@@ -55,6 +56,7 @@ const FarmCard: React.FC<React.PropsWithChildren<FarmCardProps>> = ({
   originalLiquidity,
 }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
 
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
@@ -66,8 +68,8 @@ const FarmCard: React.FC<React.PropsWithChildren<FarmCardProps>> = ({
       ? `$${liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
       : ''
 
-  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
-  const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')
+  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('BULLIONFX', '')
+  const earnLabel = farm.dual ? farm.dual.earnLabel : t('BULL + Fees')
 
   const liquidityUrlPathParts = getLiquidityUrlPathParts({
     quoteTokenAddress: farm.quoteToken.address,
@@ -75,7 +77,7 @@ const FarmCard: React.FC<React.PropsWithChildren<FarmCardProps>> = ({
   })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const lpAddress = getAddress(farm.lpAddresses)
-  const isPromotedFarm = farm.token.symbol === 'CAKE'
+  const isPromotedFarm = farm.token.symbol === 'BULL'
 
   const toggleExpandableSection = useCallback(() => {
     setShowExpandableSection((prev) => !prev)
@@ -136,7 +138,7 @@ const FarmCard: React.FC<React.PropsWithChildren<FarmCardProps>> = ({
         {showExpandableSection && (
           <DetailsSection
             removed={removed}
-            bscScanAddress={getBlockExploreLink(lpAddress, 'address')}
+            bscScanAddress={getBlockExploreLink(lpAddress, 'address', chainId)}
             infoAddress={`/info/pool/${lpAddress}`}
             totalValueFormatted={totalValueFormatted}
             lpLabel={lpLabel}

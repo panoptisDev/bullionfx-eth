@@ -1,5 +1,5 @@
 import { ResetCSS } from '@pancakeswap/uikit'
-import Script from 'next/script'
+// import Script from 'next/script'
 import dynamic from 'next/dynamic'
 import BigNumber from 'bignumber.js'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
@@ -95,7 +95,7 @@ function MyApp(props: AppProps) {
           </PersistGate>
         </Blocklist>
       </Providers>
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         id="google-tag"
         dangerouslySetInnerHTML={{
@@ -107,7 +107,7 @@ function MyApp(props: AppProps) {
             })(window,document,'script','dataLayer', '${process.env.NEXT_PUBLIC_GTAG}');
           `,
         }}
-      />
+      /> */}
     </>
   )
 }

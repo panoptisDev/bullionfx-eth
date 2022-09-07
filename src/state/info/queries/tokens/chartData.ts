@@ -1,11 +1,12 @@
 import { PCS_V2_START } from 'config/constants/info'
 import { gql } from 'graphql-request'
 import { ChartEntry } from 'state/info/types'
-import { infoClient } from 'utils/graphql'
+import { infoClient, infoClientTestnet } from 'utils/graphql'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 import { fetchChartData, mapDayData } from '../helpers'
 import { TokenDayDatasResponse } from '../types'
 
-const getTokenChartData = async (skip: number, address: string): Promise<{ data?: ChartEntry[]; error: boolean }> => {
+const getTokenChartData = async (skip: number, chainId: number, address: string): Promise<{ data?: ChartEntry[]; error: boolean }> => {
   try {
     const query = gql`
       query tokenDayDatas($startTime: Int!, $skip: Int!, $address: Bytes!) {
@@ -22,7 +23,8 @@ const getTokenChartData = async (skip: number, address: string): Promise<{ data?
         }
       }
     `
-    const { tokenDayDatas } = await infoClient.request<TokenDayDatasResponse>(query, {
+    const client = chainId === ChainId.BSC_TESTNET ? infoClientTestnet : infoClient
+    const { tokenDayDatas } = await client.request<TokenDayDatasResponse>(query, {
       startTime: PCS_V2_START,
       skip,
       address,
@@ -35,8 +37,8 @@ const getTokenChartData = async (skip: number, address: string): Promise<{ data?
   }
 }
 
-const fetchTokenChartData = async (address: string): Promise<{ data?: ChartEntry[]; error: boolean }> => {
-  return fetchChartData(getTokenChartData, address)
+const fetchTokenChartData = async (address: string, chainId: number): Promise<{ data?: ChartEntry[]; error: boolean }> => {
+  return fetchChartData(getTokenChartData, chainId, address)
 }
 
 export default fetchTokenChartData

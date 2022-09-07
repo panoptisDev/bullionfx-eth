@@ -85,8 +85,8 @@ const useLPValues = (account, pair, currency0, currency1) => {
 
 export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
-  const poolData = useLPApr(pair)
+  const { chainId, account } = useWeb3React()
+  const poolData = useLPApr(chainId, pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
     {
@@ -198,8 +198,8 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
 
 export default function FullPositionCard({ pair, ...props }: PositionCardProps) {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
-  const poolData = useLPApr(pair)
+  const { chainId, account } = useWeb3React()
+  const poolData = useLPApr(chainId, pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
     {

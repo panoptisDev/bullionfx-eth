@@ -2,11 +2,12 @@
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 import { TokenData } from 'state/info/types'
-import { infoClient } from 'utils/graphql'
+import { infoClient, infoClientTestnet } from 'utils/graphql'
 import { getDeltaTimestamps } from 'utils/getDeltaTimestamps'
 import { getChangeForPeriod } from 'utils/getChangeForPeriod'
 import { useBlocksFromTimestamps } from 'views/Info/hooks/useBlocksFromTimestamps'
 import { getAmountChange, getPercentChange } from 'views/Info/utils/infoDataHelpers'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 
 interface TokenFields {
   id: string
@@ -64,6 +65,7 @@ const fetchTokenData = async (
   block7d: number,
   block14d: number,
   tokenAddresses: string[],
+  chainId: number,
 ) => {
   try {
     const query = gql`
@@ -75,7 +77,8 @@ const fetchTokenData = async (
         twoWeeksAgo: ${TOKEN_AT_BLOCK(block14d, tokenAddresses)}
       }
     `
-    const data = await infoClient.request<TokenQueryResponse>(query)
+    const client = chainId === ChainId.BSC_TESTNET ? infoClientTestnet : infoClient
+    const data = await client.request<TokenQueryResponse>(query)
     return { data, error: false }
   } catch (error) {
     console.error('Failed to fetch token data', error)
@@ -111,10 +114,10 @@ interface TokenDatas {
 /**
  * Fetch top addresses by volume
  */
-const useFetchedTokenDatas = (tokenAddresses: string[]): TokenDatas => {
+const useFetchedTokenDatas = (tokenAddresses: string[], chainId): TokenDatas => {
   const [fetchState, setFetchState] = useState<TokenDatas>({ error: false })
   const [t24h, t48h, t7d, t14d] = getDeltaTimestamps()
-  const { blocks, error: blockError } = useBlocksFromTimestamps([t24h, t48h, t7d, t14d])
+  const { blocks, error: blockError } = useBlocksFromTimestamps([t24h, t48h, t7d, t14d], chainId)
   const [block24h, block48h, block7d, block14d] = blocks ?? []
 
   useEffect(() => {
@@ -125,6 +128,7 @@ const useFetchedTokenDatas = (tokenAddresses: string[]): TokenDatas => {
         block7d.number,
         block14d.number,
         tokenAddresses,
+        chainId
       )
       if (error) {
         setFetchState({ error: true })
@@ -191,7 +195,7 @@ const useFetchedTokenDatas = (tokenAddresses: string[]): TokenDatas => {
     if (tokenAddresses.length > 0 && allBlocksAvailable && !blockError) {
       fetch()
     }
-  }, [tokenAddresses, block24h, block48h, block7d, block14d, blockError])
+  }, [tokenAddresses, block24h, block48h, block7d, block14d, blockError, chainId])
 
   return fetchState
 }

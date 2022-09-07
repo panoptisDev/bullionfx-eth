@@ -181,8 +181,8 @@ function parseCurrencyFromURLParameter(urlParam: any): string {
   if (typeof urlParam === 'string') {
     const valid = isAddress(urlParam)
     if (valid) return valid
-    if (urlParam.toUpperCase() === 'BNB') return 'BNB'
-    if (valid === false) return 'BNB'
+    if (urlParam.toUpperCase() === 'ETH') return 'ETH'
+    if (valid === false) return 'ETH'
   }
   return ''
 }
@@ -409,16 +409,16 @@ export const useFetchPairPrices = ({
   return { pairPrices, pairId }
 }
 
-export const useLPApr = (pair?: Pair) => {
+export const useLPApr = (chainId: number, pair?: Pair) => {
   const { data: poolData } = useSWRImmutable(
     pair && pair.chainId === ChainId.BSC ? ['LP7dApr', pair.liquidityToken.address] : null,
     async () => {
       const timestampsArray = getDeltaTimestamps()
-      const blocks = await getBlocksFromTimestamps(timestampsArray, 'desc', 1000, pair.chainId)
+      const blocks = await getBlocksFromTimestamps(timestampsArray, pair.chainId, 'desc', 1000)
       const [block24h, block48h, block7d, block14d] = blocks ?? []
       const { error, data } = await fetchPoolData(block24h.number, block48h.number, block7d.number, block14d.number, [
-        pair.liquidityToken.address.toLowerCase(),
-      ])
+        pair.liquidityToken.address.toLowerCase()
+      ], chainId)
       if (error) return null
       const formattedPoolData = parsePoolData(data?.now)
       const formattedPoolData24h = parsePoolData(data?.oneDayAgo)

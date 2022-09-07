@@ -105,7 +105,7 @@ export default function RemoveLiquidity() {
   )
   const isZap = (!removalCheckedA || !removalCheckedB) && zapModeStatus
 
-  const poolData = useLPApr(pair)
+  const poolData = useLPApr(chainId, pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
     {

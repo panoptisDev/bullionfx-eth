@@ -32,6 +32,7 @@ export interface RowProps {
 
 interface RowPropsWithLoading extends RowProps {
   userDataReady: boolean
+  chainId: number
 }
 
 const cells = {

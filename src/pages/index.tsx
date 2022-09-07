@@ -1,4 +1,4 @@
-import { FACTORY_ADDRESS_ETH } from '@pancakeswap/sdk'
+import { ChainId, FACTORY_ADDRESS_ETH } from '@pancakeswap/sdk'
 import { getUnixTime, sub } from 'date-fns'
 import { gql } from 'graphql-request'
 import { GetStaticProps } from 'next'
@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   if (process.env.SF_HEADER) {
     try {
-      const [days30AgoBlock] = await getBlocksFromTimestamps([getUnixTime(days30Ago)])
+      const [days30AgoBlock] = await getBlocksFromTimestamps([getUnixTime(days30Ago)], ChainId.BSC)
 
       if (!days30AgoBlock) {
         throw new Error('No block found for 30 days ago')
@@ -122,8 +122,8 @@ export const getStaticProps: GetStaticProps = async () => {
       }
     `)
     const { totalLiquidityUSD } = result.pancakeFactories[0]
-    const cakeVaultV2 = getCakeVaultAddress(56)
-    const cakeContract = getCakeContract(56)
+    const cakeVaultV2 = getCakeVaultAddress(1)
+    const cakeContract = getCakeContract(1)
     const totalCakeInVault = await cakeContract.balanceOf(cakeVaultV2)
     results.tvl = parseFloat(formatEther(totalCakeInVault)) * result.token.derivedUSD + parseFloat(totalLiquidityUSD)
   } catch (error) {

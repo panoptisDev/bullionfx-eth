@@ -111,14 +111,15 @@ function CurrencySearch({
 
   const native = useNativeCurrency()
 
-  const showBNB: boolean = useMemo(() => {
-    const s = debouncedQuery.toLowerCase().trim()
-    return native && native.symbol?.toLowerCase?.()?.indexOf(s) !== -1
-  }, [debouncedQuery, native])
+  // const showBNB: boolean = useMemo(() => {
+  //   const s = debouncedQuery.toLowerCase().trim()
+  //   return native && native.symbol?.toLowerCase?.()?.indexOf(s) !== -1
+  // }, [debouncedQuery, native])
+  const showBNB = false
 
   const filteredTokens: Token[] = useMemo(() => {
     const filterToken = createFilterToken(debouncedQuery)
-    return Object.values(allTokens).filter(filterToken)
+    return Object.values(allTokens).filter(filterToken).filter((token) => token.symbol !== 'WETH')
   }, [allTokens, debouncedQuery])
 
   const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)
@@ -158,7 +159,7 @@ function CurrencySearch({
       if (e.key === 'Enter') {
         const s = debouncedQuery.toLowerCase().trim()
         // TODO: FIXME
-        if (s === 'bnb') {
+        if (s === 'eth') {
           handleCurrencySelect(native)
         } else if (filteredSortedTokens.length > 0) {
           if (

@@ -10,6 +10,7 @@ import { Block } from 'state/info/types'
  */
 export const useBlocksFromTimestamps = (
   timestamps: number[],
+  chainId: number,
   sortDirection: 'asc' | 'desc' = 'desc',
   skipCount = 1000,
 ): {
@@ -25,7 +26,7 @@ export const useBlocksFromTimestamps = (
   useEffect(() => {
     const fetchData = async () => {
       const timestampsArray = JSON.parse(timestampsString)
-      const result = await getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount)
+      const result = await getBlocksFromTimestamps(timestampsArray, chainId, sortDirection, skipCount)
       if (result.length === 0) {
         setError(true)
       } else {
@@ -36,7 +37,7 @@ export const useBlocksFromTimestamps = (
     if (!blocksArray && !error) {
       fetchData()
     }
-  }, [blocksString, error, skipCount, sortDirection, timestampsString])
+  }, [blocksString, error, skipCount, sortDirection, timestampsString, chainId])
 
   return {
     blocks,

@@ -131,7 +131,7 @@ export default function AddLiquidity() {
     addError,
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
-  const poolData = useLPApr(pair)
+  const poolData = useLPApr(chainId, pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
     {
@@ -586,7 +586,7 @@ export default function AddLiquidity() {
                   ? `${getLPSymbol(currencies[Field.CURRENCY_A].symbol, currencies[Field.CURRENCY_B].symbol)}`
                   : t('Add Liquidity')
               }
-              subtitle={t('Receive LP tokens and earn 0.17% trading fees')}
+              subtitle={t('Receive LP tokens and earn 0.12% trading fees')}
               helper={t(
                 'Liquidity providers earn a 0.17% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
               )}

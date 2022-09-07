@@ -1,7 +1,6 @@
 import { Flex, Link, LinkExternal, Skeleton, Text, TimerIcon } from '@pancakeswap/uikit'
 import Balance from 'components/Balance'
 import AddToWalletButton, { AddToWalletTextOptions } from 'components/AddToWallet/AddToWalletButton'
-import { BASE_BSC_SCAN_URL } from 'config'
 import { useTranslation } from '@pancakeswap/localization'
 import { memo } from 'react'
 import { useCurrentBlock } from 'state/block/hooks'
@@ -11,6 +10,8 @@ import { getBlockExploreLink } from 'utils'
 import { getAddress, getVaultPoolAddress } from 'utils/addressHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getPoolBlockInfo } from 'views/Pools/helpers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { BASE_ETH_SCAN_URLS } from 'config'
 import MaxStakeRow from './MaxStakeRow'
 import { AprInfo, DurationAvg, PerformanceFee, TotalLocked, TotalStaked } from './Stat'
 
@@ -29,6 +30,7 @@ const PoolStatsInfo: React.FC<React.PropsWithChildren<ExpandedFooterProps>> = ({
 }) => {
   const { t } = useTranslation()
   const currentBlock = useCurrentBlock()
+  const { chainId } = useActiveWeb3React()
 
   const {
     stakingToken,
@@ -112,51 +114,60 @@ const PoolStatsInfo: React.FC<React.PropsWithChildren<ExpandedFooterProps>> = ({
       )}
       {vaultKey && <PerformanceFee userData={userData} performanceFeeAsDecimal={performanceFeeAsDecimal} />}
       <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
-        <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small>
+        {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small> */}
+        <LinkExternal href='#' bold={false} small>
           {t('See Token Info')}
         </LinkExternal>
       </Flex>
-      {!vaultKey && (
-        <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
-          <LinkExternal href={earningToken.projectLink} bold={false} small>
-            {t('View Project Site')}
-          </LinkExternal>
-        </Flex>
-      )}
-      {vaultKey && (
-        <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
-          <LinkExternal href="https://docs.pancakeswap.finance/products/syrup-pool/new-cake-pool" bold={false} small>
-            {t('View Tutorial')}
-          </LinkExternal>
-        </Flex>
-      )}
-      {poolContractAddress && (
-        <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
-          <LinkExternal
-            href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? cakeVaultContractAddress : poolContractAddress}`}
-            bold={false}
-            small
-          >
-            {t('View Contract')}
-          </LinkExternal>
-        </Flex>
-      )}
-      {account && tokenAddress && (
-        <Flex justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
-          <AddToWalletButton
-            variant="text"
-            p="0"
-            height="auto"
-            style={{ fontSize: '14px', fontWeight: '400', lineHeight: 'normal' }}
-            marginTextBetweenLogo="4px"
-            textOptions={AddToWalletTextOptions.TEXT}
-            tokenAddress={tokenAddress}
-            tokenSymbol={earningToken.symbol}
-            tokenDecimals={earningToken.decimals}
-            tokenLogo={`https://tokens.pancakeswap.finance/images/${tokenAddress}.png`}
-          />
-        </Flex>
-      )}
+      {
+        !vaultKey && (
+          <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
+            <LinkExternal href={earningToken.projectLink} bold={false} small>
+              {t('View Project Site')}
+            </LinkExternal>
+          </Flex>
+        )
+      }
+      {
+        vaultKey && (
+          <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
+            <LinkExternal href="#" bold={false} small>
+              {t('View Tutorial')}
+            </LinkExternal>
+          </Flex>
+        )
+      }
+      {
+        poolContractAddress && (
+          <Flex mb="2px" justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
+            <LinkExternal
+              href={`${BASE_ETH_SCAN_URLS[chainId]}/address/${vaultKey ? cakeVaultContractAddress : poolContractAddress}`}
+              bold={false}
+              small
+            >
+              {t('View Contract')}
+            </LinkExternal>
+          </Flex>
+        )
+      }
+      {
+        account && tokenAddress && (
+          <Flex justifyContent={alignLinksToRight ? 'flex-end' : 'flex-start'}>
+            <AddToWalletButton
+              variant="text"
+              p="0"
+              height="auto"
+              style={{ fontSize: '14px', fontWeight: '400', lineHeight: 'normal' }}
+              marginTextBetweenLogo="4px"
+              textOptions={AddToWalletTextOptions.TEXT}
+              tokenAddress={tokenAddress}
+              tokenSymbol={earningToken.symbol}
+              tokenDecimals={earningToken.decimals}
+              tokenLogo={`https://tokens.pancakeswap.finance/images/${tokenAddress}.png`}
+            />
+          </Flex>
+        )
+      }
     </>
   )
 }

@@ -94,7 +94,7 @@ const fetchDerivedPriceData = async (
   }
 
   try {
-    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500, chainId)
+    const blocks = await getBlocksFromTimestamps(timestamps, chainId, 'asc', 500)
     if (!blocks || blocks.length === 0) {
       console.error('Error fetching blocks for timestamps', timestamps)
       return null

@@ -224,6 +224,7 @@ const LimitOrders = () => {
         outputAmount: rawAmounts.output,
         owner: account,
       }
+
       handleLimitOrderSubmission(orderToSubmit)
         .then(({ hash }) => {
           setSwapState((prev) => ({

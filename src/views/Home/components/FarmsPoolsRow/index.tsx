@@ -25,7 +25,7 @@ const Grid = styled.div`
   }
 `
 
-const FarmsPoolsRow = (chainId) => {
+const FarmsPoolsRow = ({ chainId }) => {
   const [showFarms, setShowFarms] = useState(false)
   const { t } = useTranslation()
   const { observerRef, isIntersecting } = useIntersectionObserver()

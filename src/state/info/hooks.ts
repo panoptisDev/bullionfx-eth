@@ -105,7 +105,7 @@ export const usePoolDatas = (poolAddresses: string[]): PoolData[] => {
   return poolsWithData
 }
 
-export const usePoolChartData = (address: string): ChartEntry[] | undefined => {
+export const usePoolChartData = (address: string, chainId: number): ChartEntry[] | undefined => {
   const dispatch = useAppDispatch()
   const pool = useSelector((state: AppState) => state.info.pools.byAddress[address])
   const chartData = pool?.chartData
@@ -113,7 +113,7 @@ export const usePoolChartData = (address: string): ChartEntry[] | undefined => {
 
   useEffect(() => {
     const fetch = async () => {
-      const { error: fetchError, data } = await fetchPoolChartData(address)
+      const { error: fetchError, data } = await fetchPoolChartData(address, chainId)
       if (!fetchError && data) {
         dispatch(updatePoolChartData({ poolAddress: address, chartData: data }))
       }
@@ -124,7 +124,7 @@ export const usePoolChartData = (address: string): ChartEntry[] | undefined => {
     if (!chartData && !error) {
       fetch()
     }
-  }, [address, dispatch, error, chartData])
+  }, [address, dispatch, error, chartData, chainId])
 
   return chartData
 }
@@ -240,7 +240,7 @@ export const usePoolsForToken = (address: string): string[] | undefined => {
   return poolsForToken
 }
 
-export const useTokenChartData = (address: string): ChartEntry[] | undefined => {
+export const useTokenChartData = (address: string, chainId: number): ChartEntry[] | undefined => {
   const dispatch = useAppDispatch()
   const token = useSelector((state: AppState) => state.info.tokens.byAddress[address])
   const { chartData } = token
@@ -248,7 +248,7 @@ export const useTokenChartData = (address: string): ChartEntry[] | undefined => 
 
   useEffect(() => {
     const fetch = async () => {
-      const { error: fetchError, data } = await fetchTokenChartData(address)
+      const { error: fetchError, data } = await fetchTokenChartData(address, chainId)
       if (!fetchError && data) {
         dispatch(updateTokenChartData({ tokenAddress: address, chartData: data }))
       }
@@ -259,7 +259,7 @@ export const useTokenChartData = (address: string): ChartEntry[] | undefined => 
     if (!chartData && !error) {
       fetch()
     }
-  }, [address, dispatch, error, chartData])
+  }, [address, dispatch, error, chartData, chainId])
 
   return chartData
 }
@@ -268,6 +268,7 @@ export const useTokenPriceData = (
   address: string,
   interval: number,
   timeWindow: Duration,
+  chainId: number
 ): PriceChartEntry[] | undefined => {
   const dispatch = useAppDispatch()
   const token = useSelector((state: AppState) => state.info.tokens.byAddress[address])
@@ -281,7 +282,7 @@ export const useTokenPriceData = (
 
   useEffect(() => {
     const fetch = async () => {
-      const { data, error: fetchingError } = await fetchTokenPriceData(address, interval, startTimestamp)
+      const { data, error: fetchingError } = await fetchTokenPriceData(address, interval, startTimestamp, chainId)
       if (data) {
         dispatch(
           updateTokenPriceData({
@@ -299,7 +300,7 @@ export const useTokenPriceData = (
     if (!priceData && !error) {
       fetch()
     }
-  }, [address, dispatch, error, interval, oldestTimestampFetched, priceData, startTimestamp, timeWindow])
+  }, [address, dispatch, error, interval, oldestTimestampFetched, priceData, startTimestamp, timeWindow, chainId])
 
   return priceData
 }

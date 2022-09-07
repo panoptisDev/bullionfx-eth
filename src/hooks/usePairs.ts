@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import IBullPairABI from 'config/abi/IBullPair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { bullionfxTokens } from 'config/constants/tokens'
 
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
@@ -31,8 +32,22 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
   const pairAddresses = useMemo(
     () =>
       tokens.map(([tokenA, tokenB]) => {
+        if (bullionfxTokens.includes(tokenA?.symbol) && bullionfxTokens.includes(tokenB?.symbol)) {
+          try {
+            return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
+          } catch (error: any) {
+            // Debug Invariant failed related to this line
+            console.error(
+              error.msg,
+              `- pairAddresses: ${tokenA?.address}-${tokenB?.address}`,
+              `chainId: ${tokenA?.chainId}`,
+            )
+
+            return undefined
+          }
+        }
         try {
-          return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
+          return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getSushiAddress(tokenA, tokenB) : undefined
         } catch (error: any) {
           // Debug Invariant failed related to this line
           console.error(

@@ -2,7 +2,8 @@ import { gql } from 'graphql-request'
 import { mapBurns, mapMints, mapSwaps } from 'state/info/queries/helpers'
 import { BurnResponse, MintResponse, SwapResponse } from 'state/info/queries/types'
 import { Transaction } from 'state/info/types'
-import { infoClient } from 'utils/graphql'
+import { infoClient, infoClientTestnet } from 'utils/graphql'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 
 /**
  * Transactions for Transaction table on the Home page
@@ -73,9 +74,10 @@ interface TransactionResults {
   burns: BurnResponse[]
 }
 
-const fetchTopTransactions = async (): Promise<Transaction[] | undefined> => {
+const fetchTopTransactions = async (chainId: number): Promise<Transaction[] | undefined> => {
   try {
-    const data = await infoClient.request<TransactionResults>(GLOBAL_TRANSACTIONS)
+    const client = chainId === ChainId.BSC_TESTNET ? infoClientTestnet : infoClient
+    const data = await client.request<TransactionResults>(GLOBAL_TRANSACTIONS)
 
     if (!data) {
       return undefined

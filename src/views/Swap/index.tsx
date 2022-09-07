@@ -66,6 +66,8 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
 import ImportTokenWarningModal from '../../components/ImportTokenWarningModal'
 import { CommonBasesType } from '../../components/SearchModal/types'
+import replaceBrowserHistory from '../../utils/replaceBrowserHistory'
+import { currencyId } from '../../utils/currencyId'
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -307,6 +309,8 @@ export default function Swap() {
       } else {
         setSwapWarningCurrency(null)
       }
+
+      replaceBrowserHistory('inputCurrency', currencyId(currencyInput))
     },
     [onCurrencySelection],
   )
@@ -326,6 +330,8 @@ export default function Swap() {
       } else {
         setSwapWarningCurrency(null)
       }
+
+      replaceBrowserHistory('outputCurrency', currencyId(currencyOutput))
     },
 
     [onCurrencySelection],
@@ -451,6 +457,8 @@ export default function Swap() {
                           onClick={() => {
                             setApprovalSubmitted(false) // reset 2 step UI for approvals
                             onSwitchTokens()
+                            replaceBrowserHistory('inputCurrency', outputCurrencyId)
+                            replaceBrowserHistory('outputCurrency', inputCurrencyId)
                           }}
                         >
                           <ArrowDownIcon

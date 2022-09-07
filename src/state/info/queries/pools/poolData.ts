@@ -2,12 +2,13 @@
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 import { PoolData } from 'state/info/types'
-import { infoClient } from 'utils/graphql'
+import { infoClient, infoClientTestnet } from 'utils/graphql'
 import { getChangeForPeriod } from 'utils/getChangeForPeriod'
 import { getLpFeesAndApr } from 'utils/getLpFeesAndApr'
 import { getDeltaTimestamps } from 'utils/getDeltaTimestamps'
 import { useBlocksFromTimestamps } from 'views/Info/hooks/useBlocksFromTimestamps'
 import { getPercentChange } from 'views/Info/utils/infoDataHelpers'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 
 interface PoolFields {
   id: string
@@ -58,7 +59,7 @@ const POOL_AT_BLOCK = (block: number | null, pools: string[]) => {
   return `pairs(
     where: { id_in: ${addressesString} }
     ${blockString}
-    orderBy: trackedReserveBNB
+    orderBy: trackedReserveUSD
     orderDirection: desc
   ) {
     id
@@ -87,18 +88,20 @@ export const fetchPoolData = async (
   block7d: number,
   block14d: number,
   poolAddresses: string[],
+  chainId: number
 ) => {
   try {
     const query = gql`
-      query pools {
-        now: ${POOL_AT_BLOCK(null, poolAddresses)}
-        oneDayAgo: ${POOL_AT_BLOCK(block24h, poolAddresses)}
-        twoDaysAgo: ${POOL_AT_BLOCK(block48h, poolAddresses)}
-        oneWeekAgo: ${POOL_AT_BLOCK(block7d, poolAddresses)}
-        twoWeeksAgo: ${POOL_AT_BLOCK(block14d, poolAddresses)}
-      }
-    `
-    const data = await infoClient.request<PoolsQueryResponse>(query)
+        query pools {
+          now: ${POOL_AT_BLOCK(null, poolAddresses)}
+          oneDayAgo: ${POOL_AT_BLOCK(block24h, poolAddresses)}
+          twoDaysAgo: ${POOL_AT_BLOCK(block48h, poolAddresses)}
+          oneWeekAgo: ${POOL_AT_BLOCK(block7d, poolAddresses)}
+          twoWeeksAgo: ${POOL_AT_BLOCK(block14d, poolAddresses)}
+        }
+      `
+    const client = chainId === ChainId.BSC_TESTNET ? infoClientTestnet : infoClient
+    const data = await client.request<PoolsQueryResponse>(query)
     return { data, error: false }
   } catch (error) {
     console.error('Failed to fetch pool data', error)
@@ -136,10 +139,10 @@ interface PoolDatas {
 /**
  * Fetch top pools by liquidity
  */
-const usePoolDatas = (poolAddresses: string[]): PoolDatas => {
+const usePoolDatas = (poolAddresses: string[], chainId): PoolDatas => {
   const [fetchState, setFetchState] = useState<PoolDatas>({ error: false })
   const [t24h, t48h, t7d, t14d] = getDeltaTimestamps()
-  const { blocks, error: blockError } = useBlocksFromTimestamps([t24h, t48h, t7d, t14d])
+  const { blocks, error: blockError } = useBlocksFromTimestamps([t24h, t48h, t7d, t14d], chainId)
   const [block24h, block48h, block7d, block14d] = blocks ?? []
 
   useEffect(() => {
@@ -147,9 +150,10 @@ const usePoolDatas = (poolAddresses: string[]): PoolDatas => {
       const { error, data } = await fetchPoolData(
         block24h.number,
         block48h.number,
-        block7d.number,
-        block14d.number,
+        block7d?.number,
+        block14d?.number,
         poolAddresses,
+        chainId
       )
       if (error) {
         setFetchState({ error: true })
@@ -234,7 +238,7 @@ const usePoolDatas = (poolAddresses: string[]): PoolDatas => {
     if (poolAddresses.length > 0 && allBlocksAvailable && !blockError) {
       fetch()
     }
-  }, [poolAddresses, block24h, block48h, block7d, block14d, blockError])
+  }, [poolAddresses, block24h, block48h, block7d, block14d, blockError, chainId])
 
   return fetchState
 }

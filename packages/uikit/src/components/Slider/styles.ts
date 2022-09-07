@@ -46,7 +46,7 @@ export const SliderLabelContainer = styled.div`
   width: calc(100% - 30px);
 `;
 
-export const SliderLabel = styled(Text)<SliderLabelProps>`
+export const SliderLabel = styled(Text) <SliderLabelProps>`
   bottom: 0;
   font-size: 12px;
   left: ${({ progress }) => progress};

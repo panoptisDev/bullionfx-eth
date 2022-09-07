@@ -1,19 +1,19 @@
 import React from "react";
-import { baseColors, darkColors, lightColors } from "../../theme/colors";
+import { darkColors, lightColors } from "../../theme/colors";
 import { Flex, Box } from "../Box";
-import { Link } from "../Link";
+// import { Link } from "../Link";
 import {
   StyledFooter,
   StyledIconMobileContainer,
-  StyledList,
-  StyledListItem,
-  StyledText,
-  StyledSocialLinks,
+  // StyledList,
+  // StyledListItem,
+  // StyledText,
+  // StyledSocialLinks,
   StyledToolsContainer,
 } from "./styles";
 import { FooterProps } from "./types";
 import { ThemeSwitcher } from "../ThemeSwitcher";
-import LangSelector from "../LangSelector/LangSelector";
+// import LangSelector from "../LangSelector/LangSelector";
 import CakePrice from "../CakePrice/CakePrice";
 import { LogoWithTextIcon, ArrowForwardIcon } from "../Svg";
 import { Button } from "../Button";
@@ -36,7 +36,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         <StyledIconMobileContainer display={["block", null, "none"]}>
           <LogoWithTextIcon isDark width="130px" />
         </StyledIconMobileContainer>
-        <Flex
+        {/* <Flex
           order={[2, null, 1]}
           flexDirection={["column", null, "row"]}
           justifyContent="space-between"
@@ -68,8 +68,8 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           <Box display={["none", null, "block"]}>
             <LogoWithTextIcon isDark width="160px" />
           </Box>
-        </Flex>
-        <StyledSocialLinks order={[2]} pb={["42px", null, "32px"]} mb={["0", null, "32px"]} />
+        </Flex> */}
+        {/* <StyledSocialLinks order={[2]} pb={["42px", null, "32px"]} mb={["0", null, "32px"]} /> */}
         <StyledToolsContainer
           order={[1, null, 3]}
           flexDirection={["column", null, "row"]}
@@ -77,13 +77,13 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         >
           <Flex order={[2, null, 1]} alignItems="center">
             <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
-            <LangSelector
+            {/* <LangSelector
               currentLang={currentLang}
               langs={langs}
               setLang={setLang}
               color={darkColors.textSubtle as keyof Colors}
               dropdownPosition="top-right"
-            />
+            /> */}
           </Flex>
           <Flex order={[1, null, 2]} mb={["24px", null, "0"]} justifyContent="space-between" alignItems="center">
             <Box mr="20px">
@@ -91,7 +91,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             </Box>
             <Button
               as="a"
-              href="https://pancakeswap.finance/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82&chainId=56"
+              href="/swap?outputCurrency=0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f&chainId=5"
               target="_blank"
               scale="sm"
               endIcon={<ArrowForwardIcon color={lightColors.backgroundAlt} />}

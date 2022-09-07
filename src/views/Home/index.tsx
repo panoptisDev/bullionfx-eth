@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import PageSection from 'components/PageSection'
-// import { useWeb3React } from '@pancakeswap/wagmi'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import useTheme from 'hooks/useTheme'
 // import Container from 'components/Layout/Container'
 import { PageMeta } from 'components/Layout/Page'
@@ -45,7 +45,7 @@ const StyledHeroSection = styled(PageSection)`
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { theme } = useTheme()
-  // const { account } = useWeb3React()
+  const { chainId } = useWeb3React()
   // const chainId = useActiveChainId()
 
   const HomeSectionContainerStyles = { margin: '0', width: '100%', maxWidth: '968px' }
@@ -110,7 +110,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           </InnerWedgeWrapper>
         </OuterWedgeWrapper>
         <SalesSection {...earnSectionData(t)} />
-        <FarmsPoolsRow />
+        <FarmsPoolsRow chainId={chainId} />
       </PageSection>
       {/* <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}

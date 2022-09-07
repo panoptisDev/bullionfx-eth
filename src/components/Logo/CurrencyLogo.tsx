@@ -46,11 +46,11 @@ export default function CurrencyLogo({
     }
     return <StyledLogo size={size} srcs={[`/images/chains/${currency.chainId || ChainId.BSC}.png`]} width={size} style={style} />
   }
-  if (currency?.symbol === "tBULL") {
+  if (currency?.symbol === "BULL") {
     return <StyledLogo size={size} srcs={[`/images/chains/bull.webp`]} width={size} style={style} />
   }
   if (srcs.length === 0) {
-    switch (currency.chainId) {
+    switch (currency?.chainId || ChainId.BSC) {
       case ChainId.BSC_TESTNET:
         if (currency instanceof Token || currency instanceof WrappedTokenInfo) srcs.push(`/images/tokens/testnet/${currency.address}.png`)
         break

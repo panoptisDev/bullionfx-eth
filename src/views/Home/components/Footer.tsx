@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex, Heading, Text, Link, useMatchBreakpointsContext } from '@pancakeswap/uikit'
+import { Flex, Heading, Text, useMatchBreakpointsContext } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Container from 'components/Layout/Container'
@@ -113,9 +113,9 @@ const Footer = () => {
           {t('No registration needed.')}
         </Text>
 
-        <Link external href="https://docs.pancakeswap.finance/">
+        {/* <Link external href="https://docs.pancakeswap.finance/">
           {t('Learn how to start')}
-        </Link>
+        </Link> */}
         {!account && <ConnectWalletButton mt="24px" />}
       </Wrapper>
     </>

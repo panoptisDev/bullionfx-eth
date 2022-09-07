@@ -1,9 +1,10 @@
 /* eslint-disable no-await-in-loop */
-import { PCS_V2_START } from 'config/constants/info'
+import { PCS_V2_START, PCS_V2_START_GOERLI } from 'config/constants/info'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 import { ChartEntry } from 'state/info/types'
-import { infoClient } from 'utils/graphql'
+import { infoClient, infoClientTestnet } from 'utils/graphql'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 import { fetchChartData, mapDayData } from '../helpers'
 import { PancakeDayDatasResponse } from '../types'
 
@@ -12,7 +13,7 @@ import { PancakeDayDatasResponse } from '../types'
  */
 const PANCAKE_DAY_DATAS = gql`
   query overviewCharts($startTime: Int!, $skip: Int!) {
-    pancakeDayDatas(first: 1000, skip: $skip, where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
+    bullionFXDayDatas(first: 1000, skip: $skip, where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
       date
       dailyVolumeUSD
       totalLiquidityUSD
@@ -20,16 +21,18 @@ const PANCAKE_DAY_DATAS = gql`
   }
 `
 
-const getOverviewChartData = async (skip: number): Promise<{ data?: ChartEntry[]; error: boolean }> => {
+const getOverviewChartData = async (skip: number, chainId: number): Promise<{ data?: ChartEntry[]; error: boolean }> => {
   try {
-    const { pancakeDayDatas } = await infoClient.request<PancakeDayDatasResponse>(PANCAKE_DAY_DATAS, {
-      startTime: PCS_V2_START,
+    const client = chainId === ChainId.BSC_TESTNET ? infoClientTestnet : infoClient
+    const startTime = chainId === ChainId.BSC_TESTNET ? PCS_V2_START_GOERLI : PCS_V2_START
+    const { pancakeDayDatas } = await client.request<PancakeDayDatasResponse>(PANCAKE_DAY_DATAS, {
+      startTime,
       skip,
     })
     const data = pancakeDayDatas.map(mapDayData)
     return { data, error: false }
   } catch (error) {
-    console.error('Failed to fetch overview chart data', error)
+    console.error(chainId, 'Failed to fetch overview chart data', error)
     return { error: true }
   }
 }
@@ -37,7 +40,7 @@ const getOverviewChartData = async (skip: number): Promise<{ data?: ChartEntry[]
 /**
  * Fetch historic chart data
  */
-const useFetchGlobalChartData = (): {
+const useFetchGlobalChartData = (chainId): {
   error: boolean
   data: ChartEntry[] | undefined
 } => {
@@ -46,7 +49,7 @@ const useFetchGlobalChartData = (): {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await fetchChartData(getOverviewChartData)
+      const { data } = await fetchChartData(getOverviewChartData, chainId)
       if (data) {
         setOverviewChartData(data)
       } else {
@@ -56,7 +59,7 @@ const useFetchGlobalChartData = (): {
     if (!overviewChartData && !error) {
       fetch()
     }
-  }, [overviewChartData, error])
+  }, [overviewChartData, error, chainId])
 
   return {
     error,

@@ -1,29 +1,31 @@
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 import { ProtocolData } from 'state/info/types'
-import { infoClient } from 'utils/graphql'
+import { infoClient, infoClientTestnet } from 'utils/graphql'
 import { getChangeForPeriod } from 'utils/getChangeForPeriod'
 import { getDeltaTimestamps } from 'utils/getDeltaTimestamps'
 import { useBlocksFromTimestamps } from 'views/Info/hooks/useBlocksFromTimestamps'
 import { getPercentChange } from 'views/Info/utils/infoDataHelpers'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 
-interface PancakeFactory {
+interface BullionFXFactory {
   totalTransactions: string
   totalVolumeUSD: string
   totalLiquidityUSD: string
 }
 
 interface OverviewResponse {
-  pancakeFactories: PancakeFactory[]
+  bullionFXFactories: BullionFXFactory[]
 }
 
 /**
  * Latest Liquidity, Volume and Transaction count
  */
-const getOverviewData = async (block?: number): Promise<{ data?: OverviewResponse; error: boolean }> => {
+const getOverviewData = async (chainId: number, block?: number): Promise<{ data?: OverviewResponse; error: boolean }> => {
+  const client = chainId === ChainId.BSC_TESTNET ? infoClientTestnet : infoClient
   try {
     const query = gql`query overview {
-      pancakeFactories(
+      bullionFXFactories(
         ${block ? `block: { number: ${block}}` : ``}
         first: 1) {
         totalTransactions
@@ -31,15 +33,15 @@ const getOverviewData = async (block?: number): Promise<{ data?: OverviewRespons
         totalLiquidityUSD
       }
     }`
-    const data = await infoClient.request<OverviewResponse>(query)
+    const data = await client.request<OverviewResponse>(query)
     return { data, error: false }
   } catch (error) {
-    console.error('Failed to fetch info overview', error)
+    // console.error('Failed to fetch info overview', error)
     return { data: null, error: true }
   }
 }
 
-const formatPancakeFactoryResponse = (rawPancakeFactory?: PancakeFactory) => {
+const formatPancakeFactoryResponse = (rawPancakeFactory?: BullionFXFactory) => {
   if (rawPancakeFactory) {
     return {
       totalTransactions: parseFloat(rawPancakeFactory.totalTransactions),
@@ -55,25 +57,25 @@ interface ProtocolFetchState {
   data?: ProtocolData
 }
 
-const useFetchProtocolData = (): ProtocolFetchState => {
+const useFetchProtocolData = (chainId): ProtocolFetchState => {
   const [fetchState, setFetchState] = useState<ProtocolFetchState>({
     error: false,
   })
   const [t24, t48] = getDeltaTimestamps()
-  const { blocks, error: blockError } = useBlocksFromTimestamps([t24, t48])
+  const { blocks, error: blockError } = useBlocksFromTimestamps([t24, t48], chainId)
   const [block24, block48] = blocks ?? []
 
   useEffect(() => {
     const fetch = async () => {
       const [{ error, data }, { error: error24, data: data24 }, { error: error48, data: data48 }] = await Promise.all([
-        getOverviewData(),
-        getOverviewData(block24?.number ?? undefined),
-        getOverviewData(block48?.number ?? undefined),
+        getOverviewData(chainId),
+        getOverviewData(chainId, block24?.number ?? undefined),
+        getOverviewData(chainId, block48?.number ?? undefined),
       ])
       const anyError = error || error24 || error48
-      const overviewData = formatPancakeFactoryResponse(data?.pancakeFactories?.[0])
-      const overviewData24 = formatPancakeFactoryResponse(data24?.pancakeFactories?.[0])
-      const overviewData48 = formatPancakeFactoryResponse(data48?.pancakeFactories?.[0])
+      const overviewData = formatPancakeFactoryResponse(data?.bullionFXFactories?.[0])
+      const overviewData24 = formatPancakeFactoryResponse(data24?.bullionFXFactories?.[0])
+      const overviewData48 = formatPancakeFactoryResponse(data48?.bullionFXFactories?.[0])
       const allDataAvailable = overviewData && overviewData24 && overviewData48
       if (anyError || !allDataAvailable) {
         setFetchState({
@@ -110,7 +112,7 @@ const useFetchProtocolData = (): ProtocolFetchState => {
     if (allBlocksAvailable && !blockError && !fetchState.data) {
       fetch()
     }
-  }, [block24, block48, blockError, fetchState])
+  }, [block24, block48, blockError, fetchState, chainId])
 
   return fetchState
 }

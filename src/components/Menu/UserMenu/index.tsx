@@ -13,26 +13,26 @@ import {
 } from '@pancakeswap/uikit'
 import Trans from 'components/Trans'
 import useAuth from 'hooks/useAuth'
-import NextLink from 'next/link'
-import { ChainId } from '@pancakeswap/sdk'
+// import NextLink from 'next/link'
+// import { ChainId } from '@pancakeswap/sdk'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useTranslation } from '@pancakeswap/localization'
 import WalletModal, { WalletView } from './WalletModal'
-import ProfileUserMenuItem from './ProfileUserMenuItem'
+// import ProfileUserMenuItem from './ProfileUserMenuItem'
 import WalletUserMenuItem from './WalletUserMenuItem'
 
 const UserMenu = () => {
   const { t } = useTranslation()
-  const { account, chain, chainId } = useWeb3React()
+  const { account, chain } = useWeb3React()
   const { logout } = useAuth()
   const { hasPendingTransactions, pendingNumber } = usePendingTransactions()
-  const { isInitialized, isLoading, profile } = useProfile()
+  const { profile } = useProfile()
   const [onPresentWalletModal] = useModal(<WalletModal initialView={WalletView.WALLET_INFO} />)
   const [onPresentTransactionModal] = useModal(<WalletModal initialView={WalletView.TRANSACTIONS} />)
   const [onPresentWrongNetworkModal] = useModal(<WalletModal initialView={WalletView.WRONG_NETWORK} />)
-  const hasProfile = isInitialized && !!profile
+  // const hasProfile = isInitialized && !!profile
   const avatarSrc = profile?.nft?.image?.thumbnail
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
@@ -65,7 +65,7 @@ const UserMenu = () => {
           {hasPendingTransactions && <RefreshIcon spin />}
         </UserMenuItem>
         <UserMenuDivider />
-        <NextLink href={`/profile/${account?.toLowerCase()}`} passHref>
+        {/* <NextLink href={`/profile/${account?.toLowerCase()}`} passHref>
           <UserMenuItem as="a" disabled={isWrongNetwork || chainId !== ChainId.BSC}>
             {t('Your NFTs')}
           </UserMenuItem>
@@ -74,7 +74,7 @@ const UserMenu = () => {
           isLoading={isLoading}
           hasProfile={hasProfile}
           disabled={isWrongNetwork || chainId !== ChainId.BSC}
-        />
+        /> */}
         <UserMenuDivider />
         <UserMenuItem as="button" onClick={logout}>
           <Flex alignItems="center" justifyContent="space-between" width="100%">

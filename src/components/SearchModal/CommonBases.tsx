@@ -1,7 +1,7 @@
 import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import { Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
-import useNativeCurrency from 'hooks/useNativeCurrency'
+// import useNativeCurrency from 'hooks/useNativeCurrency'
 import { useTranslation } from '@pancakeswap/localization'
 
 import { SUGGESTED_BASES } from 'config/constants/exchange'
@@ -55,7 +55,7 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
-  const native = useNativeCurrency()
+  // const native = useNativeCurrency()
   const { t } = useTranslation()
   const pinTokenDescText = commonBasesType === CommonBasesType.SWAP_LIMITORDER ? t('Common tokens') : t('Common bases')
 
@@ -68,7 +68,7 @@ export default function CommonBases({
         )}
       </AutoRow>
       <RowWrapper>
-        <ButtonWrapper>
+        {/* <ButtonWrapper>
           <BaseWrapper
             onClick={() => {
               if (!selectedCurrency || !selectedCurrency.isNative) {
@@ -80,7 +80,7 @@ export default function CommonBases({
             <CurrencyLogo currency={native} style={{ marginRight: 8 }} />
             <Text>{native?.symbol}</Text>
           </BaseWrapper>
-        </ButtonWrapper>
+        </ButtonWrapper> */}
         {(chainId ? SUGGESTED_BASES[chainId] : []).map((token: Token) => {
           const selected = selectedCurrency?.equals(token)
           return (

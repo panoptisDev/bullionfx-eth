@@ -31,7 +31,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
     logout()
   }
 
-  const isBSC = native.chainId === ChainId.BSC
+  const isETH = native.chainId === ChainId.BSC
 
   return (
     <>
@@ -57,8 +57,8 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       )}
       <Flex alignItems="center" justifyContent="space-between">
         <Flex>
-          {!isBSC && <Image width={24} height={24} src={`/images/chains/${native.chainId || ChainId.BSC}.png`} unoptimized />}
-          <Text ml={isBSC ? 0 : '8px'} color="textSubtle">
+          {!isETH && <Image width={24} height={24} src={`/images/chains/${native.chainId || ChainId.BSC}.png`} unoptimized />}
+          <Text ml={isETH ? 0 : '8px'} color="textSubtle">
             {native.symbol} {t('Balance')}
           </Text>
         </Flex>
@@ -66,9 +66,9 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       </Flex>
       <Flex alignItems="center" justifyContent="space-between" mb="24px" mt="12px">
         <Flex alignItems="center">
-          {!isBSC && <Image width={24} height={24} src="/images/chains/56.png" unoptimized />}
-          <Text ml={isBSC ? 0 : '8px'} color="textSubtle">
-            {t('CAKE Balance')}
+          {!isETH && <Image width={24} height={24} src="/images/chains/bull.webp" unoptimized />}
+          <Text ml={isETH ? 0 : '8px'} color="textSubtle">
+            {t('BULL Balance')}
           </Text>
         </Flex>
         {cakeFetchStatus !== FetchStatus.Fetched ? (

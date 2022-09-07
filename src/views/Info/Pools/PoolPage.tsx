@@ -29,6 +29,7 @@ import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable
 import Percent from 'views/Info/components/Percent'
 import SaveIcon from 'views/Info/components/SaveIcon'
 import { formatAmount } from 'utils/formatInfoNumbers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 const ContentLayout = styled.div`
   display: grid;
@@ -64,6 +65,7 @@ const LockedTokensContainer = styled(Flex)`
 const PoolPage: React.FC<React.PropsWithChildren<{ address: string }>> = ({ address: routeAddress }) => {
   const { isXs, isSm } = useMatchBreakpointsContext()
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const [showWeeklyData, setShowWeeklyData] = useState(0)
   const { tooltip, tooltipVisible, targetRef } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
@@ -74,7 +76,7 @@ const PoolPage: React.FC<React.PropsWithChildren<{ address: string }>> = ({ addr
   const address = routeAddress.toLowerCase()
 
   const poolData = usePoolDatas([address])[0]
-  const chartData = usePoolChartData(address)
+  const chartData = usePoolChartData(address, chainId)
   const transactions = usePoolTransactions(address)
 
   const [watchlistPools, addPoolToWatchlist] = useWatchlistPools()

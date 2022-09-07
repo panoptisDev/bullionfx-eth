@@ -1,7 +1,7 @@
 import { Flex, Heading, Skeleton, Text } from '@pancakeswap/uikit'
 import Balance from 'components/Balance'
 import bullAbi from 'config/abi/bull.json'
-import { ethTokens } from 'config/constants/tokens'
+import { ethTokens, ethTokensGoerli } from 'config/constants/tokens'
 import { useTranslation } from '@pancakeswap/localization'
 import useIntersectionObserver from 'hooks/useIntersectionObserver'
 import { useEffect, useState } from 'react'
@@ -14,6 +14,7 @@ import { SLOW_INTERVAL } from 'config/constants'
 import { BigNumber } from '@ethersproject/bignumber'
 import { getCakeVaultV2Contract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { ChainId } from '../../../../packages/swap-sdk/src/constants'
 
 const StyledColumn = styled(Flex) <{ noMobileBorder?: boolean; noDesktopBorder?: boolean }>`
   flex-direction: column;
@@ -73,7 +74,7 @@ const emissionsPerBlock = 12.75
  * https://twitter.com/PancakeSwap/status/1523913527626702849
  * https://bscscan.com/tx/0xd5ffea4d9925d2f79249a4ce05efd4459ed179152ea5072a2df73cd4b9e88ba7
  */
-const planetFinanceBurnedTokensWei = BigNumber.from('637407922445268000000000')
+const planetFinanceBurnedTokensWei = BigNumber.from('0')
 
 const CakeDataRow = () => {
   const { chainId } = useActiveWeb3React()
@@ -90,9 +91,10 @@ const CakeDataRow = () => {
   } = useSWR(
     loadData ? ['cakeDataRow'] : null,
     async () => {
-      const totalSupplyCall = { address: ethTokens.bull.address, name: 'totalSupply' }
+      const _bull = chainId === ChainId.BSC_TESTNET ? ethTokensGoerli.bull.address : ethTokens.bull.address
+      const totalSupplyCall = { address: _bull, name: 'totalSupply' }
       const burnedTokenCall = {
-        address: ethTokens.bull.address,
+        address: _bull,
         name: 'balanceOf',
         params: ['0x000000000000000000000000000000000000dEaD'],
       }
