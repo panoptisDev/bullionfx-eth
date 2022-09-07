@@ -57,7 +57,7 @@ const Apr: React.FC<React.PropsWithChildren<AprProps>> = ({
 }) => {
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddress, tokenAddress })
   const { chainId } = useActiveWeb3React()
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}${chainId ? "?chainId=" + chainId : ''}`
+  const addLiquidityUrl = chainId ? `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}${"?chainId="}${chainId}` : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   return originalValue !== 0 ? (
     <Container>
       {originalValue ? (

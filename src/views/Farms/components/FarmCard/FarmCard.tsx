@@ -75,7 +75,7 @@ const FarmCard: React.FC<React.PropsWithChildren<FarmCardProps>> = ({
     quoteTokenAddress: farm.quoteToken.address,
     tokenAddress: farm.token.address,
   })
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}${chainId ? '?chainId=' + chainId : ''}`
+  const addLiquidityUrl = chainId ? `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}${'?chainId='}${chainId}` : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const lpAddress = getAddress(farm.lpAddresses)
   const isPromotedFarm = farm.token.symbol === 'BULL'
 
