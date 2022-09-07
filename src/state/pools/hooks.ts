@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { useWeb3React } from '@pancakeswap/wagmi'
+// import { useWeb3React } from '@pancakeswap/wagmi'
 import { batch, useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useFastRefreshEffect, useSlowRefreshEffect } from 'hooks/useRefreshEffect'
@@ -79,7 +79,7 @@ export const useDeserializedPoolByVaultKey = (vaultKey) => {
 }
 
 export const usePoolsPageFetch = () => {
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const dispatch = useAppDispatch()
   useFetchPublicPoolsData()
 
@@ -105,7 +105,7 @@ export const usePoolsPageFetch = () => {
 }
 
 export const useCakeVaultUserData = () => {
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const dispatch = useAppDispatch()
 
   useFastRefreshEffect(() => {
@@ -116,7 +116,7 @@ export const useCakeVaultUserData = () => {
 }
 
 export const useFetchIfo = () => {
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const dispatch = useAppDispatch()
 
   useFastRefreshEffect(() => {

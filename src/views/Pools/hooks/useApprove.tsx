@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useWeb3React } from '@pancakeswap/wagmi'
+// import { useWeb3React } from '@pancakeswap/wagmi'
 import { Contract } from '@ethersproject/contracts'
 import { MaxUint256 } from '@ethersproject/constants'
 import { useAppDispatch } from 'state'
@@ -13,6 +13,7 @@ import useCatchTxError from 'hooks/useCatchTxError'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useCakeApprovalStatus from 'hooks/useCakeApprovalStatus'
 import useCakeApprove from 'hooks/useCakeApprove'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol) => {
   const { toastSuccess } = useToast()
@@ -20,7 +21,7 @@ export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol)
   const { callWithGasPrice } = useCallWithGasPrice()
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const sousChefContract = useSousChef(sousId, chainId)
 
   const handleApprove = useCallback(async () => {

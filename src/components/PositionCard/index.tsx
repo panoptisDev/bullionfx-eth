@@ -19,8 +19,9 @@ import { useTranslation } from '@pancakeswap/localization'
 import useTotalSupply from 'hooks/useTotalSupply'
 import useBUSDPrice from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
-import { useWeb3React } from '@pancakeswap/wagmi'
+// import { useWeb3React } from '@pancakeswap/wagmi'
 import { BIG_INT_ZERO } from 'config/constants/exchange'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 import { useTokenBalance } from '../../state/wallet/hooks'
 import { currencyId } from '../../utils/currencyId'
@@ -85,7 +86,7 @@ const useLPValues = (account, pair, currency0, currency1) => {
 
 export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
   const { t } = useTranslation()
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const poolData = useLPApr(chainId, pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
@@ -198,7 +199,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
 
 export default function FullPositionCard({ pair, ...props }: PositionCardProps) {
   const { t } = useTranslation()
-  const { chainId, account } = useWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const poolData = useLPApr(chainId, pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),

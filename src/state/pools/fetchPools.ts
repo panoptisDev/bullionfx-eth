@@ -82,7 +82,7 @@ export const fetchPoolsStakingLimits = async (
 ): Promise<{ [key: string]: { stakingLimit: BigNumber; numberBlocksForUserLimit: number } }> => {
   const pools = chainId === ChainId.BSC_TESTNET ? poolsTestnet : poolsConfig
   const validPools = pools
-    .filter((p) => p.stakingToken.symbol !== 'BNB' && !p.isFinished)
+    .filter((p) => p.stakingToken.symbol !== 'ETH' && !p.isFinished)
     .filter((p) => !poolsWithStakingLimit.includes(p.sousId))
 
   // Get the staking limit for each valid pool

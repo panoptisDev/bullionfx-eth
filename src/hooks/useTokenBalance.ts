@@ -11,6 +11,7 @@ import { BIG_ZERO } from 'utils/bigNumber'
 import { ethRpcProvider } from 'utils/providers'
 import { useTokenContract } from './useContract'
 import { useSWRContract } from './useSWRContract'
+import useActiveWeb3React from './useActiveWeb3React'
 
 const useTokenBalance = (tokenAddress: string, forceBSC?: boolean) => {
   const { account } = useWeb3React()
@@ -50,7 +51,7 @@ export const useGetBnbBalance = () => {
 }
 
 export const useGetCakeBalance = () => {
-  const { chainId } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const { balance, fetchStatus } = useTokenBalance(BULL[chainId]?.address || BULL[ChainId.BSC]?.address, false)
 
   // TODO: Remove ethers conversion once useTokenBalance is converted to ethers.BigNumber
