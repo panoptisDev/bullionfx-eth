@@ -50,7 +50,7 @@ const fetchPairPriceData = async ({ pairId, timeWindow, chainId }: fetchPairData
         return { data: pairHoursData, error: false }
       }
       case PairDataTimeWindowEnum.MONTH: {
-        const data = await requestWithTimeout<PairHoursDatasResponse>(client, pairDayDatas, {
+        const data = await requestWithTimeout<PairDayDatasResponse>(client, pairDayDatas, {
           pairId,
           first: timeWindowIdsCountMapping[timeWindow],
         })
