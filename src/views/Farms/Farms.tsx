@@ -28,7 +28,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Table from './components/FarmTable/FarmTable'
 import FarmTabButtons from './components/FarmTabButtons'
 import { FarmWithStakedValue } from './components/types'
-import { BCakeBoosterCard } from './components/BCakeBoosterCard'
+// import { BCakeBoosterCard } from './components/BCakeBoosterCard'
 
 const ControlContainer = styled.div`
   display: flex;
