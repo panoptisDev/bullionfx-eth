@@ -6,7 +6,6 @@ import {
   CardFooter,
   Flex,
   HelpIcon,
-  Link,
   RocketIcon,
   Text,
   useTooltip,

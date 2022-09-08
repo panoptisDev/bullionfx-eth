@@ -333,9 +333,9 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
               </Button>
             </NextLinkFromReactRouter> */}
           </Box>
-          <Box>
+          {/* <Box>
             <BCakeBoosterCard />
-          </Box>
+          </Box> */}
         </FarmFlexWrapper>
       </PageHeader>
       <Page>
