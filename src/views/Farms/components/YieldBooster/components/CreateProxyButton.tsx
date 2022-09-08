@@ -10,8 +10,9 @@ import { useBCakeFarmBoosterProxyFactoryContract } from 'hooks/useContract'
 const MAX_GAS_LIMIT = 2500000
 
 const CreateProxyButton = (props) => {
+  const { chainId } = props
   const { t } = useTranslation()
-  const farmBoosterProxyFactoryContract = useBCakeFarmBoosterProxyFactoryContract()
+  const farmBoosterProxyFactoryContract = useBCakeFarmBoosterProxyFactoryContract(chainId)
   const [isCreateProxyLoading, setIsCreateProxyLoading] = useState(false)
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError, loading } = useCatchTxError()

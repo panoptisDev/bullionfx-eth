@@ -364,9 +364,9 @@ export function useBCakeFarmBoosterContract(withSignerIfPossible = true) {
   )
 }
 
-export function useBCakeFarmBoosterProxyFactoryContract(withSignerIfPossible = true) {
+export function useBCakeFarmBoosterProxyFactoryContract(chainId: number, withSignerIfPossible = true) {
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
-  return useMemo(() => getBCakeFarmBoosterProxyFactoryContract(providerOrSigner), [providerOrSigner])
+  return useMemo(() => getBCakeFarmBoosterProxyFactoryContract(chainId, providerOrSigner), [providerOrSigner])
 }
 
 export function useBCakeProxyContract(proxyContractAddress: string, withSignerIfPossible = true) {

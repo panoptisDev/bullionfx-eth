@@ -1,9 +1,9 @@
 import { useEffect, useCallback, useState, useMemo, useRef, createContext } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { Image, Heading, Toggle, Text, Button, ArrowForwardIcon, Flex, Box } from '@pancakeswap/uikit'
+import { Image, Heading, Toggle, Text, Flex, Box } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
-import { NextLinkFromReactRouter } from 'components/NextLink'
+// import { NextLinkFromReactRouter } from 'components/NextLink'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
@@ -324,14 +324,14 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
             <FarmH2 scale="lg" color="text">
               {t('Stake LP tokens to earn.')}
             </FarmH2>
-            <NextLinkFromReactRouter to="/farms/auction" prefetch={false}>
+            {/* <NextLinkFromReactRouter to="/farms/auction" prefetch={false}>
               <Button p="0" variant="text">
                 <Text color="primary" bold fontSize="16px" mr="4px">
                   {t('Community Auctions')}
                 </Text>
                 <ArrowForwardIcon color="primary" />
               </Button>
-            </NextLinkFromReactRouter>
+            </NextLinkFromReactRouter> */}
           </Box>
           <Box>
             <BCakeBoosterCard />

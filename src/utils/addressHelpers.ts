@@ -117,6 +117,6 @@ export const getBCakeFarmBoosterAddress = (chainId?: number) => {
   return getAddress(addresses.bBullFarmBooster, chainId)
 }
 
-export const getBCakeFarmBoosterProxyFactoryAddress = () => {
-  return getAddress(addresses.bBullFarmBoosterProxyFactory)
+export const getBCakeFarmBoosterProxyFactoryAddress = (chainId) => {
+  return getAddress(addresses.bBullFarmBoosterProxyFactory, chainId)
 }

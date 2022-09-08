@@ -352,11 +352,10 @@ export const getBCakeFarmBoosterContract = (chainId: number, signer?: Signer | P
   return getContract(bBullFarmBoosterAbi, getBCakeFarmBoosterAddress(chainId), chainId, signer) as BBullFarmBooster
 }
 
-export const getBCakeFarmBoosterProxyFactoryContract = (signer?: Signer | Provider) => {
-  const chainId = 5
+export const getBCakeFarmBoosterProxyFactoryContract = (chainId: number, signer?: Signer | Provider) => {
   return getContract(
     bBullFarmBoosterProxyFactoryAbi,
-    getBCakeFarmBoosterProxyFactoryAddress(),
+    getBCakeFarmBoosterProxyFactoryAddress(chainId),
     chainId,
     signer,
   ) as BBullFarmBoosterProxyFactory

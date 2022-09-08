@@ -74,15 +74,15 @@ export const BCakeBoosterCard = () => {
     <>
       <Box mb="20px">
         {t(
-          'Yield Boosters allow you to boost your farming yields by locking CAKE in the fixed-term staking CAKE pool. The more CAKE you lock, and the longer you lock them, the higher the boost you will receive.',
+          'Yield Boosters allow you to boost your farming yields by locking BULL in the fixed-term staking BULL pool. The more BULL you lock, and the longer you lock them, the higher the boost you will receive.',
         )}
       </Box>
-      <Box>
+      {/* <Box>
         {t('To learn more, check out the')}
         <Link target="_blank" href="https://medium.com/pancakeswap/introducing-bcake-farm-yield-boosters-b27b7a6f0f84">
           {t('Medium Article')}
         </Link>
-      </Box>
+      </Box> */}
     </>
   )
 
@@ -113,7 +113,7 @@ export const BCakeBoosterCard = () => {
 
 const CardContent: React.FC = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const { proxyCreated, refreshProxyAddress } = useBCakeProxyContractAddress(account)
   const { maxBoostCounts, remainingCounts } = useUserBoosterStatus(account)
   const { locked, lockedEnd } = useUserLockedCakeStatus()
@@ -127,7 +127,7 @@ const CardContent: React.FC = () => {
           {t('Connect wallet to view booster')}
         </Text>
         <Text color="textSubtle" fontSize={12} mb="16px">
-          {t('An active fixed-term CAKE staking position is required for activating farm yield boosters.')}
+          {t('An active fixed-term BULL staking position is required for activating farm yield boosters.')}
         </Text>
         <ConnectWalletButton width="100%" style={{ backgroundColor: theme.colors.textSubtle }} />
       </Box>
@@ -153,7 +153,7 @@ const CardContent: React.FC = () => {
           {t('Locked staking is ended')}
         </Text>
         <Text color="textSubtle" fontSize={12} mb="16px">
-          {t('An active fixed-term CAKE staking position is required for activating farm yield boosters.')}
+          {t('An active fixed-term BULL staking position is required for activating farm yield boosters.')}
         </Text>
         <Button onClick={() => push('/pools')} width="100%" style={{ backgroundColor: theme.colors.textSubtle }}>
           {t('Go to Pool')}
@@ -169,7 +169,7 @@ const CardContent: React.FC = () => {
         <Text color="textSubtle" fontSize={12} mb="16px">
           {t('A one-time setup is required for enabling farm yield boosters.')}
         </Text>
-        <CreateProxyButton onDone={refreshProxyAddress} style={{ backgroundColor: theme.colors.textSubtle }} />
+        <CreateProxyButton onDone={refreshProxyAddress} chainId={chainId} style={{ backgroundColor: theme.colors.textSubtle }} />
       </Box>
     )
   }
