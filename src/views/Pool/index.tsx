@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import styled from 'styled-components'
-import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@pancakeswap/uikit'
+import { Text, CardBody, CardFooter, Button, AddIcon } from '@pancakeswap/uikit'
 import Link from 'next/link'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
@@ -90,7 +90,7 @@ export default function Pool() {
         <AppHeader title={t('Your Liquidity')} subtitle={t('Remove liquidity to receive tokens back')} />
         <Body>
           {renderBody()}
-          {account && !v2IsLoading && (
+          {/* {account && !v2IsLoading && (
             <Flex flexDirection="column" alignItems="center" mt="24px">
               <Text color="textSubtle" mb="8px">
                 {t("Don't see a pool you joined?")}
@@ -101,7 +101,7 @@ export default function Pool() {
                 </Button>
               </Link>
             </Flex>
-          )}
+          )} */}
         </Body>
         <CardFooter style={{ textAlign: 'center' }}>
           <Link href="/add" passHref>

@@ -315,7 +315,7 @@ export default function FullPositionCard({ pair, ...props }: PositionCardProps) 
                 startIcon={<AddIcon color="primary" />}
                 width="100%"
               >
-                {t('Add liquidity instead')}
+                {t('Add more liquidity')}
               </Button>
             </Flex>
           )}
