@@ -29,6 +29,7 @@ import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToU
 import { useLPApr } from 'state/swap/hooks'
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
 import { BULL, USDC, GOLD } from 'config/constants/tokens'
+import { useUSDCCurrencyAmount } from 'hooks/useUSDCPrice'
 import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -567,6 +568,16 @@ export default function AddLiquidity() {
       (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
     )
 
+  const amountInDollarA = useUSDCCurrencyAmount(
+    currencies[Field.CURRENCY_A],
+    Number.isFinite(+maxAmounts[Field.CURRENCY_A]) ? +maxAmounts[Field.CURRENCY_A] : undefined,
+  )
+
+  const amountInDollarB = useUSDCCurrencyAmount(
+    currencies[Field.CURRENCY_B],
+    Number.isFinite(+maxAmounts[Field.CURRENCY_B]) ? +maxAmounts[Field.CURRENCY_B] : undefined,
+  )
+
   return (
     <Page>
       <AppBody>
@@ -609,7 +620,7 @@ export default function AddLiquidity() {
                 )}
                 <CurrencyInputPanel
                   disableCurrencySelect={canZap}
-                  showBUSD
+                  showBUSD={currencies[Field.CURRENCY_A]?.symbol !== 'USDC'}
                   onInputBlur={zapIn.onInputBlurOnce}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_A}
                   disabled={canZap && !zapTokenCheckedA}
@@ -629,7 +640,8 @@ export default function AddLiquidity() {
                   value={formattedAmounts[Field.CURRENCY_A]}
                   onUserInput={onFieldAInput}
                   onMax={() => {
-                    onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')
+                    if (amountInDollarB > amountInDollarA) onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')
+                    else onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
                   }}
                   showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
                   currency={currencies[Field.CURRENCY_A]}
@@ -641,7 +653,7 @@ export default function AddLiquidity() {
                   <AddIcon width="16px" />
                 </ColumnCenter>
                 <CurrencyInputPanel
-                  showBUSD
+                  showBUSD={currencies[Field.CURRENCY_B]?.symbol !== 'USDC'}
                   onInputBlur={zapIn.onInputBlurOnce}
                   disabled={canZap && !zapTokenCheckedB}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_B}
@@ -662,7 +674,8 @@ export default function AddLiquidity() {
                   value={formattedAmounts[Field.CURRENCY_B]}
                   onUserInput={onFieldBInput}
                   onMax={() => {
-                    onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
+                    if (amountInDollarB > amountInDollarA) onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')
+                    else onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
                   }}
                   showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
                   currency={currencies[Field.CURRENCY_B]}
