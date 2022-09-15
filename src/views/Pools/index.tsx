@@ -4,7 +4,7 @@ import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { Heading, Flex, Image, Text } from '@pancakeswap/uikit'
+import { Heading, Flex, Image } from '@pancakeswap/uikit'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { useTranslation } from '@pancakeswap/localization'
@@ -14,8 +14,8 @@ import { latinise } from 'utils/latinise'
 import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
 import PageHeader from 'components/PageHeader'
-import SearchInput from 'components/SearchInput'
-import Select, { OptionProps } from 'components/Select/Select'
+// import SearchInput from 'components/SearchInput'
+// import Select, { OptionProps } from 'components/Select/Select'
 import { DeserializedPool, DeserializedPoolVault, VaultKey, DeserializedPoolLockedVault } from 'state/types'
 import { useUserPoolStakedOnly, useUserPoolsViewMode } from 'state/user/hooks'
 import { ViewMode } from 'state/user/actions'
@@ -51,29 +51,29 @@ const PoolControls = styled.div`
   }
 `
 
-const FilterContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 8px 0px;
+// const FilterContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   padding: 8px 0px;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    width: auto;
-    padding: 0;
-  }
-`
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     width: auto;
+//     padding: 0;
+//   }
+// `
 
-const LabelWrapper = styled.div`
-  > ${Text} {
-    font-size: 12px;
-  }
-`
+// const LabelWrapper = styled.div`
+//   > ${Text} {
+//     font-size: 12px;
+//   }
+// `
 
-const ControlStretch = styled(Flex)`
-  > div {
-    flex: 1;
-  }
-`
+// const ControlStretch = styled(Flex)`
+//   > div {
+//     flex: 1;
+//   }
+// `
 
 // const FinishedTextContainer = styled(Flex)`
 //   padding-bottom: 32px;
@@ -162,7 +162,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
   const { pools, userDataLoaded } = usePoolsWithVault()
-  const [stakedOnly, setStakedOnly] = useUserPoolStakedOnly()
+  const [stakedOnly,] = useUserPoolStakedOnly()
   const [viewMode, setViewMode] = useUserPoolsViewMode()
   const [numberOfPoolsVisible, setNumberOfPoolsVisible] = useState(NUMBER_OF_POOLS_VISIBLE)
   const { observerRef, isIntersecting } = useIntersectionObserver()
@@ -170,9 +170,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     () => (typeof router?.query?.search === 'string' ? router.query.search : ''),
     [router.query],
   )
-  const [_searchQuery, setSearchQuery] = useState('')
+  const [_searchQuery,] = useState('')
   const searchQuery = normalizedUrlSearch && !_searchQuery ? normalizedUrlSearch : _searchQuery
-  const [sortOption, setSortOption] = useState('hot')
+  const [sortOption,] = useState('hot')
   const chosenPoolsLength = useRef(0)
   const initialBlock = useInitialBlock()
 
@@ -206,7 +206,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       return pool.userData && new BigNumber(pool.userData.stakedBalance).isGreaterThan(0)
     })
   }, [openPoolsWithStartBlockFilter])
-  const hasStakeInFinishedPools = stakedOnlyFinishedPools.length > 0
+  // const hasStakeInFinishedPools = stakedOnlyFinishedPools.length > 0
 
   usePoolsPageFetch()
 
@@ -222,12 +222,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   }, [isIntersecting])
   const showFinishedPools = router.pathname.includes('history')
 
-  const handleChangeSearchQuery = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(event.target.value),
-    [],
-  )
+  // const handleChangeSearchQuery = useCallback(
+  //   (event: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(event.target.value),
+  //   [],
+  // )
 
-  const handleSortOptionChange = useCallback((option: OptionProps) => setSortOption(option.value), [])
+  // const handleSortOptionChange = useCallback((option: OptionProps) => setSortOption(option.value), [])
 
   let chosenPools
   if (showFinishedPools) {
@@ -280,13 +280,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       <Page>
         <PoolControls>
           <PoolTabButtons
-            stakedOnly={stakedOnly}
-            setStakedOnly={setStakedOnly}
-            hasStakeInFinishedPools={hasStakeInFinishedPools}
+            // stakedOnly={stakedOnly}
+            // setStakedOnly={setStakedOnly}
+            // hasStakeInFinishedPools={hasStakeInFinishedPools}
             viewMode={viewMode}
             setViewMode={setViewMode}
           />
-          <FilterContainer>
+          {/* <FilterContainer>
             <LabelWrapper>
               <Text fontSize="12px" bold color="textSubtle" textTransform="uppercase">
                 {t('Sort by')}
@@ -325,7 +325,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               </Text>
               <SearchInput initialValue={searchQuery} onChange={handleChangeSearchQuery} placeholder="Search Pools" />
             </LabelWrapper>
-          </FilterContainer>
+          </FilterContainer> */}
         </PoolControls>
         {/* {showFinishedPools && (
           <FinishedTextContainer>

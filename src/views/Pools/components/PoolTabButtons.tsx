@@ -1,19 +1,19 @@
-import { NextLinkFromReactRouter } from 'components/NextLink'
+// import { NextLinkFromReactRouter } from 'components/NextLink'
 import ToggleView from 'components/ToggleView/ToggleView'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem, Toggle, Text, NotificationDot } from '@pancakeswap/uikit'
-import { useTranslation } from '@pancakeswap/localization'
+// import { ButtonMenu, ButtonMenuItem, Toggle, Text, NotificationDot } from '@pancakeswap/uikit'
+// import { useTranslation } from '@pancakeswap/localization'
 
-const ToggleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
+// const ToggleWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-left: 10px;
 
-  ${Text} {
-    margin-left: 8px;
-  }
-`
+//   ${Text} {
+//     margin-left: 8px;
+//   }
+// `
 
 const ViewControls = styled.div`
   flex-wrap: wrap;
@@ -36,57 +36,57 @@ const ViewControls = styled.div`
   }
 `
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const Wrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  a {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
+//   a {
+//     padding-left: 12px;
+//     padding-right: 12px;
+//   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    margin-left: 16px;
-  }
-`
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     margin-left: 16px;
+//   }
+// `
 
-const PoolTabButtons = ({ stakedOnly, setStakedOnly, hasStakeInFinishedPools, viewMode, setViewMode }) => {
-  const router = useRouter()
+const PoolTabButtons = ({ viewMode, setViewMode }) => {
+  // const router = useRouter()
 
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
-  const isExact = router.pathname === '/pools' || router.pathname === '/_mp/pools'
+  // const isExact = router.pathname === '/pools' || router.pathname === '/_mp/pools'
 
   const viewModeToggle = <ToggleView idPrefix="clickPool" viewMode={viewMode} onToggle={setViewMode} />
 
-  const liveOrFinishedSwitch = (
-    <Wrapper>
-      <ButtonMenu activeIndex={isExact ? 0 : 1} scale="sm" variant="subtle">
-        <ButtonMenuItem as={NextLinkFromReactRouter} to="/pools" replace>
-          {t('Live')}
-        </ButtonMenuItem>
-        <NotificationDot show={hasStakeInFinishedPools}>
-          <ButtonMenuItem id="finished-pools-button" as={NextLinkFromReactRouter} to="/pools/history" replace>
-            {t('Finished')}
-          </ButtonMenuItem>
-        </NotificationDot>
-      </ButtonMenu>
-    </Wrapper>
-  )
+  // const liveOrFinishedSwitch = (
+  //   <Wrapper>
+  //     <ButtonMenu activeIndex={isExact ? 0 : 1} scale="sm" variant="subtle">
+  //       <ButtonMenuItem as={NextLinkFromReactRouter} to="/pools" replace>
+  //         {t('Live')}
+  //       </ButtonMenuItem>
+  //       <NotificationDot show={hasStakeInFinishedPools}>
+  //         <ButtonMenuItem id="finished-pools-button" as={NextLinkFromReactRouter} to="/pools/history" replace>
+  //           {t('Finished')}
+  //         </ButtonMenuItem>
+  //       </NotificationDot>
+  //     </ButtonMenu>
+  //   </Wrapper>
+  // )
 
-  const stakedOnlySwitch = (
-    <ToggleWrapper>
-      <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} scale="sm" />
-      <Text> {t('Staked only')}</Text>
-    </ToggleWrapper>
-  )
+  // const stakedOnlySwitch = (
+  //   <ToggleWrapper>
+  //     <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} scale="sm" />
+  //     <Text> {t('Staked only')}</Text>
+  //   </ToggleWrapper>
+  // )
 
   return (
     <ViewControls>
       {viewModeToggle}
-      {stakedOnlySwitch}
-      {liveOrFinishedSwitch}
+      {/* {stakedOnlySwitch}
+      {liveOrFinishedSwitch} */}
     </ViewControls>
   )
 }

@@ -74,7 +74,6 @@ enum Steps {
   Add,
 }
 
-const zapAddress = getZapAddress()
 const zapSupportedChain = [ChainId.BSC, ChainId.BSC_TESTNET]
 
 export default function AddLiquidity() {
@@ -100,6 +99,8 @@ export default function AddLiquidity() {
 
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
+
+  const zapAddress = getZapAddress(chainId)
 
   useEffect(() => {
     if (!currencyIdA && !currencyIdB) {
@@ -358,7 +359,7 @@ export default function AddLiquidity() {
   const addIsUnsupported = useIsTransactionUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
   const addIsWarning = useIsTransactionWarning(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
 
-  const zapContract = useZapContract(true)
+  const zapContract = useZapContract(chainId, true)
 
   const [onPresentAddLiquidityModal] = useModal(
     <ConfirmAddLiquidityModal

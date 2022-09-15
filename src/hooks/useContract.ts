@@ -351,8 +351,8 @@ export const usePotterytDrawContract = () => {
   return useMemo(() => getPotteryDrawContract(signer), [signer])
 }
 
-export function useZapContract(withSignerIfPossible = true) {
-  return useContract<Zap>(getZapAddress(), zapAbi, withSignerIfPossible)
+export function useZapContract(chainId: number, withSignerIfPossible = true) {
+  return useContract<Zap>(getZapAddress(chainId), zapAbi, withSignerIfPossible)
 }
 
 export function useBCakeFarmBoosterContract(withSignerIfPossible = true) {

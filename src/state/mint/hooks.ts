@@ -104,9 +104,9 @@ export function useDerivedMintInfo(
     Boolean(totalSupply && JSBI.equal(totalSupply.quotient, BIG_INT_ZERO)) ||
     Boolean(
       pairState === PairState.EXISTS &&
-        pair &&
-        JSBI.equal(pair.reserve0.quotient, BIG_INT_ZERO) &&
-        JSBI.equal(pair.reserve1.quotient, BIG_INT_ZERO),
+      pair &&
+      JSBI.equal(pair.reserve0.quotient, BIG_INT_ZERO) &&
+      JSBI.equal(pair.reserve1.quotient, BIG_INT_ZERO),
     )
 
   // balances
@@ -320,6 +320,7 @@ export function useZapIn({
   zapTokenCheckedB?: boolean
   maxAmounts?: { [field in Field]?: CurrencyAmount<Currency> }
 }) {
+  const { chainId } = useActiveWeb3React()
   const { t } = useTranslation()
   const [inputBlurOnce, setInputBlurOnce] = useState(false)
   const previousBlur = usePreviousValue(inputBlurOnce)
@@ -375,13 +376,13 @@ export function useZapIn({
       [Field.CURRENCY_A]: !zapTokenCheckedA
         ? undefined
         : independentField === Field.CURRENCY_A
-        ? independentAmount
-        : dependentAmount,
+          ? independentAmount
+          : dependentAmount,
       [Field.CURRENCY_B]: !zapTokenCheckedB
         ? undefined
         : independentField === Field.CURRENCY_A
-        ? dependentAmount
-        : independentAmount,
+          ? dependentAmount
+          : independentAmount,
     }),
     [dependentAmount, independentAmount, independentField, zapTokenCheckedA, zapTokenCheckedB],
   )
@@ -394,7 +395,7 @@ export function useZapIn({
     [parsedAmounts],
   )
 
-  const zapContract = useZapContract()
+  const zapContract = useZapContract(chainId)
 
   const rebalancing =
     !!zapTokenCheckedA && !!zapTokenCheckedB && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]
@@ -442,20 +443,20 @@ export function useZapIn({
 
   const singleZapEstimate = useSWRContract(
     canZap &&
-      !noNeedZap &&
-      zapContract &&
-      singleTokenToZapAmount &&
-      singleTokenToZapAmount?.currency &&
-      pair &&
-      !rebalancing && {
-        contract: zapContract,
-        methodName: 'estimateZapInSwap',
-        params: [
-          singleTokenToZapAmount.currency.address,
-          singleTokenToZapAmount.quotient.toString(),
-          pair.liquidityToken.address,
-        ],
-      },
+    !noNeedZap &&
+    zapContract &&
+    singleTokenToZapAmount &&
+    singleTokenToZapAmount?.currency &&
+    pair &&
+    !rebalancing && {
+      contract: zapContract,
+      methodName: 'estimateZapInSwap',
+      params: [
+        singleTokenToZapAmount.currency.address,
+        singleTokenToZapAmount.quotient.toString(),
+        pair.liquidityToken.address,
+      ],
+    },
     {
       onError(err) {
         console.error(err)
@@ -465,23 +466,23 @@ export function useZapIn({
 
   const rebalancingZapEstimate = useSWRContract(
     canZap &&
-      zapContract &&
-      !noNeedZap &&
-      wrappedParsedAmounts &&
-      wrappedParsedAmounts[Field.CURRENCY_A] &&
-      wrappedParsedAmounts[Field.CURRENCY_B] &&
-      pair &&
-      rebalancing && {
-        contract: zapContract,
-        methodName: 'estimateZapInRebalancingSwap',
-        params: [
-          wrappedParsedAmounts[Field.CURRENCY_A].currency.address,
-          wrappedParsedAmounts[Field.CURRENCY_B].currency.address,
-          wrappedParsedAmounts[Field.CURRENCY_A].quotient.toString(),
-          wrappedParsedAmounts[Field.CURRENCY_B]?.quotient?.toString(),
-          pair.liquidityToken.address,
-        ],
-      },
+    zapContract &&
+    !noNeedZap &&
+    wrappedParsedAmounts &&
+    wrappedParsedAmounts[Field.CURRENCY_A] &&
+    wrappedParsedAmounts[Field.CURRENCY_B] &&
+    pair &&
+    rebalancing && {
+      contract: zapContract,
+      methodName: 'estimateZapInRebalancingSwap',
+      params: [
+        wrappedParsedAmounts[Field.CURRENCY_A].currency.address,
+        wrappedParsedAmounts[Field.CURRENCY_B].currency.address,
+        wrappedParsedAmounts[Field.CURRENCY_A].quotient.toString(),
+        wrappedParsedAmounts[Field.CURRENCY_B]?.quotient?.toString(),
+        pair.liquidityToken.address,
+      ],
+    },
     {
       onError(err) {
         console.error(err)
@@ -524,8 +525,8 @@ export function useZapIn({
   const swapTokenField = !rebalancing
     ? singleTokenToZapField
     : rebalancingSellToken0
-    ? Field.CURRENCY_A
-    : Field.CURRENCY_B
+      ? Field.CURRENCY_A
+      : Field.CURRENCY_B
   const swapOutTokenField = swapTokenField === Field.CURRENCY_A ? Field.CURRENCY_B : Field.CURRENCY_A
 
   const swapTokens: { [field in Field]?: Token } = useMemo(
@@ -636,8 +637,8 @@ export function useZapIn({
           zapInEstimated.swapAmountIn.toString(),
         )
           ? wrappedParsedAmounts[swapTokenField].subtract(
-              CurrencyAmount.fromRawAmount(swapTokens[swapTokenField], zapInEstimated.swapAmountIn.toString()),
-            )
+            CurrencyAmount.fromRawAmount(swapTokens[swapTokenField], zapInEstimated.swapAmountIn.toString()),
+          )
           : wrappedParsedAmounts[swapTokenField]
 
         let zappedTokenAmountB = CurrencyAmount.fromRawAmount(

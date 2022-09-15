@@ -338,9 +338,8 @@ export const getPotteryDrawContract = (signer?: Signer | Provider) => {
   return getContract(potteryDrawAbi, getPotteryDrawAddress(), chainId, signer) as PotteryDrawAbi
 }
 
-export const getZapContract = (signer?: Signer | Provider) => {
-  const chainId = 5
-  return getContract(zapAbi, getZapAddress(), chainId, signer) as Zap
+export const getZapContract = (chainId: number, signer?: Signer | Provider) => {
+  return getContract(zapAbi, getZapAddress(chainId), chainId, signer) as Zap
 }
 
 export const getIfoCreditAddressContract = (signer?: Signer | Provider) => {

@@ -20,7 +20,7 @@ export function WrongNetworkModal() {
     <Modal title="Check your network" hideCloseButton headerBackground="gradients.cardHeader">
       <Grid style={{ gap: '16px' }} maxWidth="336px">
         <Text>
-          {t('Currently exchange only supported in')} {supportedMainnetChains?.map((c) => c.name).join(', ')}
+          {t('BullionFX is currently only on Ethereum')} {supportedMainnetChains?.map((c) => c.name).join(', ')}
         </Text>
         <div style={{ textAlign: 'center' }}>
           <Image

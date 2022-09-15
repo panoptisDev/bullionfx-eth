@@ -154,7 +154,7 @@ export default function RemoveLiquidity() {
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    isZap ? getZapAddress() : ROUTER_ADDRESS[chainId],
+    isZap ? getZapAddress(chainId) : ROUTER_ADDRESS[chainId],
   )
 
   async function onAttemptToApprove() {
@@ -236,7 +236,7 @@ export default function RemoveLiquidity() {
   const onCurrencyAInput = useCallback((value: string): void => onUserInput(Field.CURRENCY_A, value), [onUserInput])
   const onCurrencyBInput = useCallback((value: string): void => onUserInput(Field.CURRENCY_B, value), [onUserInput])
 
-  const zapContract = useZapContract(true)
+  const zapContract = useZapContract(chainId, true)
 
   // tx sending
   const addTransaction = useTransactionAdder()

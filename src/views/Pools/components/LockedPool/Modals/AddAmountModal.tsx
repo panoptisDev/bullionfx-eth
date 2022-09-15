@@ -28,7 +28,7 @@ const RenewDuration = ({ setCheckedState, checkedState }) => {
         <Message variant="warning" mb="16px">
           <MessageText maxWidth="320px">
             {t(
-              'Adding more CAKE will renew your lock, setting it to remaining duration. Due to shorter lock period, benefits decrease. To keep similar benefits, extend your lock.',
+              'Adding more BULL will not renew your lock, setting it to remaining duration. Due to shorter lock period, benefits decrease. To keep similar benefits, extend your lock.',
             )}
           </MessageText>
         </Message>
