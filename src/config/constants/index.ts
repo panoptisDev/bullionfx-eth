@@ -19,7 +19,7 @@ export { farmsTestnet as farmsTestnetConfig } from './farms'
 export { default as ifosConfig } from './ifo'
 export { default as poolsConfig } from './pools'
 
-export const FAST_INTERVAL = 10000
+export const FAST_INTERVAL = 13000
 export const SLOW_INTERVAL = 60000
 
 export const NOT_ON_SALE_SELLER = '0x0000000000000000000000000000000000000000'
