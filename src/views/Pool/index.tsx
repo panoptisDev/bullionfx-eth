@@ -79,7 +79,7 @@ export default function Pool() {
     }
     return (
       <Text color="textSubtle" textAlign="center">
-        {t('No liquidity found.')}
+        {t('Put your BULL or GOLD tokens to work by providing liquidity and earning yield.')}
       </Text>
     )
   }
