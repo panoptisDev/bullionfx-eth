@@ -1,6 +1,6 @@
 import { Currency } from '@pancakeswap/sdk'
 import useTheme from 'hooks/useTheme'
-import { useCallback, useState } from 'react'
+// import { useCallback, useState } from 'react'
 import BnbWbnbNotice from './BnbWbnbNotice'
 import { BNB_ADDRESS } from './constants'
 import PriceChart from './PriceChart'
@@ -37,8 +37,9 @@ const PriceChartContainer: React.FC<React.PropsWithChildren<PriceChartContainerP
 }) => {
   const token0Address = getTokenAddress(inputCurrencyId)
   const token1Address = getTokenAddress(outputCurrencyId)
-  const [isPairReversed, setIsPairReversed] = useState(false)
-  const togglePairReversed = useCallback(() => setIsPairReversed((prePairReversed) => !prePairReversed), [])
+  // const [isPairReversed, setIsPairReversed] = useState(true)
+  const isPairReversed = true
+  // const togglePairReversed = useCallback(() => setIsPairReversed((prePairReversed) => !prePairReversed), [])
 
   const { isDark } = useTheme()
 
@@ -58,7 +59,7 @@ const PriceChartContainer: React.FC<React.PropsWithChildren<PriceChartContainerP
       token1Address={isPairReversed ? token0Address : token1Address}
       inputCurrency={isPairReversed ? outputCurrency : inputCurrency}
       outputCurrency={isPairReversed ? inputCurrency : outputCurrency}
-      onSwitchTokens={togglePairReversed}
+      // onSwitchTokens={togglePairReversed}
       isDark={isDark}
       isChartExpanded={isChartExpanded}
       setIsChartExpanded={setIsChartExpanded}

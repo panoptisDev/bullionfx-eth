@@ -1,36 +1,36 @@
 import {
-  Button,
+  // Button,
   ExpandIcon,
   Flex,
   IconButton,
   ShrinkIcon,
-  SyncAltIcon,
+  // SyncAltIcon,
   Text,
   // TradingViewIcon,
-  LineGraphIcon,
-  useMatchBreakpointsContext,
+  // LineGraphIcon,
+  // useMatchBreakpointsContext,
 } from '@pancakeswap/uikit'
 import { CurrencyLogo, DoubleCurrencyLogo } from 'components/Logo'
 // import { TradingViewLabel } from 'components/TradingView'
-import { useTranslation } from '@pancakeswap/localization'
+// import { useTranslation } from '@pancakeswap/localization'
 import { ChartViewMode } from 'state/user/actions'
 import { useExchangeChartViewManager } from 'state/user/hooks'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import BasicChart from './BasicChart'
 import { StyledPriceChart } from './styles'
 // import TradingViewChart from './TradingViewChart'
 // import PairPriceDisplay from '../../../../components/PairPriceDisplay'
 
-const ChartButton = styled(Button)`
-  background-color: ${({ $active, theme }) => $active && `${theme.colors.primary}0f`};
-  padding: 4px 8px;
-  border-radius: 6px;
-`
+// const ChartButton = styled(Button)`
+//   background-color: ${({ $active, theme }) => $active && `${theme.colors.primary}0f`};
+//   padding: 4px 8px;
+//   border-radius: 6px;
+// `
 
 const PriceChart = ({
   inputCurrency,
   outputCurrency,
-  onSwitchTokens,
+  // onSwitchTokens,
   isDark,
   isChartExpanded,
   setIsChartExpanded,
@@ -41,11 +41,11 @@ const PriceChart = ({
   currentSwapPrice,
   chainId
 }) => {
-  const { isDesktop } = useMatchBreakpointsContext()
+  // const { isDesktop } = useMatchBreakpointsContext()
   const toggleExpanded = () => setIsChartExpanded((currentIsExpanded) => !currentIsExpanded)
-  const [chartView, setChartView] = useExchangeChartViewManager()
+  const [chartView,] = useExchangeChartViewManager()
   // const [twChartSymbol, setTwChartSymbol] = useState('')
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   // const handleTwChartSymbol = useCallback((symbol) => {
   //   setTwChartSymbol(symbol)
@@ -71,10 +71,10 @@ const PriceChart = ({
               {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol}
             </Text>
           )}
-          <IconButton variant="text" onClick={onSwitchTokens}>
+          {/* <IconButton variant="text" onClick={onSwitchTokens}>
             <SyncAltIcon ml="6px" color="primary" />
-          </IconButton>
-          <Flex>
+          </IconButton> */}
+          {/* <Flex>
             <ChartButton
               aria-label={t('Basic')}
               title={t('Basic')}
@@ -87,7 +87,7 @@ const PriceChart = ({
             >
               {isDesktop ? t('Basic') : <LineGraphIcon color="primary" />}
             </ChartButton>
-            {/* <ChartButton
+            <ChartButton
               aria-label="TradingView"
               title="TradingView"
               $active={chartView === ChartViewMode.TRADING_VIEW}
@@ -96,8 +96,8 @@ const PriceChart = ({
               onClick={() => setChartView(ChartViewMode.TRADING_VIEW)}
             >
               {isDesktop ? 'TradingView' : <TradingViewIcon color="primary" />}
-            </ChartButton> */}
-          </Flex>
+            </ChartButton>
+          </Flex> */}
         </Flex>
         {!isMobile && (
           <Flex>
