@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState, useMemo, useRef, createContext } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { Image, Heading, Toggle, Text, Flex, Box } from '@pancakeswap/uikit'
+import { Image, Heading, Flex, Box } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
 // import { NextLinkFromReactRouter } from 'components/NextLink'
 import styled from 'styled-components'
@@ -19,14 +19,14 @@ import { useUserFarmStakedOnly, useUserFarmsViewMode } from 'state/user/hooks'
 import { ViewMode } from 'state/user/actions'
 import { useRouter } from 'next/router'
 import PageHeader from 'components/PageHeader'
-import SearchInput from 'components/SearchInput'
-import Select, { OptionProps } from 'components/Select/Select'
+// import SearchInput from 'components/SearchInput'
+// import Select, { OptionProps } from 'components/Select/Select'
 import Loading from 'components/Loading'
 import ToggleView from 'components/ToggleView/ToggleView'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 import Table from './components/FarmTable/FarmTable'
-import FarmTabButtons from './components/FarmTabButtons'
+// import FarmTabButtons from './components/FarmTabButtons'
 import { FarmWithStakedValue } from './components/types'
 // import { BCakeBoosterCard } from './components/BCakeBoosterCard'
 
@@ -54,49 +54,49 @@ const FarmFlexWrapper = styled(Flex)`
   }
 `
 const FarmH1 = styled(Heading)`
-  font-size: 32px;
+  font-size: 22px;
   margin-bottom: 8px;
   ${({ theme }) => theme.mediaQueries.sm} {
-    font-size: 64px;
+    font-size: 28px;
     margin-bottom: 24px;
   }
 `
 const FarmH2 = styled(Heading)`
-  font-size: 16px;
+  font-size: 12px;
   margin-bottom: 8px;
   ${({ theme }) => theme.mediaQueries.sm} {
-    font-size: 24px;
+    font-size: 14px;
     margin-bottom: 18px;
   }
 `
 
-const ToggleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
+// const ToggleWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-left: 10px;
 
-  ${Text} {
-    margin-left: 8px;
-  }
-`
+//   ${Text} {
+//     margin-left: 8px;
+//   }
+// `
 
-const LabelWrapper = styled.div`
-  > ${Text} {
-    font-size: 12px;
-  }
-`
+// const LabelWrapper = styled.div`
+//   > ${Text} {
+//     font-size: 12px;
+//   }
+// `
 
-const FilterContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 8px 0px;
+// const FilterContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   padding: 8px 0px;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    width: auto;
-    padding: 0;
-  }
-`
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     width: auto;
+//     padding: 0;
+//   }
+// `
 
 const ViewControls = styled.div`
   flex-wrap: wrap;
@@ -148,13 +148,13 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
   const cakePrice = usePriceBullUsdc()
   const { chainId } = useActiveWeb3React()
 
-  const [_query, setQuery] = useState('')
+  const [_query,] = useState('')
   const normalizedUrlSearch = useMemo(() => (typeof urlQuery?.search === 'string' ? urlQuery.search : ''), [urlQuery])
   const query = normalizedUrlSearch && !_query ? normalizedUrlSearch : _query
 
   const [viewMode, setViewMode] = useUserFarmsViewMode()
   const { account } = useWeb3React()
-  const [sortOption, setSortOption] = useState('hot')
+  const [sortOption,] = useState('hot')
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const chosenFarmsLength = useRef(0)
 
@@ -169,8 +169,8 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
   // Connected users should see loading indicator until first userData has loaded
   const userDataReady = !account || (!!account && userDataLoaded)
 
-  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
-  const [boostedOnly, setBoostedOnly] = useState(false)
+  const [stakedOnly,] = useUserFarmStakedOnly(isActive)
+  const [boostedOnly,] = useState(false)
 
   const activeFarms = farmsLP.filter(
     (farm) => farm.pid !== 0 && farm.multiplier !== '0X' && (!poolLength || poolLength > farm.pid),
@@ -230,9 +230,9 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
     [cakePrice, query, isActive, regularCakePerBlock, chainId],
   )
 
-  const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value)
-  }
+  // const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setQuery(event.target.value)
+  // }
 
   const [numberOfFarmsVisible, setNumberOfFarmsVisible] = useState(NUMBER_OF_FARMS_VISIBLE)
 
@@ -309,17 +309,17 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
     }
   }, [isIntersecting])
 
-  const handleSortOptionChange = (option: OptionProps): void => {
-    setSortOption(option.value)
-  }
+  // const handleSortOptionChange = (option: OptionProps): void => {
+  //   setSortOption(option.value)
+  // }
 
   return (
     <FarmsContext.Provider value={{ chosenFarmsMemoized }}>
       <PageHeader>
         <FarmFlexWrapper justifyContent="space-between">
           <Box>
-            <FarmH1 as="h1" scale="xxl" color="secondary" mb="24px">
-              {t('Farms')}
+            <FarmH1 as="h1" scale="xxl" color="text" mb="24px">
+              {t('Provide Liquidity')}
             </FarmH1>
             <FarmH2 scale="lg" color="text">
               {t('Stake LP tokens to earn.')}
@@ -342,7 +342,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
         <ControlContainer>
           <ViewControls>
             <ToggleView idPrefix="clickFarm" viewMode={viewMode} onToggle={setViewMode} />
-            <ToggleWrapper>
+            {/* <ToggleWrapper>
               <Toggle
                 id="staked-only-farms"
                 checked={stakedOnly}
@@ -360,9 +360,9 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
               />
               <Text> {t('Booster Available')}</Text>
             </ToggleWrapper>
-            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
+            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} /> */}
           </ViewControls>
-          <FilterContainer>
+          {/* <FilterContainer>
             <LabelWrapper>
               <Text textTransform="uppercase">{t('Sort by')}</Text>
               <Select
@@ -399,7 +399,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
               <Text textTransform="uppercase">{t('Search')}</Text>
               <SearchInput initialValue={normalizedUrlSearch} onChange={handleChangeQuery} placeholder="Search Farms" />
             </LabelWrapper>
-          </FilterContainer>
+          </FilterContainer> */}
         </ControlContainer>
         {/* {isInactive && (
           <FinishedTextContainer>

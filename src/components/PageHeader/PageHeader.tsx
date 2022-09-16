@@ -3,13 +3,13 @@ import { Box } from '@pancakeswap/uikit'
 import Container from '../Layout/Container'
 import { PageHeaderProps } from './types'
 
-const Outer = styled(Box)<{ background?: string }>`
-  background: ${({ theme, background }) => background || theme.colors.gradients.bubblegum};
+const Outer = styled(Box) <{ background?: string }>`
+  // background: ${({ theme, background }) => background || theme.colors.gradients.bubblegum};
 `
 
 const Inner = styled(Container)`
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 50px;
+  padding-bottom: 12px;
   position: relative;
 `
 

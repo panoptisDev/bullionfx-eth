@@ -11,7 +11,7 @@ const getScale = ({ scale }: CheckboxProps) => {
   }
 };
 
-const Checkbox = styled.input.attrs({ type: "checkbox" })<CheckboxProps>`
+const Checkbox = styled.input.attrs({ type: "checkbox" }) <CheckboxProps>`
   appearance: none;
   overflow: hidden;
   cursor: pointer;

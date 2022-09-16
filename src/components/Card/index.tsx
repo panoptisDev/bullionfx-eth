@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Box } from '@pancakeswap/uikit'
 
-const Card = styled(Box)<{
+const Card = styled(Box) <{
   width?: string
   padding?: string
   border?: string
@@ -22,7 +22,7 @@ export const LightCard = styled(Card)`
 
 export const LightGreyCard = styled(Card)`
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.backgroundAlt};
 `
 
 export const GreyCard = styled(Card)`
