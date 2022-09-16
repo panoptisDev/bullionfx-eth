@@ -42,12 +42,12 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       {hasLowNativeBalance && (
         <Message variant="warning" mb="24px">
           <Box>
-            <Text fontWeight="bold">
+            <Text fontWeight="bold" small>
               {t('%currency% Balance Low', {
                 currency: native.symbol,
               })}
             </Text>
-            <Text as="p">
+            <Text as="p" smaller>
               {t('You need %currency% for transaction fees.', {
                 currency: native.symbol,
               })}
@@ -57,8 +57,8 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       )}
       <Flex alignItems="center" justifyContent="space-between">
         <Flex>
-          {!isETH && <Image width={24} height={24} src={`/images/chains/${native.chainId || ChainId.BSC}.png`} unoptimized />}
-          <Text ml={isETH ? 0 : '8px'} color="textSubtle">
+          {!isETH && <Image width={20} height={20} src={`/images/chains/${native.chainId || ChainId.BSC}.png`} unoptimized />}
+          <Text ml={isETH ? 0 : '8px'} color="textSubtle" small>
             {native.symbol} {t('Balance')}
           </Text>
         </Flex>
@@ -66,8 +66,8 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       </Flex>
       <Flex alignItems="center" justifyContent="space-between" mb="24px" mt="12px">
         <Flex alignItems="center">
-          {!isETH && <Image width={24} height={24} src="/images/chains/bull.webp" unoptimized />}
-          <Text ml={isETH ? 0 : '8px'} color="textSubtle">
+          {!isETH && <Image width={20} height={20} src="/images/chains/bull.webp" unoptimized style={{ borderRadius: '50%' }} />}
+          <Text ml={isETH ? 0 : '8px'} color="textSubtle" small>
             {t('BULL Balance')}
           </Text>
         </Flex>

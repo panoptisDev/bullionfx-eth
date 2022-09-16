@@ -1,4 +1,4 @@
-import { Button, Grid, Message, MessageText, Modal, Text } from '@pancakeswap/uikit'
+import { Button, Flex, Grid, Message, MessageText, Modal, Text } from '@pancakeswap/uikit'
 import { useLocalNetworkChain } from 'hooks/useActiveChainId'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
@@ -7,6 +7,7 @@ import { useNetwork } from 'wagmi'
 import { useMemo } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
 import Dots from './Loader/Dots'
+import Icon from '@pancakeswap/uikit/src/components/Svg/Icons/Warning'
 
 export function WrongNetworkModal() {
   const { switchNetwork, isLoading } = useSwitchNetwork()
@@ -17,24 +18,18 @@ export function WrongNetworkModal() {
   const supportedMainnetChains = useMemo(() => chains.filter((chain) => !chain.testnet), [chains])
 
   return (
-    <Modal title="Check your network" hideCloseButton headerBackground="gradients.cardHeader">
-      <Grid style={{ gap: '16px' }} maxWidth="336px">
-        <Text>
-          {t('BullionFX is currently only on Ethereum')} {supportedMainnetChains?.map((c) => c.name).join(', ')}
+    <Modal title="Check your network" hideCloseButton headerBackground="gradients.cardHeader" bodyPadding='0px 20px 20px'>
+      <Grid style={{ gap: '16px' }} maxWidth="370px">
+        <Text style={{ textAlign: "center" }} smaller>
+          {t('BullionFX is currently only on ')} {supportedMainnetChains?.map((c) => c.name).join(', ')}
         </Text>
-        <div style={{ textAlign: 'center' }}>
-          <Image
-            layout="fixed"
-            width="194px"
-            height="175px"
-            src="/images/check-your-network.png"
-            alt="check your network"
-          />
+        <div style={{ textAlign: 'center', background: '#35353588', width: '182px', height: '182px', borderRadius: '32px', margin: '32px auto' }}>
         </div>
-        <Message variant="warning">
-          <MessageText>{t('Please switch your network to continue.')}</MessageText>
-        </Message>
-        <Button isLoading={isLoading} onClick={() => switchNetwork(chainId)}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Icon color='#ED6A5A' width={'18px'} height={'18px'} />
+          <Text style={{ color: '#ED6A5A', fontSize: '12px', marginLeft: '3px' }}>{t('Please switch your network to continue.')}</Text>
+        </div>
+        <Button isLoading={isLoading} onClick={() => switchNetwork(chainId)} height={'56px'} fontSize={'16px'} width={'330px'}>
           {isLoading ? <Dots>{t('Switch network in wallet')}</Dots> : t('Switch network in wallet')}
         </Button>
       </Grid>

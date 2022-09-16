@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import { useTheme } from "styled-components";
+// import { useTheme } from "styled-components";
 import Heading from "../../components/Heading/Heading";
-import getThemeValue from "../../util/getThemeValue";
+// import getThemeValue from "../../util/getThemeValue";
 import { ModalBody, ModalHeader, ModalTitle, ModalContainer, ModalCloseButton, ModalBackButton } from "./styles";
 import { ModalProps } from "./types";
 import { useMatchBreakpointsContext } from "../../contexts";
@@ -19,7 +19,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
   minWidth = "320px",
   ...props
 }) => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const { isMobile } = useMatchBreakpointsContext();
   const wrapperRef = useRef<HTMLDivElement>(null);
   return (
@@ -39,7 +39,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
       minWidth={minWidth}
       {...props}
     >
-      <ModalHeader background={getThemeValue(theme, `colors.${headerBackground}`, headerBackground)}>
+      <ModalHeader>
         <ModalTitle>
           {onBack && <ModalBackButton onBack={onBack} />}
           <Heading>{title}</Heading>

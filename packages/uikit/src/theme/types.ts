@@ -52,6 +52,7 @@ export type Colors = {
   cardBorder: string;
   contrast: string;
   dropdown: string;
+  dropdownAlter: string;
   dropdownDeep: string;
   invertedContrast: string;
   input: string;

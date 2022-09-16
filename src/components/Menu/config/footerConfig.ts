@@ -3,77 +3,66 @@ import { ContextApi } from '@pancakeswap/localization'
 
 export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
   {
-    label: t('About'),
+    label: t('Navigation'),
     items: [
       {
-        label: t('Contact'),
-        href: 'https://docs.pancakeswap.finance/contact-us',
+        label: t('About Us'),
+        href: 'https://bullionfx.com/about/',
         isHighlighted: true,
       },
       {
-        label: t('Brand'),
-        href: 'https://docs.pancakeswap.finance/brand',
+        label: t('Contact'),
+        href: 'https://bullionfx.com/contact/',
       },
       {
-        label: t('Blog'),
-        href: 'https://medium.com/pancakeswap',
+        label: t('News'),
+        href: 'https://bullionfx.com/news/',
       },
       {
-        label: t('Community'),
-        href: 'https://docs.pancakeswap.finance/contact-us/telegram',
-      },
-      {
-        label: t('Litepaper'),
-        href: 'https://v2litepaper.pancakeswap.finance/',
-      },
-      {
-        label: '—',
-      },
-      {
-        label: t('Online Store'),
-        href: 'https://pancakeswap.creator-spring.com/',
+        label: t('Terms & Conditions'),
+        href: 'https://bullionfx.com/whitepaper/',
       },
     ],
   },
   {
-    label: t('Help'),
+    label: t('Ecosystem'),
     items: [
       {
-        label: t('Customer Support'),
-        href: 'https://docs.pancakeswap.finance/contact-us/customer-support',
+        label: t('GOLD'),
+        href: 'https://bullionfx.com/gold/',
       },
       {
-        label: t('Troubleshooting'),
-        href: 'https://docs.pancakeswap.finance/help/troubleshooting',
+        label: t('BULL'),
+        href: 'https://bullionfx.com/bull/',
       },
       {
-        label: t('Guides'),
-        href: 'https://docs.pancakeswap.finance/get-started',
+        label: t('Exchange Trading'),
+        href: 'https://bullionfx.com/exchange-trading/',
+      },
+      {
+        label: t('Payments'),
+        href: 'https://bullionfx.com/payments/',
       },
     ],
   },
   {
-    label: t('Developers'),
+    label: t(''),
     items: [
       {
-        label: 'Github',
-        href: 'https://github.com/pancakeswap',
+        label: 'Yield',
+        href: 'https://bullionfx.com/yield/',
       },
       {
-        label: t('Documentation'),
-        href: 'https://docs.pancakeswap.finance',
+        label: t('DeFi'),
+        href: 'https://bullionfx.com/defi/',
       },
       {
-        label: t('Bug Bounty'),
-        href: 'https://docs.pancakeswap.finance/code/bug-bounty',
+        label: t('Synthetics'),
+        href: 'https://bullionfx.com/vault/',
       },
       {
-        label: t('Audits'),
-        href: 'https://docs.pancakeswap.finance/help/faq#is-pancakeswap-safe-has-pancakeswap-been-audited',
-      },
-      {
-        label: t('Careers'),
-        href: 'https://docs.pancakeswap.finance/hiring/become-a-chef',
+        label: t('DeMi'),
+        href: 'https://bullionfx.com/demi/',
       },
     ],
   },

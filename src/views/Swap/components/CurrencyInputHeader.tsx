@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {
-  // ChartIcon,
+  ChartIcon,
   Flex,
   Heading,
   HistoryIcon,
@@ -8,7 +8,7 @@ import {
   NotificationDot,
   Text,
   useModal,
-  // ChartDisableIcon,
+  ChartDisableIcon,
 } from '@pancakeswap/uikit'
 import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import GlobalSettings from 'components/Menu/GlobalSettings'
@@ -35,33 +35,33 @@ const CurrencyInputContainer = styled(Flex)`
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
-// const ColoredIconButton = styled(IconButton)`
-//   color: ${({ theme }) => theme.colors.textSubtle};
-// `
+const ColoredIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.colors.textSubtle};
+`
 
 const CurrencyInputHeader: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   subtitle,
-  // setIsChartDisplayed,
-  // isChartDisplayed,
+  setIsChartDisplayed,
+  isChartDisplayed,
   hasAmount,
   onRefreshPrice,
 }) => {
   const [expertMode] = useExpertModeManager()
-  // const toggleChartDisplayed = () => {
-  //   setIsChartDisplayed((currentIsChartDisplayed) => !currentIsChartDisplayed)
-  // }
+  const toggleChartDisplayed = () => {
+    setIsChartDisplayed((currentIsChartDisplayed) => !currentIsChartDisplayed)
+  }
   const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
   const handleOnClick = useCallback(() => onRefreshPrice?.(), [onRefreshPrice])
 
   return (
     <CurrencyInputContainer>
       <Flex width="100%" alignItems="center" justifyContent="space-between">
-        {/* {setIsChartDisplayed && (
+        {setIsChartDisplayed && (
           <ColoredIconButton onClick={toggleChartDisplayed} variant="text" scale="sm">
             {isChartDisplayed ? <ChartDisableIcon color="textSubtle" /> : <ChartIcon width="24px" color="textSubtle" />}
           </ColoredIconButton>
-        )} */}
+        )}
         <Flex flexDirection="column" alignItems="flex-end" width="100%" mr={18}>
           <Heading as="h2">{title}</Heading>
         </Flex>

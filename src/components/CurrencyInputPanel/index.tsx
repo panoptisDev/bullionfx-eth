@@ -23,7 +23,7 @@ const InputRow = styled.div<{ selected: boolean }>`
   padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
 `
 const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' }) <{ zapStyle?: ZapStyle }>`
-  padding: 0 0.5rem;
+  padding: 1.2rem 0.5rem;
 
   ${({ zapStyle, theme }) =>
     zapStyle &&
@@ -163,11 +163,11 @@ export default function CurrencyInputPanel({
                 <CurrencyLogo currency={currency} size="20px" style={{ marginRight: '8px' }} />
               ) : null}
               {pair ? (
-                <Text id="pair" bold>
+                <Text id="pair" bold fontFamily={"'Open Sans', sans-serif"}>
                   {pair?.token0.symbol}:{pair?.token1.symbol}
                 </Text>
               ) : (
-                <Text id="pair" bold small fontWeight={700}>
+                <Text id="pair" bold small fontWeight={700} fontFamily={"'Open Sans', sans-serif"}>
                   {(currency && currency.symbol && currency.symbol.length > 20
                     ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(
                       currency.symbol.length - 5,

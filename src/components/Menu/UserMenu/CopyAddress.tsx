@@ -25,7 +25,7 @@ const Address = styled.div`
     color: ${({ theme }) => theme.colors.text};
     display: block;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0;
     width: 100%;
 
@@ -37,8 +37,8 @@ const Address = styled.div`
   &:after {
     background: linear-gradient(
       to right,
-      ${({ theme }) => theme.colors.background}00,
-      ${({ theme }) => theme.colors.background}E6
+      ${({ theme }) => theme.colors.dropdown}00,
+      ${({ theme }) => theme.colors.dropdown}E6
     );
     content: '';
     height: 100%;

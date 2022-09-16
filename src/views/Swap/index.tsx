@@ -425,14 +425,14 @@ export default function Swap() {
               <AppBody>
                 <CurrencyInputHeader
                   title={t('Swap')}
-                  subtitle={t('Trade tokens in an instant')}
-                  // setIsChartDisplayed={setIsChartDisplayed}
-                  // isChartDisplayed={isChartDisplayed}
+                  subtitle={t('Trade Gold the better way')}
+                  setIsChartDisplayed={setIsChartDisplayed}
+                  isChartDisplayed={isChartDisplayed}
                   hasAmount={hasAmount}
                   onRefreshPrice={onRefreshPrice}
                 />
                 <GradientBar />
-                <Wrapper id="swap-page" style={{ minHeight: '412px' }}>
+                <Wrapper id="swap-page" style={{ minHeight: '432px' }}>
                   <AutoColumn gap="sm">
                     <CurrencyInputPanel
                       label={
@@ -514,7 +514,7 @@ export default function Swap() {
                             <>
                               <Label>{t('Price')}</Label>
                               {isLoading ? (
-                                <Skeleton width="100%" ml="8px" height="24px" />
+                                <Skeleton width="100%" ml="8px" height="20px" />
                               ) : (
                                 <TradePrice
                                   price={trade?.executionPrice}
@@ -525,9 +525,9 @@ export default function Swap() {
                             </>
                           )}
                         </RowBetween>
-                        <RowBetween align="center">
-                          <Label>{t('Slippage Tolerance')}</Label>
-                          <Text bold color="textHighlight" small>
+                        <RowBetween align="center" style={{ marginTop: '10px' }}>
+                          <Label fontFamily={"'Open Sans', sans-serif"}>{t('Slippage Tolerance')}</Label>
+                          <Text bold color="textHighlight" small fontFamily={"'Open Sans', sans-serif"}>
                             {allowedSlippage / 100}%
                           </Text>
                         </RowBetween>

@@ -19,12 +19,12 @@ const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    padding: ${({ $removePadding }) => ($removePadding ? '0' : '24px')};
+    padding: ${({ $removePadding }) => ($removePadding ? '0' : '40px')};
     padding-bottom: 0;
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    padding: ${({ $removePadding }) => ($removePadding ? '0' : '32px')};
+    padding: ${({ $removePadding }) => ($removePadding ? '0' : '65px')};
     padding-bottom: 0;
     min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 100px)')};
   }

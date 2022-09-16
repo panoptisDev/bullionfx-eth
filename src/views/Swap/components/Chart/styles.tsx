@@ -11,12 +11,14 @@ export const StyledPriceChart = styled(Box) <{
   width: 100%;
   padding-top: 36px;
   ${({ theme }) => theme.mediaQueries.sm} {
-    padding-top: 8px;
+    padding-top: 20px;
+    padding-left: 4px;
+    padding-right: 4px;
     background: ${({ $isDark }) => ($isDark ? '#191915' : 'rgba(255, 255, 255, 0.5)')};
     // border: ${({ theme }) => `1px solid ${theme.colors.cardBorder}`};
     border-radius: ${({ $isExpanded }) => ($isExpanded ? '0' : '16px')};
-    width: ${({ $isExpanded, $isFullWidthContainer }) => ($isFullWidthContainer || $isExpanded ? '100%' : '50%')};
-    height: ${({ $isExpanded }) => ($isExpanded ? 'calc(100vh - 100px)' : '516px')};
+    width: ${({ $isExpanded, $isFullWidthContainer }) => ($isFullWidthContainer || $isExpanded ? '100%' : '60%')};
+    height: ${({ $isExpanded }) => ($isExpanded ? 'calc(100vh - 100px)' : '528px')};
   }
 `
 

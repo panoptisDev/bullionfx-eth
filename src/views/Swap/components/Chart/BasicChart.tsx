@@ -36,7 +36,7 @@ const BasicChart = ({
   const valueToDisplay = hoverValue || pairPrices[pairPrices.length - 1]?.value
   const { changePercentage, changeValue } = getTimeWindowChange(pairPrices)
   const isChangePositive = changeValue >= 0
-  const chartHeight = isChartExpanded ? 'calc(100% - 120px)' : '378px'
+  const chartHeight = isChartExpanded ? 'calc(100% - 120px)' : '370px'
   const {
     t,
     currentLanguage: { locale },
@@ -77,7 +77,7 @@ const BasicChart = ({
         justifyContent="space-between"
         px="24px"
       >
-        <Flex flexDirection="column" pt="12px">
+        <Flex flexDirection="column" pt="18px">
           <PairPriceDisplay
             value={pairPrices?.length > 0 && valueToDisplay}
             inputSymbol={inputCurrency?.symbol}
@@ -100,7 +100,7 @@ const BasicChart = ({
           </ButtonMenu>
         </Box>
       </Flex>
-      <Box height={isMobile ? '100%' : chartHeight} p={isMobile ? '0px' : '16px'} width="100%">
+      <Box height={isMobile ? '100%' : chartHeight} p={isMobile ? '0px' : '24px'} width="100%">
         <SwapLineChart
           data={pairPrices}
           setHoverValue={setHoverValue}

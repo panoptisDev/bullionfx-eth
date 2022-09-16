@@ -1,14 +1,14 @@
 import React from "react";
-import { darkColors, lightColors } from "../../theme/colors";
+import { baseColors, darkColors, lightColors } from "../../theme/colors";
 import { Flex, Box } from "../Box";
-// import { Link } from "../Link";
+import { Link } from "../Link";
 import {
   StyledFooter,
   StyledIconMobileContainer,
-  // StyledList,
-  // StyledListItem,
-  // StyledText,
-  // StyledSocialLinks,
+  StyledList,
+  StyledListItem,
+  StyledText,
+  StyledSocialLinks,
   StyledToolsContainer,
 } from "./styles";
 import { FooterProps } from "./types";
@@ -18,6 +18,7 @@ import CakePrice from "../CakePrice/CakePrice";
 import { LogoWithTextIcon, ArrowForwardIcon } from "../Svg";
 import { Button } from "../Button";
 import { Colors } from "../..";
+import { GradientBar } from "./Components/styleds";
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   items,
@@ -37,7 +38,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         <StyledIconMobileContainer display={["block", null, "none"]}>
           <LogoWithTextIcon isDark width="130px" />
         </StyledIconMobileContainer>
-        {/* <Flex
+        <Flex
           order={[2, null, 1]}
           flexDirection={["column", null, "row"]}
           justifyContent="space-between"
@@ -46,7 +47,9 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         >
           {items?.map((item) => (
             <StyledList key={item.label}>
-              <StyledListItem>{item.label}</StyledListItem>
+              <StyledListItem
+                style={{ minHeight: '16px' }}
+              >{item.label}</StyledListItem>
               {item.items?.map(({ label, href, isHighlighted = false }) => (
                 <StyledListItem key={label}>
                   {href ? (
@@ -69,8 +72,14 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           <Box display={["none", null, "block"]}>
             <LogoWithTextIcon isDark width="160px" />
           </Box>
-        </Flex> */}
-        {/* <StyledSocialLinks order={[2]} pb={["42px", null, "32px"]} mb={["0", null, "32px"]} /> */}
+        </Flex>
+        <StyledSocialLinks order={[2]} pb={["20px", null, "15px"]} mb={["0", null, "15px"]} />
+        <Flex
+          order={[2]}
+          mb={["42px", null, "32px"]}
+        >
+          <GradientBar />
+        </Flex>
         <StyledToolsContainer
           order={[1, null, 3]}
           flexDirection={["column", null, "row"]}
@@ -102,7 +111,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           </Flex>
         </StyledToolsContainer>
       </Flex>
-    </StyledFooter>
+    </StyledFooter >
   );
 };
 

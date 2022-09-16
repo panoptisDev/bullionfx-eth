@@ -33,11 +33,11 @@ interface WalletModalProps extends InjectedModalProps {
 export const LOW_BNB_BALANCE = parseUnits('2', 'gwei')
 
 const ModalHeader = styled(UIKitModalHeader)`
-  background: ${({ theme }) => theme.colors.gradients.bubblegum};
+  // background: ${({ theme }) => theme.colors.gradients.bubblegum};
 `
 
 const Tabs = styled.div`
-  background-color: ${({ theme }) => theme.colors.dropdown};
+  background-color: ${({ theme }) => theme.colors.dropdownAlter};
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
   padding: 16px 24px;
 `
@@ -66,17 +66,19 @@ const WalletModal: React.FC<React.PropsWithChildren<WalletModalProps>> = ({
   )
 
   return (
-    <ModalContainer title={t('Welcome!')} $minWidth="320px">
+    <ModalContainer title={t('Welcome!')} $minWidth="370px">
       <ModalHeader>
         <ModalTitle>
           <Heading>{t('Your Wallet')}</Heading>
         </ModalTitle>
-        <IconButton variant="text" onClick={onDismiss}>
-          <CloseIcon width="24px" color="text" />
-        </IconButton>
+        <div style={{ position: "absolute", right: "15px" }}>
+          <IconButton variant="text" onClick={onDismiss}>
+            <CloseIcon width="24px" color="text" />
+          </IconButton>
+        </div>
       </ModalHeader>
       {view !== WalletView.WRONG_NETWORK && <TabsComponent />}
-      <ModalBody p="24px" width="100%">
+      <ModalBody p="0px 24px 24px" width="100%">
         {view === WalletView.WALLET_INFO && (
           <WalletInfo hasLowNativeBalance={hasLowNativeBalance} onDismiss={onDismiss} />
         )}

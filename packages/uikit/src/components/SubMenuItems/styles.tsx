@@ -10,6 +10,7 @@ export const SubMenuItemWrapper = styled(Flex) <{ $isMobileOnly: boolean }>`
   position: relative;
 `;
 const StyledSubMenuItems = styled(Flex)`
+  padding-top: 10px;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -76,7 +77,7 @@ export const GradientBar = styled.div`
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0));
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
   z-index: -1;
 `;
 

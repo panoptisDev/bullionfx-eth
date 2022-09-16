@@ -4,7 +4,7 @@ import { Box, Flex } from "../Box";
 import SocialLinks from "./Components/SocialLinks";
 
 export const StyledFooter = styled(Flex)`
-  background: ${darkColors.backgroundAlt};
+  background: linear-gradient(180deg, #1A1A19 0%, #191915 48.74%, #0A0D10 100%);
 `;
 
 export const StyledList = styled.ul`
@@ -17,13 +17,15 @@ export const StyledList = styled.ul`
 `;
 
 export const StyledListItem = styled.li`
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 8px;
   text-transform: capitalize;
+  font-weight: 500;
+  color: ${darkColors.textSubtle};
 
   &:first-child {
-    color: ${darkColors.secondary};
-    font-weight: 600;
+    color: ${darkColors.text};
+    font-weight: 700;
     text-transform: uppercase;
   }
 `;
@@ -49,7 +51,7 @@ export const StyledToolsContainer = styled(Flex)`
 `;
 
 export const StyledSocialLinks = styled(SocialLinks)`
-  border-bottom: 1px solid ${darkColors.cardBorder};
+  // border-bottom: 1px solid ${darkColors.cardBorder};
 `;
 
 export const StyledText = styled.span`

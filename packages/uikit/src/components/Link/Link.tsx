@@ -3,14 +3,17 @@ import styled from "styled-components";
 import EXTERNAL_LINK_PROPS from "../../util/externalLinkProps";
 import Text from "../Text/Text";
 import { LinkProps } from "./types";
+import { darkColors } from "../../theme/colors";
 
 const StyledLink = styled(Text) <LinkProps>`
   display: flex;
   align-items: center;
   width: fit-content;
+  font-size: 14px;
+  color: ${darkColors.textSubtle};
   &:hover {
     text-decoration: underline;
-    text-decoration-color: #837144;
+    text-decoration-color: ${darkColors.textSubtle};
   }
 `;
 

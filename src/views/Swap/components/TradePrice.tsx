@@ -17,7 +17,7 @@ export default function TradePrice({ price, showInverted, setShowInverted }: Tra
     : `${price?.baseCurrency?.symbol} per ${price?.quoteCurrency?.symbol}`
 
   return (
-    <Text style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+    <Text style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }} small>
       {show ? (
         <>
           {formattedPrice ?? '-'} {label}
