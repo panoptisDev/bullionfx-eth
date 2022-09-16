@@ -40,8 +40,8 @@ const Farm: React.FunctionComponent<React.PropsWithChildren<FarmProps>> = ({ tok
   const handleRenderFarming = (): JSX.Element => {
     if (rawStakedBalance) {
       return (
-        <Text color="secondary" fontSize="12px" bold textTransform="uppercase">
-          {t('Farming')}
+        <Text color="secondaryAlter" fontSize="12px" bold textTransform="uppercase">
+          {t('Stake-Earn & more')}
         </Text>
       )
     }
@@ -55,8 +55,8 @@ const Farm: React.FunctionComponent<React.PropsWithChildren<FarmProps>> = ({ tok
         <TokenPairImage variant="inverted" primaryToken={token} secondaryToken={quoteToken} width={40} height={40} />
       </TokenWrapper>
       <div>
-        {handleRenderFarming()}
         <Text bold>{label}</Text>
+        {handleRenderFarming()}
       </div>
     </Container>
   )

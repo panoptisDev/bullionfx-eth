@@ -69,10 +69,11 @@ const Container = styled.div<{ expanded }>`
 
 const StyledLinkExternal = styled(LinkExternal)`
   font-weight: 400;
+  color: ${({ theme }) => theme.colors.secondary};
 `
 
 const StakeContainer = styled.div`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.secondary};
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -173,7 +174,7 @@ const ActionPanel: React.FunctionComponent<React.PropsWithChildren<ActionPanelPr
         </ValueContainer>
         {isActive && (
           <StakeContainer>
-            <StyledLinkExternal href={`/add/${liquidityUrlPathParts}`}>
+            <StyledLinkExternal href={`/add/${liquidityUrlPathParts}`} color="secondary">
               {t('Get %symbol%', { symbol: lpLabel })}
             </StyledLinkExternal>
           </StakeContainer>

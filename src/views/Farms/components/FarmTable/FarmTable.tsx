@@ -1,8 +1,8 @@
-import { useRef, useMemo, useCallback } from 'react'
+import { useRef, useMemo } from 'react'
 import { latinise } from 'utils/latinise'
 import styled from 'styled-components'
-import { Button, ChevronUpIcon, RowType } from '@pancakeswap/uikit'
-import { useTranslation } from '@pancakeswap/localization'
+import { RowType } from '@pancakeswap/uikit'
+// import { useTranslation } from '@pancakeswap/localization'
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { BIG_ZERO } from 'utils/bigNumber'
@@ -24,9 +24,9 @@ export interface ITableProps {
 
 const Container = styled.div`
   width: 100%;
-  background: ${({ theme }) => theme.card.background};
+  background: ${({ theme }) => theme.colors.tertiary};
   border-radius: 16px;
-  margin: 16px 0px;
+  margin: 0px;
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
@@ -61,17 +61,17 @@ const TableContainer = styled.div`
   position: relative;
 `
 
-const ScrollButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
-`
+// const ScrollButtonContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   padding-top: 5px;
+//   padding-bottom: 5px;
+// `
 
 const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cakePrice, userDataReady }) => {
   const tableWrapperEl = useRef<HTMLDivElement>(null)
   const { query } = useRouter()
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
 
   const columns = useMemo(
@@ -101,12 +101,12 @@ const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cake
     [],
   )
 
-  const scrollToTop = useCallback((): void => {
-    window.scrollTo({
-      top: tableWrapperEl.current.offsetTop,
-      behavior: 'smooth',
-    })
-  }, [])
+  // const scrollToTop = useCallback((): void => {
+  //   window.scrollTo({
+  //     top: tableWrapperEl.current.offsetTop,
+  //     behavior: 'smooth',
+  //   })
+  // }, [])
 
   const getFarmEarnings = (farm) => {
     let earnings = BIG_ZERO
@@ -202,12 +202,12 @@ const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cake
             </TableBody>
           </StyledTable>
         </TableWrapper>
-        <ScrollButtonContainer>
+        {/* <ScrollButtonContainer>
           <Button variant="text" onClick={scrollToTop}>
             {t('To Top')}
             <ChevronUpIcon color="primary" />
           </Button>
-        </ScrollButtonContainer>
+        </ScrollButtonContainer> */}
       </TableContainer>
     </Container>
   )

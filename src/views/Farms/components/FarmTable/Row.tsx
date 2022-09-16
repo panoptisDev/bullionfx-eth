@@ -18,6 +18,7 @@ import CellLayout from './CellLayout'
 import { DesktopColumnSchema, MobileColumnSchema, FarmWithStakedValue } from '../types'
 import BoostedApr from '../YieldBooster/components/BoostedApr'
 import BoostedTag from '../YieldBooster/components/BoostedTag'
+import { GradientBar } from './styleds'
 
 export interface RowProps {
   apr: AprProps
@@ -57,8 +58,9 @@ const CellInner = styled.div`
 `
 
 const StyledTr = styled.tr`
+  position: relative;
   cursor: pointer;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.disabled};
+  // border-bottom: 2px solid ${({ theme }) => theme.colors.disabled};
 `
 
 const EarnedMobileCell = styled.td`
@@ -155,6 +157,7 @@ const Row: React.FunctionComponent<React.PropsWithChildren<RowPropsWithLoading>>
                 )
             }
           })}
+          <GradientBar />
         </StyledTr>
       )
     }

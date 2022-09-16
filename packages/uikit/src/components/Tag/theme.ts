@@ -20,6 +20,9 @@ export const styleVariants = {
   [variants.SECONDARY]: {
     backgroundColor: "secondary",
   },
+  [variants.SECONDARYALTER]: {
+    backgroundColor: "secondaryAlter",
+  },
   [variants.SUCCESS]: {
     backgroundColor: "success",
   },

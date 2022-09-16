@@ -4,6 +4,7 @@ import { SpaceProps, TypographyProps } from "styled-system";
 export const variants = {
   PRIMARY: "primary",
   SECONDARY: "secondary",
+  SECONDARYALTER: "secondaryAlter",
   SUCCESS: "success",
   TEXTDISABLED: "textDisabled",
   TEXTSUBTLE: "textSubtle",

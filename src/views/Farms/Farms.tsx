@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState, useMemo, useRef, createContext } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { Image, Heading, Flex, Box } from '@pancakeswap/uikit'
+import { Heading, Flex, Box } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
 // import { NextLinkFromReactRouter } from 'components/NextLink'
 import styled from 'styled-components'
@@ -32,18 +32,20 @@ import { FarmWithStakedValue } from './components/types'
 
 const ControlContainer = styled.div`
   display: flex;
-  width: 100%;
+  // width: 100%;
   align-items: center;
-  position: relative;
+  position: absolute;
+  right: 0px;
+  top: -40px;
 
   justify-content: space-between;
   flex-direction: column;
-  margin-bottom: 32px;
+  margin-bottom: 5px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 16px 32px;
+    padding: 3px 32px;
     margin-bottom: 0;
   }
 `
@@ -58,7 +60,7 @@ const FarmH1 = styled(Heading)`
   margin-bottom: 8px;
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 28px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
   }
 `
 const FarmH2 = styled(Heading)`
@@ -66,7 +68,7 @@ const FarmH2 = styled(Heading)`
   margin-bottom: 8px;
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 8px;
   }
 `
 
@@ -106,7 +108,7 @@ const ViewControls = styled.div`
   width: 100%;
 
   > div {
-    padding: 8px 0px;
+    padding: 2px 0px;
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -119,11 +121,11 @@ const ViewControls = styled.div`
   }
 `
 
-const StyledImage = styled(Image)`
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 58px;
-`
+// const StyledImage = styled(Image)`
+//   margin-left: auto;
+//   margin-right: auto;
+//   margin-top: 58px;
+// `
 
 // const FinishedTextContainer = styled(Flex)`
 //   padding-bottom: 32px;
@@ -318,7 +320,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
       <PageHeader>
         <FarmFlexWrapper justifyContent="space-between">
           <Box>
-            <FarmH1 as="h1" scale="xxl" color="text" mb="24px">
+            <FarmH1 as="h1" scale="xxl" color="text" mb="6px">
               {t('Provide Liquidity')}
             </FarmH1>
             <FarmH2 scale="lg" color="text">
@@ -435,7 +437,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
           </Flex>
         )}
         <div ref={observerRef} />
-        <StyledImage src="/images/decorations/3dpan.png" alt="Pancake illustration" width={120} height={103} />
+        {/* <StyledImage src="/images/decorations/3dpan.png" alt="Pancake illustration" width={120} height={103} /> */}
       </Page>
     </FarmsContext.Provider>
   )

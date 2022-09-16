@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ChevronDownIcon, useMatchBreakpointsContext } from '@pancakeswap/uikit'
+import { ChevronDownIcon, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 
 interface DetailsProps {
@@ -18,19 +18,19 @@ const Container = styled.div`
   }
 `
 
-const ArrowIcon = styled(ChevronDownIcon)<{ toggled: boolean }>`
+const ArrowIcon = styled(ChevronDownIcon) <{ toggled: boolean }>`
   transform: ${({ toggled }) => (toggled ? 'rotate(180deg)' : 'rotate(0)')};
   height: 20px;
 `
 
 const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({ actionPanelToggled }) => {
   const { t } = useTranslation()
-  const { isDesktop } = useMatchBreakpointsContext()
+  // const { isDesktop } = useMatchBreakpointsContext()
 
   return (
-    <Container>
-      {!isDesktop && t('Details')}
-      <ArrowIcon color="primary" toggled={actionPanelToggled} />
+    <Container style={{ display: "flex", justifyContent: "center" }}>
+      <Text style={{ fontSize: "16px", fontWeight: "600" }} color="secondary">{actionPanelToggled ? t('Hide') : t('Details')}</Text>
+      <ArrowIcon color="secondary" toggled={actionPanelToggled} />
     </Container>
   )
 }

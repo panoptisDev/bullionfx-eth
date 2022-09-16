@@ -19,10 +19,10 @@ const CoreTag: React.FC<React.PropsWithChildren<TagProps>> = (props) => {
   const { t } = useTranslation()
   return (
     <Tag
-      variant="secondary"
+      variant="secondaryAlter"
       style={{ background: 'none' }}
       outline
-      startIcon={<VerifiedIcon width="18px" color="secondary" mr="4px" />}
+      startIcon={<VerifiedIcon width="18px" color="secondaryAlter" mr="4px" />}
       {...props}
     >
       {t('Core')}
