@@ -55,7 +55,6 @@ const UserMenu = () => {
       onPresentWalletModal()
     }
   }
-  console.log(isWrongNetwork, account)
 
   const UserMenuItems = () => {
     return (

@@ -67,7 +67,7 @@ const PriceChart = ({
             inputCurrency && <CurrencyLogo currency={inputCurrency} size="24px" style={{ marginRight: '8px' }} />
           )}
           {inputCurrency && (
-            <Text color="text" bold>
+            <Text color="text" bold small>
               {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol}
             </Text>
           )}
@@ -102,7 +102,7 @@ const PriceChart = ({
         {!isMobile && (
           <Flex>
             <IconButton variant="text" onClick={toggleExpanded}>
-              {isChartExpanded ? <ShrinkIcon color="text" /> : <ExpandIcon color="text" />}
+              {isChartExpanded ? <ShrinkIcon color="textSubtle" /> : <ExpandIcon color="textSubtle" />}
             </IconButton>
           </Flex>
         )}

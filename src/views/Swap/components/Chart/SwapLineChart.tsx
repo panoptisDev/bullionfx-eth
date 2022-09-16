@@ -34,8 +34,8 @@ const HoverUpdater = ({ locale, payload, setHoverValue, setHoverDate }) => {
 
 const getChartColors = ({ isChangePositive }) => {
   return isChangePositive
-    ? { gradient1: '#A69052', gradient2: '9500CB', stroke: '#837144' }
-    : { gradient1: '#ED4B9E', gradient2: '#ED4B9E', stroke: '#ED4B9E ' }
+    ? { gradient1: '#16DB65', gradient2: 'rgba(22, 219, 101, 0.1)', stroke: '#16DB65' }
+    : { gradient1: '#ED6A5A', gradient2: 'rgba(237, 106, 90, 0.1)', stroke: '#ED6A5A' }
 }
 
 const dateFormattingByTimewindow: Record<PairDataTimeWindowEnum, Intl.DateTimeFormatOptions> = {
@@ -99,7 +99,7 @@ const LineChart = ({ data, setHoverValue, setHoverDate, isChangePositive, timeWi
           tickFormatter={(time) => time.toLocaleString(locale, dateFormatting)}
           minTickGap={8}
         />
-        <YAxis dataKey="value" axisLine={false} tickLine={false} domain={['auto', 'auto']} hide />
+        <YAxis dataKey="value" axisLine={false} tickLine={false} domain={['auto', 'auto']} hide padding={{ bottom: 20 }} />
         <Tooltip
           cursor={{ stroke: theme.colors.textDisabled }}
           contentStyle={{ display: 'none' }}
