@@ -1,5 +1,5 @@
 import styled, { DefaultTheme, css } from "styled-components";
-import { space, layout, variant } from "styled-system";
+import { space, layout, variant, fontSize } from "styled-system";
 import { scaleVariants, styleVariants } from "./theme";
 import { BaseButtonProps } from "./types";
 
@@ -42,17 +42,23 @@ const getDisabledStyles = ({ $isLoading, theme }: TransientButtonProps) => {
 const getOpacity = ({ $isLoading = false }: TransientButtonProps) => {
   return $isLoading ? ".5" : "1";
 };
+const getBorderRadius = ({ borderRadius }: BaseButtonProps) => {
+  return borderRadius ?? "15px";
+};
+const getFontSize = ({ fontSize }: BaseButtonProps) => {
+  return fontSize ?? "14px";
+}
 
 const StyledButton = styled.button<BaseButtonProps>`
   position: relative;
   align-items: center;
   border: 0;
-  border-radius: 15px;
+  border-radius: ${getBorderRadius};
   box-shadow: 0px -1px 0px 0px rgba(14, 14, 44, 0.4) inset;
   cursor: pointer;
   display: inline-flex;
   font-family: inherit;
-  font-size: 14px;
+  font-size: ${getFontSize};
   font-weight: 600;
   justify-content: center;
   letter-spacing: 0.03em;

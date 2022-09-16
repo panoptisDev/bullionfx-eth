@@ -23,15 +23,15 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
       : null}
 `
 
-export const ErrorText = styled(Text)<{ severity?: 0 | 1 | 2 | 3 | 4 }>`
+export const ErrorText = styled(Text) <{ severity?: 0 | 1 | 2 | 3 | 4 }>`
   color: ${({ theme, severity }) =>
     severity === 3 || severity === 4
       ? theme.colors.failure
       : severity === 2
-      ? theme.colors.warning
-      : severity === 1
-      ? theme.colors.text
-      : theme.colors.success};
+        ? theme.colors.warning
+        : severity === 1
+          ? theme.colors.text
+          : theme.colors.success};
 `
 
 export const StyledBalanceMaxMini = styled.button`
@@ -110,3 +110,9 @@ export const SwapShowAcceptChanges = styled(AutoColumn)`
   border-radius: 12px;
   margin-top: 8px;
 `
+
+export const GradientBar = styled.div`
+  width: 100%;
+  height: 1px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+`;

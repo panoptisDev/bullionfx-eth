@@ -31,6 +31,8 @@ export interface BaseButtonProps extends LayoutProps, SpaceProps {
   disabled?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  fontSize?: string;
+  borderRadius?: string;
   decorator?: {
     backgroundColor?: string;
     color?: string;

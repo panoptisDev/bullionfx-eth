@@ -49,10 +49,14 @@ const InputPanel = styled.div`
   flex-flow: column nowrap;
   position: relative;
   background-color: ${({ theme }) => theme.colors.backgroundAlt};
+  border-radius: 12px;
   z-index: 1;
+  &:focus-within {
+    border: 1px solid gold;
+  }
 `
 const Container = styled.div<{ zapStyle?: ZapStyle; error?: boolean }>`
-  border-radius: 16px;
+  border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.input};
   box-shadow: ${({ theme, error }) => theme.shadows[error ? 'warning' : 'inset']};
   ${({ zapStyle }) =>
@@ -156,14 +160,14 @@ export default function CurrencyInputPanel({
               {pair ? (
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={16} margin />
               ) : currency ? (
-                <CurrencyLogo currency={currency} size="24px" style={{ marginRight: '8px' }} />
+                <CurrencyLogo currency={currency} size="20px" style={{ marginRight: '8px' }} />
               ) : null}
               {pair ? (
                 <Text id="pair" bold>
                   {pair?.token0.symbol}:{pair?.token1.symbol}
                 </Text>
               ) : (
-                <Text id="pair" bold>
+                <Text id="pair" bold small fontWeight={700}>
                   {(currency && currency.symbol && currency.symbol.length > 20
                     ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(
                       currency.symbol.length - 5,

@@ -35,7 +35,7 @@ import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AutoRow, RowBetween } from '../../components/Layout/Row'
 import AdvancedSwapDetailsDropdown from './components/AdvancedSwapDetailsDropdown'
 import confirmPriceImpactWithoutFee from './components/confirmPriceImpactWithoutFee'
-import { ArrowWrapper, SwapCallbackError, Wrapper } from './components/styleds'
+import { ArrowWrapper, GradientBar, SwapCallbackError, Wrapper } from './components/styleds'
 import TradePrice from './components/TradePrice'
 import ProgressSteps from './components/ProgressSteps'
 import { AppBody } from '../../components/App'
@@ -70,23 +70,23 @@ import replaceBrowserHistory from '../../utils/replaceBrowserHistory'
 import { currencyId } from '../../utils/currencyId'
 
 const Label = styled(Text)`
-  font-size: 12px;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.secondary};
+  font-size: 14px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.textSubtle};
 `
 
 const SwitchIconButton = styled(IconButton)`
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
-  .icon-up-down {
+  .icon-up-down-1 {
     display: none;
   }
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary};
-    .icon-down {
+    .icon-up-down-0 {
       display: none;
       fill: white;
     }
-    .icon-up-down {
+    .icon-up-down-1 {
       display: block;
       fill: white;
     }
@@ -426,11 +426,12 @@ export default function Swap() {
                 <CurrencyInputHeader
                   title={t('Swap')}
                   subtitle={t('Trade tokens in an instant')}
-                  setIsChartDisplayed={setIsChartDisplayed}
-                  isChartDisplayed={isChartDisplayed}
+                  // setIsChartDisplayed={setIsChartDisplayed}
+                  // isChartDisplayed={isChartDisplayed}
                   hasAmount={hasAmount}
                   onRefreshPrice={onRefreshPrice}
                 />
+                <GradientBar />
                 <Wrapper id="swap-page" style={{ minHeight: '412px' }}>
                   <AutoColumn gap="sm">
                     <CurrencyInputPanel
@@ -461,13 +462,15 @@ export default function Swap() {
                             replaceBrowserHistory('outputCurrency', inputCurrencyId)
                           }}
                         >
-                          <ArrowDownIcon
-                            className="icon-down"
-                            color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? '#837144' : 'text'}
+                          <ArrowUpDownIcon
+                            className="icon-up-down-0"
+                            color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? '#A18841' : 'text'}
+                            width={30}
                           />
                           <ArrowUpDownIcon
-                            className="icon-up-down"
-                            color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? '#837144' : 'text'}
+                            className="icon-up-down-1"
+                            color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? '#FFFFFF' : 'text'}
+                            width={30}
                           />
                         </SwitchIconButton>
                         {recipient === null && !showWrap && isExpertMode ? (
@@ -524,7 +527,7 @@ export default function Swap() {
                         </RowBetween>
                         <RowBetween align="center">
                           <Label>{t('Slippage Tolerance')}</Label>
-                          <Text bold color="primary">
+                          <Text bold color="textHighlight" small>
                             {allowedSlippage / 100}%
                           </Text>
                         </RowBetween>
@@ -533,18 +536,18 @@ export default function Swap() {
                   </AutoColumn>
                   <Box mt="0.25rem">
                     {swapIsUnsupported ? (
-                      <Button width="100%" disabled>
+                      <Button width="100%" disabled height="56px" borderRadius='12px' fontSize='16px'>
                         {t('Unsupported Asset')}
                       </Button>
                     ) : !account ? (
-                      <ConnectWalletButton width="100%" />
+                      <ConnectWalletButton width="100%" height="56px" borderRadius='12px' fontSize='16px' />
                     ) : showWrap ? (
-                      <Button width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                      <Button width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap} height="56px" borderRadius='12px' fontSize='16px'>
                         {wrapInputError ??
                           (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
                       </Button>
                     ) : noRoute && userHasSpecifiedInputOutput ? (
-                      <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
+                      <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }} height="56px" borderRadius='12px'>
                         <Text color="textSubtle">{t('Insufficient liquidity for this trade.')}</Text>
                         {singleHopOnly && <Text color="textSubtle">{t('Try enabling multi-hop trades.')}</Text>}
                       </GreyCard>
@@ -555,6 +558,7 @@ export default function Swap() {
                           onClick={approveCallback}
                           disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
                           width="48%"
+                          height="56px" borderRadius='12px' fontSize='16px'
                         >
                           {approval === ApprovalState.PENDING ? (
                             <AutoRow gap="6px" justify="center">
@@ -588,6 +592,7 @@ export default function Swap() {
                             approval !== ApprovalState.APPROVED ||
                             (priceImpactSeverity > 3 && !isExpertMode)
                           }
+                          height="56px" borderRadius='12px' fontSize='16px'
                         >
                           {priceImpactSeverity > 3 && !isExpertMode
                             ? t('Price Impact High')
@@ -615,6 +620,7 @@ export default function Swap() {
                         id="swap-button"
                         width="100%"
                         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+                        height="56px" borderRadius='12px' fontSize='16px'
                       >
                         {swapInputError ||
                           (priceImpactSeverity > 3 && !isExpertMode

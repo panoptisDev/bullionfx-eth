@@ -18,7 +18,7 @@ export const scaleVariants = {
 
 export const styleVariants = {
   [variants.PRIMARY]: {
-    backgroundColor: "#A69052",
+    backgroundColor: "#A18841",
     color: "white",
   },
   [variants.SECONDARY]: {
