@@ -45,10 +45,10 @@ const HarvestAction: React.FunctionComponent<React.PropsWithChildren<Deserialize
 
   const actionTitle = (
     <>
-      <Text fontSize="12px" bold color="secondary" as="span" textTransform="uppercase">
+      <Text fontSize="12px" color="secondary" as="span" textTransform="uppercase">
         {earningToken.symbol}{' '}
       </Text>
-      <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+      <Text fontSize="12px" color="textSubtle" as="span" textTransform="uppercase">
         {t('Earned')}
       </Text>
     </>
@@ -85,7 +85,7 @@ const HarvestAction: React.FunctionComponent<React.PropsWithChildren<Deserialize
           <>
             {hasEarnings ? (
               <>
-                <Balance lineHeight="1" bold fontSize="20px" decimals={5} value={earningTokenBalance} />
+                <Balance lineHeight="1" bold fontSize="16px" decimals={5} value={earningTokenBalance} />
                 {earningTokenPrice > 0 && (
                   <Balance
                     display="inline"
@@ -95,6 +95,7 @@ const HarvestAction: React.FunctionComponent<React.PropsWithChildren<Deserialize
                     prefix="~"
                     value={earningTokenDollarBalance}
                     unit=" USD"
+                    mt="5px"
                   />
                 )}
               </>

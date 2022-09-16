@@ -43,11 +43,10 @@ const StakedCell: React.FC<React.PropsWithChildren<StakedCellProps>> = ({ pool, 
     stakingToken.decimals,
   )
 
-  const labelText = `${pool.stakingToken.symbol} ${
-    pool.vaultKey === VaultKey.CakeVault && (vaultData as DeserializedPoolLockedVault).userData.locked
-      ? t('Locked')
-      : t('Staked')
-  }`
+  const labelText = `${pool.stakingToken.symbol} ${pool.vaultKey === VaultKey.CakeVault && (vaultData as DeserializedPoolLockedVault).userData.locked
+    ? t('Locked')
+    : t('Staked')
+    }`
 
   const hasStaked = account && (stakedBalance.gt(0) || isVaultWithShares)
 
@@ -60,8 +59,8 @@ const StakedCell: React.FC<React.PropsWithChildren<StakedCellProps>> = ({ pool, 
         pool.vaultKey === VaultKey.CakeFlexibleSideVault
           ? '1 0 162px'
           : pool.vaultKey === VaultKey.CakeVault && !hasStaked
-          ? '1 0 120px'
-          : '2 0 100px'
+            ? '1 0 120px'
+            : '2 0 100px'
       }
     >
       <CellContent>
@@ -75,10 +74,11 @@ const StakedCell: React.FC<React.PropsWithChildren<StakedCellProps>> = ({ pool, 
             <Flex>
               <Box mr="8px" height="32px">
                 <Balance
-                  mt="4px"
+                  mt="8px"
+                  mb="4px"
                   bold={!isMobile}
                   fontSize={isMobile ? '14px' : '16px'}
-                  color={hasStaked ? 'primary' : 'textDisabled'}
+                  color={hasStaked ? 'text' : 'textDisabled'}
                   decimals={hasStaked ? 5 : 1}
                   value={
                     hasStaked

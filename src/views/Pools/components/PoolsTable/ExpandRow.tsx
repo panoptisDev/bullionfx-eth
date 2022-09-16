@@ -8,6 +8,7 @@ import ExpandActionCell from './Cells/ExpandActionCell'
 const StyledRow = styled.div`
   background-color: transparent;
   display: flex;
+  position: relative;
   cursor: pointer;
 `
 

@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { useMatchBreakpointsContext } from '@pancakeswap/uikit'
 import { usePool, useDeserializedPoolByVaultKey } from 'state/pools/hooks'
 import { VaultKey } from 'state/types'
+import { GradientBar } from 'views/Farms/components/FarmTable/styleds'
 
 import NameCell from './Cells/NameCell'
 import EarningsCell from './Cells/EarningsCell'
@@ -34,6 +35,7 @@ export const VaultPoolRow: React.FC<
       {isXLargerScreen ? <StakedCell pool={pool} account={account} /> : null}
       <AutoAprCell pool={pool} />
       {isLargerScreen && <TotalStakedCell pool={pool} />}
+      <GradientBar />
     </ExpandRow>
   )
 })
@@ -59,6 +61,7 @@ const PoolRow: React.FC<React.PropsWithChildren<{ sousId: number; account: strin
       {isLargerScreen && <TotalStakedCell pool={pool} />}
       <AprCell pool={pool} />
       {isDesktop && <EndsInCell pool={pool} />}
+      <GradientBar />
     </ExpandRow>
   )
 }

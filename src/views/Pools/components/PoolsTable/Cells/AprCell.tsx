@@ -22,7 +22,7 @@ const AprCell: React.FC<React.PropsWithChildren<AprCellProps>> = ({ pool }) => {
         <Text fontSize="12px" color="textSubtle" textAlign="left">
           {t('APR')}
         </Text>
-        <Apr pool={pool} stakedBalance={stakedBalance} showIcon={!isMobile} />
+        <Apr pool={pool} stakedBalance={stakedBalance} showIcon={!isMobile} mt="8px" mb="8px" />
       </CellContent>
     </BaseCell>
   )

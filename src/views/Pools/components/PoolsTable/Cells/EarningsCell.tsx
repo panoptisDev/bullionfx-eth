@@ -68,10 +68,11 @@ const EarningsCell: React.FC<React.PropsWithChildren<EarningsCellProps>> = ({ po
             <Flex>
               <Box mr="8px" height="32px" onClick={hasEarnings ? handleEarningsClick : undefined}>
                 <Balance
-                  mt="4px"
+                  mt="8px"
+                  mb="4px"
                   bold={!isMobile}
                   fontSize={isMobile ? '14px' : '16px'}
-                  color={hasEarnings ? 'primary' : 'textDisabled'}
+                  color={hasEarnings ? 'text' : 'textDisabled'}
                   decimals={hasEarnings ? 5 : 1}
                   value={hasEarnings ? earningTokenBalance : 0}
                 />

@@ -22,7 +22,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   cursor: pointer;
   font-weight: ${({ $isActive = false }) => ($isActive ? "600" : "400")};
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   height: 48px;
   justify-content: space-between;
   outline: 0;
@@ -82,7 +82,7 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
   `}
 `;
 
-export const LinkStatus = styled(Text)<{ color: keyof Colors }>`
+export const LinkStatus = styled(Text) <{ color: keyof Colors }>`
   border-radius: ${({ theme }) => theme.radii.default};
   padding: 0 8px;
   border: 2px solid;

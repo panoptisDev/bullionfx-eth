@@ -12,7 +12,7 @@ import Apr from './Apr'
 
 const StatWrapper: FC<React.PropsWithChildren<{ label: ReactNode }>> = ({ children, label }) => {
   return (
-    <Flex mb="2px" justifyContent="space-between" alignItems="center" width="100%">
+    <Flex mt="6px" mb="8px" justifyContent="flex-start" alignItems="center" width="100%">
       {label}
       <Flex alignItems="center">{children}</Flex>
     </Flex>
@@ -65,7 +65,7 @@ export const TotalLocked: FC<React.PropsWithChildren<{ totalLocked: BigNumber; l
   const { t } = useTranslation()
 
   return (
-    <StatWrapper label={<Text small>{t('Total locked')}:</Text>}>
+    <StatWrapper label={<Text small mr="3px" color="textSubtle">{t('Total locked')}:</Text>}>
       <TotalToken total={totalLocked} token={lockedToken} />
     </StatWrapper>
   )
@@ -83,7 +83,7 @@ export const DurationAvg = () => {
   return (
     <StatWrapper
       label={
-        <TooltipText ref={targetRef} small>
+        <TooltipText ref={targetRef} small color="textSubtle">
           {t('Average lock duration')}:
         </TooltipText>
       }

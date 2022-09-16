@@ -28,7 +28,7 @@ const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({ actionPanelT
   // const { isDesktop } = useMatchBreakpointsContext()
 
   return (
-    <Container style={{ display: "flex", justifyContent: "center" }}>
+    <Container style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", minWidth: "75px" }}>
       <Text style={{ fontSize: "16px", fontWeight: "600" }} color="secondary">{actionPanelToggled ? t('Hide') : t('Details')}</Text>
       <ArrowIcon color="secondary" toggled={actionPanelToggled} />
     </Container>

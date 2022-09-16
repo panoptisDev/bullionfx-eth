@@ -8,6 +8,7 @@ import {
   TokenPocketIcon,
   OperaIcon,
   BinanceChainIcon,
+  Text
 } from '@pancakeswap/uikit'
 import { BAD_SRCS } from 'components/Logo/Logo'
 import { useAccount } from 'wagmi'
@@ -90,10 +91,12 @@ const AddToWalletButton: React.FC<AddToWalletButtonProps & ButtonProps> = ({
         })
       }}
     >
-      {textOptions !== AddToWalletTextOptions.NO_TEXT &&
-        (textOptions === AddToWalletTextOptions.TEXT
-          ? t('Add to %wallet%', { wallet: connector.name })
-          : t('Add %asset% to %wallet%', { asset: tokenSymbol, wallet: connector.name }))}
+      <Text color="secondary" small fontWeight={600}>
+        {textOptions !== AddToWalletTextOptions.NO_TEXT &&
+          (textOptions === AddToWalletTextOptions.TEXT
+            ? t('Add %asset% to %wallet%', { asset: tokenSymbol, wallet: connector.name })
+            : t('Add to %wallet%', { wallet: connector.name }))}
+      </Text>
       {getWalletIcon(marginTextBetweenLogo, connector?.name)}
     </Button>
   )

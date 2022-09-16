@@ -74,19 +74,19 @@ const config: (t: ContextApi['t'], isDark: boolean, languageCode?: string, chain
       },
       {
         label: t('Earn'),
-        href: '/farms',
+        href: '/pools',
         icon: EarnIcon,
         fillIcon: EarnFillIcon,
         supportChainIds: [ChainId.BSC, ChainId.BSC_TESTNET],
         image: '/images/decorations/pe2.png',
         items: [
           {
-            label: t('Farms'),
-            href: '/farms',
+            label: t('Stake'),
+            href: '/pools',
           },
           {
-            label: t('Pools'),
-            href: '/pools',
+            label: t('Yield'),
+            href: '/farms',
           },
         ],
       },

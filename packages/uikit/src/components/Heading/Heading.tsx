@@ -12,8 +12,8 @@ const style = {
     fontSizeLg: "24px",
   },
   [scales.XL]: {
-    fontSize: "32px",
-    fontSizeLg: "40px",
+    fontSize: "26px",
+    fontSizeLg: "28px",
   },
   [scales.XXL]: {
     fontSize: "48px",

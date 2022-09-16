@@ -63,6 +63,8 @@ const AutoAprCell: React.FC<React.PropsWithChildren<AprCellProps>> = ({ pool }) 
                   decimals={2}
                   unit="%"
                   fontWeight={[600, 400]}
+                  mt="8px"
+                  mb="8px"
                 />
                 {!isMobile && (
                   <Button
@@ -102,6 +104,8 @@ const AutoAprCell: React.FC<React.PropsWithChildren<AprCellProps>> = ({ pool }) 
                     decimals={2}
                     unit="%"
                     fontWeight={[600, 400]}
+                    mt="8px"
+                    mb="8px"
                   />
                   {!isMobile && (
                     <Button
@@ -142,6 +146,8 @@ const AutoAprCell: React.FC<React.PropsWithChildren<AprCellProps>> = ({ pool }) 
               value={vaultPosition > VaultPosition.Flexible ? parseFloat(lockedApy) : parseFloat(flexibleApy)}
               decimals={2}
               unit="%"
+              mt="8px"
+              mb="8px"
             />
             <Button
               onClick={(e) => {

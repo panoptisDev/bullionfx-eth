@@ -51,7 +51,7 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
   const vaultPosition = getVaultPosition(vaultData.userData)
 
   const actionTitle = (
-    <Text fontSize="12px" bold color="secondary" as="span" textTransform="uppercase">
+    <Text fontSize="12px" color="secondary" as="span" textTransform="uppercase">
       {t('Recent BULL profit')}
     </Text>
   )
@@ -87,7 +87,7 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
             <>
               {hasAutoEarnings ? (
                 <>
-                  <BalanceWithLoading lineHeight="1" bold fontSize="20px" decimals={5} value={autoCakeToDisplay} />
+                  <BalanceWithLoading lineHeight="1" bold fontSize="16px" decimals={5} value={autoCakeToDisplay} />
                   {Number.isFinite(earningTokenPrice) && earningTokenPrice > 0 && (
                     <BalanceWithLoading
                       display="inline"
@@ -97,6 +97,7 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
                       prefix="~"
                       value={autoUsdToDisplay}
                       unit=" USD"
+                      mt="5px"
                     />
                   )}
                 </>
@@ -121,7 +122,7 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
       {!isMobile && vaultKey === VaultKey.CakeVault && (vaultData as DeserializedLockedCakeVault).userData.locked && (
         <Box minWidth="123px">
           <ActionTitles>
-            <Text fontSize="12px" bold color="secondary" as="span" textTransform="uppercase">
+            <Text fontSize="12px" color="secondary" as="span" textTransform="uppercase">
               {t('Yield boost')}
             </Text>
           </ActionTitles>
@@ -131,12 +132,12 @@ const AutoHarvestAction: React.FunctionComponent<React.PropsWithChildren<Deseria
                 color="text"
                 lineHeight="1"
                 bold
-                fontSize="20px"
+                fontSize="16px"
                 value={boostFactor ? boostFactor?.toString() : '0'}
                 decimals={2}
                 unit="x"
               />
-              <Text fontSize="12px" color="textSubtle">
+              <Text fontSize="12px" color="textSubtle" mt="5px">
                 {t('Lock for %duration%', { duration: weekDuration })}
               </Text>
             </Flex>

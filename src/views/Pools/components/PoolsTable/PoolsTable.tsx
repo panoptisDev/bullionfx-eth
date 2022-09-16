@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import styled from 'styled-components'
-import { Button, ChevronUpIcon } from '@pancakeswap/uikit'
-import { useTranslation } from '@pancakeswap/localization'
+// import { Button, ChevronUpIcon } from '@pancakeswap/uikit'
+// import { useTranslation } from '@pancakeswap/localization'
 import { DeserializedPool } from 'state/types'
 import PoolRow, { VaultPoolRow } from './PoolRow'
 
@@ -15,9 +15,9 @@ const StyledTable = styled.div`
   border-radius: ${({ theme }) => theme.radii.card};
   scroll-margin-top: 64px;
 
-  background-color: ${({ theme }) => theme.card.background};
+  background-color: ${({ theme }) => theme.colors.tertiary};
   > div:not(:last-child) {
-    border-bottom: 2px solid ${({ theme }) => theme.colors.disabled};
+    // border-bottom: 2px solid ${({ theme }) => theme.colors.disabled};
   }
 `
 
@@ -28,23 +28,23 @@ const StyledTableBorder = styled.div`
   background-size: 400% 400%;
 `
 
-const ScrollButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
-`
+// const ScrollButtonContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   padding-top: 5px;
+//   padding-bottom: 5px;
+// `
 
 const PoolsTable: React.FC<React.PropsWithChildren<PoolsTableProps>> = ({ pools, account, urlSearch }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const tableWrapperEl = useRef<HTMLDivElement>(null)
 
-  const scrollToTop = (): void => {
-    window.scrollTo({
-      top: tableWrapperEl.current.offsetTop,
-      behavior: 'smooth',
-    })
-  }
+  // const scrollToTop = (): void => {
+  //   window.scrollTo({
+  //     top: tableWrapperEl.current.offsetTop,
+  //     behavior: 'smooth',
+  //   })
+  // }
 
   return (
     <StyledTableBorder>
@@ -68,12 +68,12 @@ const PoolsTable: React.FC<React.PropsWithChildren<PoolsTableProps>> = ({ pools,
             />
           ),
         )}
-        <ScrollButtonContainer>
+        {/* <ScrollButtonContainer>
           <Button variant="text" onClick={scrollToTop}>
             {t('To Top')}
             <ChevronUpIcon color="primary" />
           </Button>
-        </ScrollButtonContainer>
+        </ScrollButtonContainer> */}
       </StyledTable>
     </StyledTableBorder>
   )

@@ -194,7 +194,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
     return (
       <ActionContainer>
         <ActionTitles>
-          <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+          <Text fontSize="12px" color="textSubtle" as="span" textTransform="uppercase">
             {t('Start staking')}
           </Text>
         </ActionTitles>
@@ -209,7 +209,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
     return (
       <ActionContainer>
         <ActionTitles>
-          <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+          <Text fontSize="12px" color="textSubtle" as="span" textTransform="uppercase">
             {t('Start staking')}
           </Text>
         </ActionTitles>
@@ -224,7 +224,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
     return (
       <ActionContainer>
         <ActionTitles>
-          <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+          <Text fontSize="12px" color="textSubtle" as="span" textTransform="uppercase">
             {t('Enable pool')}
           </Text>
         </ActionTitles>
@@ -239,7 +239,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
     return (
       <ActionContainer>
         <ActionTitles>
-          <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+          <Text fontSize="12px" color="textSubtle" as="span" textTransform="uppercase">
             {t('Enable pool')}
           </Text>
         </ActionTitles>
@@ -261,10 +261,10 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
           <ActionContent mt={0}>
             <Flex flex="1" flexDirection="column" alignSelf="flex-start">
               <ActionTitles>
-                <Text fontSize="12px" bold color="secondary" as="span" textTransform="uppercase">
+                <Text fontSize="12px" color="secondary" as="span" textTransform="uppercase">
                   {stakingToken.symbol}{' '}
                 </Text>
-                <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+                <Text fontSize="12px" color="secondary" as="span" textTransform="uppercase">
                   {vaultKey === VaultKey.CakeVault && (vaultData as DeserializedLockedCakeVault).userData.locked
                     ? t('Locked')
                     : t('Staked')}
@@ -275,9 +275,10 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
                   <Balance
                     lineHeight="1"
                     bold
-                    fontSize="20px"
+                    fontSize="16px"
                     decimals={5}
                     value={vaultKey ? cakeAsNumberBalance : stakedTokenBalance}
+                    mb="5px"
                   />
                   <SkeletonV2
                     isDataReady={Number.isFinite(vaultKey ? stakedAutoDollarValue : stakedTokenDollarBalance)}
@@ -312,15 +313,16 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
             </Flex>
             {vaultPosition >= VaultPosition.Locked && (
               <Flex flex="1" ml="20px" flexDirection="column" alignSelf="flex-start">
-                <Text fontSize="12px" bold color="textSubtle" as="span" textTransform="uppercase">
+                <Text fontSize="12px" color="secondary" as="span" textTransform="uppercase">
                   {t('Unlocks In')}
                 </Text>
                 <Text
                   lineHeight="1"
-                  mt="8px"
                   bold
-                  fontSize="20px"
+                  fontSize="16px"
                   color={vaultPosition >= VaultPosition.LockedEnd ? '#D67E0A' : 'text'}
+                  style={{ display: 'flex', alignItems: "center" }}
+                  mt="3px"
                 >
                   {vaultPosition >= VaultPosition.LockedEnd ? t('Unlocked') : remainingTime}
                   {tagTooltipVisibleOfBurn && tagTooltipOfBurn}
@@ -332,7 +334,8 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
                   height="20px"
                   fontSize="12px"
                   display="inline"
-                  color={vaultPosition >= VaultPosition.LockedEnd ? '#D67E0A' : 'text'}
+                  color={vaultPosition >= VaultPosition.LockedEnd ? '#D67E0A' : 'textSubtle'}
+                  mt="3px"
                 >
                   {t('On %date%', { date: lockEndDate })}
                 </Text>

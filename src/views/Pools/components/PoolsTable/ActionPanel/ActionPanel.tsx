@@ -1,16 +1,16 @@
 import styled, { keyframes, css } from 'styled-components'
-import { Box, Flex, HelpIcon, Text, useTooltip, useMatchBreakpointsContext } from '@pancakeswap/uikit'
+import { Box, Flex, Text, useMatchBreakpointsContext } from '@pancakeswap/uikit'
 import { useVaultPoolByKey } from 'state/pools/hooks'
 import { getVaultPosition, VaultPosition } from 'utils/cakePool'
 import BigNumber from 'bignumber.js'
-import { DeserializedPool, VaultKey, DeserializedLockedCakeVault, DeserializedLockedVaultUser } from 'state/types'
-import { useTranslation } from '@pancakeswap/localization'
-import { CompoundingPoolTag, ManualPoolTag } from 'components/Tags'
+import { DeserializedPool, VaultKey, DeserializedLockedCakeVault } from 'state/types'
+// import { useTranslation } from '@pancakeswap/localization'
+// import { CompoundingPoolTag, ManualPoolTag } from 'components/Tags'
 import { BIG_ZERO } from 'utils/bigNumber'
 import Harvest from './Harvest'
 import Stake from './Stake'
 import AutoHarvest from './AutoHarvest'
-import { VaultPositionTagWithLabel } from '../../Vault/VaultPositionTag'
+// import { VaultPositionTagWithLabel } from '../../Vault/VaultPositionTag'
 import YieldBoostRow from '../../LockedPool/Common/YieldBoostRow'
 import LockDurationRow from '../../LockedPool/Common/LockDurationRow'
 import useUserDataInVaultPresenter from '../../LockedPool/hooks/useUserDataInVaultPresenter'
@@ -120,7 +120,7 @@ const YieldBoostDurationRow = ({ lockEndTime, lockStartTime }) => {
 
 const ActionPanel: React.FC<React.PropsWithChildren<ActionPanelProps>> = ({ account, pool, expanded }) => {
   const { userData, vaultKey } = pool
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const { isMobile } = useMatchBreakpointsContext()
 
   const vaultData = useVaultPoolByKey(vaultKey)
@@ -139,18 +139,18 @@ const ActionPanel: React.FC<React.PropsWithChildren<ActionPanelProps>> = ({ acco
     ? cakeAsBigNumber.plus(stakingTokenBalance)
     : stakedBalance.plus(stakingTokenBalance)
 
-  const manualTooltipText = t('You must harvest and compound your earnings from this pool manually.')
-  const autoTooltipText = t(
-    'Rewards are distributed and included into your staking balance automatically. There’s no need to manually compound your rewards.',
-  )
+  // const manualTooltipText = t('You must harvest and compound your earnings from this pool manually.')
+  // const autoTooltipText = t(
+  //   'Rewards are distributed and included into your staking balance automatically. There’s no need to manually compound your rewards.',
+  // )
 
-  const {
-    targetRef: tagTargetRef,
-    tooltip: tagTooltip,
-    tooltipVisible: tagTooltipVisible,
-  } = useTooltip(vaultKey ? autoTooltipText : manualTooltipText, {
-    placement: 'bottom-start',
-  })
+  // const {
+  //   targetRef: tagTargetRef,
+  //   tooltip: tagTooltip,
+  //   tooltipVisible: tagTooltipVisible,
+  // } = useTooltip(vaultKey ? autoTooltipText : manualTooltipText, {
+  //   placement: 'bottom-start',
+  // })
 
   return (
     <StyledActionPanel expanded={expanded}>
@@ -166,24 +166,24 @@ const ActionPanel: React.FC<React.PropsWithChildren<ActionPanelProps>> = ({ acco
         <Flex flexDirection="column" mb="8px">
           <PoolStatsInfo pool={pool} account={account} showTotalStaked={isMobile} alignLinksToRight={isMobile} />
         </Flex>
-        {vaultKey ? <CompoundingPoolTag /> : <ManualPoolTag />}
+        {/* {vaultKey ? <CompoundingPoolTag /> : <ManualPoolTag />}
         {tagTooltipVisible && tagTooltip}
         <span ref={tagTargetRef}>
           <HelpIcon ml="4px" width="20px" height="20px" color="textSubtle" />
-        </span>
+        </span> */}
       </InfoSection>
       <ActionContainer>
         {isMobile && vaultKey === VaultKey.CakeVault && vaultPosition === VaultPosition.None && (
           <CakeVaultApr pool={pool} userData={vaultData.userData} vaultPosition={vaultPosition} />
         )}
         <Box width="100%">
-          {pool.vaultKey === VaultKey.CakeVault && (
+          {/* {pool.vaultKey === VaultKey.CakeVault && (
             <VaultPositionTagWithLabel
               userData={vaultData.userData as DeserializedLockedVaultUser}
               width={['auto', , 'fit-content']}
               ml={['12px', , , , , '32px']}
             />
-          )}
+          )} */}
           <ActionContainer isAutoVault={!!pool.vaultKey} hasBalance={poolStakingTokenBalance.gt(0)}>
             {pool.vaultKey ? <AutoHarvest {...pool} /> : <Harvest {...pool} />}
             <Stake pool={pool} />

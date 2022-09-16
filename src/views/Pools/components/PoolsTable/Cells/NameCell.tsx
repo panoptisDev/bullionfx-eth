@@ -1,13 +1,13 @@
 import { Text, TokenPairImage as UITokenPairImage, useMatchBreakpointsContext } from '@pancakeswap/uikit'
-import BigNumber from 'bignumber.js'
+// import BigNumber from 'bignumber.js'
 import { TokenPairImage } from 'components/TokenImage'
 import { vaultPoolConfig } from 'config/constants/pools'
 import { useTranslation } from '@pancakeswap/localization'
 import { memo } from 'react'
-import { useVaultPoolByKey } from 'state/pools/hooks'
-import { DeserializedPool, VaultKey, DeserializedLockedCakeVault } from 'state/types'
+// import { useVaultPoolByKey } from 'state/pools/hooks'
+import { DeserializedPool } from 'state/types'
 import styled from 'styled-components'
-import { BIG_ZERO } from 'utils/bigNumber'
+// import { BIG_ZERO } from 'utils/bigNumber'
 import { getVaultPosition, VaultPosition, VaultPositionParams } from 'utils/cakePool'
 import BaseCell, { CellContent } from './BaseCell'
 
@@ -28,23 +28,23 @@ const StyledCell = styled(BaseCell)`
 const NameCell: React.FC<React.PropsWithChildren<NameCellProps>> = ({ pool }) => {
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpointsContext()
-  const { sousId, stakingToken, earningToken, userData, isFinished, vaultKey } = pool
-  const vaultData = useVaultPoolByKey(pool.vaultKey)
-  const {
-    userData: { userShares },
-  } = vaultData
-  const hasVaultShares = userShares.gt(0)
+  const { sousId, stakingToken, earningToken, vaultKey } = pool
+  // const vaultData = useVaultPoolByKey(pool.vaultKey)
+  // const {
+  //   userData: { userShares },
+  // } = vaultData
+  // const hasVaultShares = userShares.gt(0)
 
   const stakingTokenSymbol = stakingToken.symbol
   const earningTokenSymbol = earningToken.symbol
 
-  const stakedBalance = userData?.stakedBalance ? new BigNumber(userData.stakedBalance) : BIG_ZERO
-  const isStaked = stakedBalance.gt(0)
+  // const stakedBalance = userData?.stakedBalance ? new BigNumber(userData.stakedBalance) : BIG_ZERO
+  // const isStaked = stakedBalance.gt(0)
 
-  const showStakedTag = vaultKey ? hasVaultShares : isStaked
+  // const showStakedTag = vaultKey ? hasVaultShares : isStaked
 
-  let title: React.ReactNode = `${t('Earn')} ${earningTokenSymbol}`
-  let subtitle: React.ReactNode = `${t('Stake')} ${stakingTokenSymbol}`
+  let title: React.ReactNode = `${t('Stake')} ${stakingTokenSymbol}`
+  let subtitle: React.ReactNode = `${t('Stake & earn')} ${earningTokenSymbol}`
   const showSubtitle = sousId !== 0 || (sousId === 0 && !isMobile)
 
   if (vaultKey) {
@@ -55,12 +55,12 @@ const NameCell: React.FC<React.PropsWithChildren<NameCellProps>> = ({ pool }) =>
   return (
     <StyledCell role="cell">
       {vaultKey ? (
-        <UITokenPairImage {...vaultPoolConfig[vaultKey].tokenImage} mr="8px" width={40} height={40} />
+        <UITokenPairImage primarySrc={vaultPoolConfig[vaultKey].tokenImage.primarySrc} secondarySrc={vaultPoolConfig[vaultKey].tokenImage.primarySrc} mr="8px" width={40} height={40} />
       ) : (
         <TokenPairImage primaryToken={earningToken} secondaryToken={stakingToken} mr="8px" width={40} height={40} />
       )}
       <CellContent>
-        {showStakedTag &&
+        {/* {showStakedTag &&
           (vaultKey === VaultKey.CakeVault ? (
             <StakedCakeStatus
               userShares={userShares}
@@ -71,12 +71,12 @@ const NameCell: React.FC<React.PropsWithChildren<NameCellProps>> = ({ pool }) =>
             <Text fontSize="12px" bold color={isFinished ? 'failure' : 'secondary'} textTransform="uppercase">
               {t('Staked')}
             </Text>
-          ))}
+          ))} */}
         <Text bold={!isMobile} small={isMobile}>
           {title}
         </Text>
         {showSubtitle && (
-          <Text fontSize="12px" color="textSubtle">
+          <Text fontSize="12px" color="textSubtle" marginTop="5px">
             {subtitle}
           </Text>
         )}

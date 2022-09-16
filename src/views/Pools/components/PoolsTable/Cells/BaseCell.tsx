@@ -13,7 +13,7 @@ const BaseCell = styled(Flex)`
 export const CellContent = styled(Flex)`
   flex-direction: column;
   justify-content: center;
-  max-height: 40px;
+  // max-height: 40px;
   ${Text} {
     line-height: 1;
   }

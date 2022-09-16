@@ -16,15 +16,15 @@ export const UnitContainer = styled(Text)`
   white-space: nowrap;
 `;
 
-export const StyledBalanceInput = styled(Box)<{ isWarning: BalanceInputProps["isWarning"] }>`
-  background-color: ${({ theme }) => theme.colors.input};
+export const StyledBalanceInput = styled(Box) <{ isWarning: BalanceInputProps["isWarning"] }>`
+  background-color: ${({ theme }) => theme.colors.backgroundAlt};
   border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
   border-radius: 16px;
   box-shadow: ${({ theme, isWarning }) => theme.shadows[isWarning ? "warning" : "inset"]};
   padding: 8px 16px;
 `;
 
-export const StyledInput = styled(Input)<{ textAlign?: string }>`
+export const StyledInput = styled(Input) <{ textAlign?: string }>`
   background: transparent;
   border-radius: 0;
   box-shadow: none;

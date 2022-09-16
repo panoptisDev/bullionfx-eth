@@ -27,8 +27,8 @@ export const vaultPoolConfig = {
   },
   [VaultKey.CakeVault]: {
     name: <Trans>Stake BULL</Trans>,
-    description: <Trans>Stake, Earn – And more!</Trans>,
-    autoCompoundFrequency: 5000,
+    description: <Trans>Lock to earn BULL</Trans>,
+    autoCompoundFrequency: 13000,
     gasLimit: 500000,
     tokenImage: {
       primarySrc: `/images/tokens/testnet/${ethTokensGoerli.bull.address}.png`,
@@ -36,9 +36,9 @@ export const vaultPoolConfig = {
     },
   },
   [VaultKey.CakeFlexibleSideVault]: {
-    name: <Trans>Flexible BULL</Trans>,
-    description: <Trans>Flexible staking on the side.</Trans>,
-    autoCompoundFrequency: 5000,
+    name: <Trans>Stake BULL</Trans>,
+    description: <Trans>Flexible staking to earn BULL</Trans>,
+    autoCompoundFrequency: 13000,
     gasLimit: 500000,
     tokenImage: {
       primarySrc: `/images/tokens/testnet/${ethTokensGoerli.bull.address}.png`,
