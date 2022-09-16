@@ -12,9 +12,9 @@ export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
         content: "";
         position: absolute;
         bottom: 0;
-        height: 4px;
+        height: 2px;
         width: 100%;
-        background-color: ${theme.colors.primary};
+        background-color: ${theme.colors.primaryAlter};
         border-radius: 2px 2px 0 0;
       }
     `};
@@ -26,8 +26,8 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   align-items: center;
 
   color: ${({ theme, $isActive }) => ($isActive ? theme.colors.secondary : theme.colors.textSubtle)};
-  font-size: 16px;
-  font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")};
+  font-size: 14px;
+  font-weight: ${({ $isActive }) => ($isActive ? "500" : "500")};
   opacity: ${({ $isDisabled }) => ($isDisabled ? 0.5 : 1)};
 
   ${({ $statusColor, theme }) =>

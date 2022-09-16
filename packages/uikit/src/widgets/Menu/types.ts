@@ -27,8 +27,10 @@ export interface NavProps {
   isDark: boolean;
   toggleTheme: (isDark: boolean) => void;
   cakePriceUsd?: number;
+  goldPriceUsd?: number;
   currentLang: string;
   buyCakeLabel: string;
   langs: Language[];
   setLang: (lang: Language) => void;
+  chainId: number;
 }

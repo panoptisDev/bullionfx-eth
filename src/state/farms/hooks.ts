@@ -18,6 +18,7 @@ import {
   farmSelector,
   farmFromLpSymbolSelector,
   priceBullFromPidSelector,
+  priceGoldFromPidSelector,
   makeBusdPriceFromPidSelector,
   makeUserFarmFromPidSelector,
   makeLpTokenPriceFromLpSymbolSelector,
@@ -119,6 +120,10 @@ export const useLpTokenPrice = (symbol: string) => {
  */
 export const usePriceBullUsdc = (): BigNumber => {
   return useSelector(priceBullFromPidSelector)
+}
+
+export const usePriceGoldUsdc = (): BigNumber => {
+  return useSelector(priceGoldFromPidSelector)
 }
 
 export const useFarmWithStakeValue = (farm: DeserializedFarm): FarmWithStakedValue => {

@@ -10,6 +10,7 @@ import StyledSubMenuItems, {
   RightMaskLayer,
   StyledSubMenuItemWrapper,
   SubMenuItemWrapper,
+  GradientBar
 } from "./styles";
 import { SubMenuItemsProps } from "./types";
 
@@ -73,9 +74,9 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
           const isExternalLink = type === DropdownMenuItemType.EXTERNAL_LINK;
           const linkProps = isExternalLink
             ? {
-                as: "a",
-                target: "_blank",
-              }
+              as: "a",
+              target: "_blank",
+            }
             : {};
 
           return (
@@ -102,6 +103,7 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
             )
           );
         })}
+        <GradientBar />
       </StyledSubMenuItems>
     </SubMenuItemWrapper>
   );

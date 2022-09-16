@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Flex, Box } from "../Box";
 
-export const SubMenuItemWrapper = styled(Flex)<{ $isMobileOnly: boolean }>`
+export const SubMenuItemWrapper = styled(Flex) <{ $isMobileOnly: boolean }>`
   ${({ theme }) => theme.mediaQueries.sm} {
     ${({ $isMobileOnly }) => ($isMobileOnly ? "display:none" : "")};
   }
@@ -70,6 +70,14 @@ export const StyledSubMenuItemWrapper = styled(Box)`
   display: inline-block;
   vertical-align: top;
   scroll-snap-align: start;
+`;
+export const GradientBar = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0));
+  z-index: -1;
 `;
 
 export default StyledSubMenuItems;

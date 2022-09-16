@@ -9,6 +9,7 @@ import { NetworkSupportModal } from 'components/NetworkSupportModal'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useTheme from 'hooks/useTheme'
 import { usePriceBullUsdc } from 'state/farms/hooks'
+import { usePriceGoldUsdc } from 'state/farms/hooks'
 // import { usePhishingBannerManager } from 'state/user/hooks'
 import UserMenu from './UserMenu'
 import { useMenuItems } from './hooks/useMenuItems'
@@ -20,10 +21,11 @@ import { SettingsMode } from './GlobalSettings/types'
 const Menu = (props) => {
   const { isDark, setTheme } = useTheme()
   const cakePriceUsd = usePriceBullUsdc()
+  const goldPriceUsd = usePriceGoldUsdc()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
   // const [showPhishingWarningBanner] = usePhishingBannerManager()
-  const { chain } = useActiveWeb3React()
+  const { chain, chainId } = useActiveWeb3React()
 
   const menuItems = useMenuItems()
 
@@ -59,12 +61,14 @@ const Menu = (props) => {
         langs={languageList}
         setLang={setLanguage}
         cakePriceUsd={cakePriceUsd.toNumber()}
+        goldPriceUsd={goldPriceUsd.toNumber()}
         links={menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
         footerLinks={getFooterLinks}
         activeItem={activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}
         buyCakeLabel={t('Buy BULL')}
+        chainId={chainId}
         {...props}
       />
       <ModalV2 isOpen={(activeSubMenuItem?.disabled || activeMenuItem?.disabled) && !chain?.unsupported}>

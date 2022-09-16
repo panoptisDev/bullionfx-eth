@@ -80,6 +80,9 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
 const selectBullFarm = (state: State) => {
   return state.farms.chainId === ChainId.BSC_TESTNET ? state.farms.data.find((f) => f.pid === 1) : state.farms.data.find((f) => f.pid === 1)
 }
+const selectGoldFarm = (state: State) => {
+  return state.farms.chainId === ChainId.BSC_TESTNET ? state.farms.data.find((f) => f.pid === 2) : state.farms.data.find((f) => f.pid === 2)
+}
 const selectFarmByKey = (key: string, value: string | number) => (state: State) =>
   state.farms.data.find((f) => f[key] === value)
 
@@ -106,6 +109,11 @@ export const makeUserFarmFromPidSelector = (pid: number) =>
 export const priceBullFromPidSelector = createSelector([selectBullFarm], (bullUsdcFarm) => {
   const bullPriceUsdcAsString = bullUsdcFarm?.tokenPriceBusd || bullUsdcFarm?.tokenPriceVsQuote
   return new BigNumber(bullPriceUsdcAsString)
+})
+
+export const priceGoldFromPidSelector = createSelector([selectGoldFarm], (goldUsdcFarm) => {
+  const goldPriceUsdcAsString = goldUsdcFarm?.tokenPriceBusd || goldUsdcFarm?.tokenPriceVsQuote
+  return new BigNumber(goldPriceUsdcAsString)
 })
 
 export const farmFromLpSymbolSelector = (lpSymbol: string) =>

@@ -208,9 +208,8 @@ function RecentTransactionsModal({
             key={i}
             href={
               txn.confirmation
-                ? `${findChainByStargateId(txn.confirmation.chainId)?.chain.blockExplorers?.default.url}/tx/${
-                    txn.confirmation.hash
-                  }`
+                ? `${findChainByStargateId(txn.confirmation.chainId)?.chain.blockExplorers?.default.url}/tx/${txn.confirmation.hash
+                }`
                 : `${txnChain?.chain.blockExplorers?.default.url}/tx/${txn.hash}`
             }
             external

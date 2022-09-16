@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import LogoRound from "../Svg/Icons/LogoRound";
+import LogoRoundGold from "../Svg/Icons/LogoRoundGold";
 import Text from "../Text/Text";
 import Skeleton from "../Skeleton/Skeleton";
 import { Colors } from "../../theme";
 
 export interface Props {
-  color?: keyof Colors;
-  cakePriceUsd?: number;
-  showSkeleton?: boolean;
   chainId: number;
+  color?: keyof Colors;
+  goldPriceUsd?: number;
+  showSkeleton?: boolean;
 }
 
 const PriceLink = styled.a`
@@ -25,25 +25,25 @@ const PriceLink = styled.a`
   }
 `;
 
-const CakePrice: React.FC<React.PropsWithChildren<Props>> = ({
-  cakePriceUsd,
+const GoldPrice: React.FC<React.PropsWithChildren<Props>> = ({
+  goldPriceUsd,
   chainId,
   color = "textHighlight",
   showSkeleton = true,
 }) => {
   const _chainId = chainId ?? 1
-  const outputCurrency = _chainId === 5 ? '0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f' : ''
-  return cakePriceUsd ? (
+  const outputCurrency = _chainId === 5 ? '0xAE617d20232297FD2540c93b6fCc2475f11cdd67' : ''
+  return goldPriceUsd ? (
     <PriceLink
       href={`/swap?outputCurrency=${outputCurrency}&chainId=${_chainId}`}
       target="_blank"
     >
-      <LogoRound width="24px" mr="8px" />
-      <Text color={color} bold small>{`$${cakePriceUsd.toFixed(3)}`}</Text>
+      <LogoRoundGold width="24px" mr="8px" />
+      <Text color={color} bold small>{`$${goldPriceUsd.toFixed(3)}`}</Text>
     </PriceLink>
   ) : showSkeleton ? (
     <Skeleton width={80} height={24} />
   ) : null;
 };
 
-export default React.memo(CakePrice);
+export default React.memo(GoldPrice);
