@@ -48,7 +48,7 @@ export function ChoosePair({
               onCurrencySelect={handleCurrencyASelect}
               showCommonBases={false}
               commonBasesType={CommonBasesType.LIQUIDITY}
-              choseLiquidity
+              chooseLiquidity
             />
             <AddIcon color="textSubtle" />
             <CurrencySelect
@@ -58,7 +58,7 @@ export function ChoosePair({
               onCurrencySelect={handleCurrencyBSelect}
               showCommonBases={false}
               commonBasesType={CommonBasesType.LIQUIDITY}
-              choseLiquidity
+              chooseLiquidity
             />
           </FlexGap>
         </Box>

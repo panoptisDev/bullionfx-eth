@@ -139,7 +139,7 @@ const CakeVaultCard: React.FC<React.PropsWithChildren<CakeVaultProps>> = ({
           title={vaultPoolConfig[pool.vaultKey].name}
           subTitle={vaultPoolConfig[pool.vaultKey].description}
         />
-        <TokenPairImage {...vaultPoolConfig[pool.vaultKey].tokenImage} width={64} height={64} />
+        <TokenPairImage primarySrc={vaultPoolConfig[pool.vaultKey].tokenImage.primarySrc} secondarySrc={vaultPoolConfig[pool.vaultKey].tokenImage.primarySrc} width={64} height={64} />
       </PoolCardHeader>
       <CakeVaultDetail
         isLoading={isLoading}

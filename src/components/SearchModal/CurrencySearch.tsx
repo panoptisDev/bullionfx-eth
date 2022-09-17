@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { Currency, Token } from '@pancakeswap/sdk'
+import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import { Box, Input, Text, useMatchBreakpointsContext } from '@pancakeswap/uikit'
 import { KeyboardEvent, RefObject, useCallback, useMemo, useRef, useState, useEffect } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
@@ -10,7 +10,7 @@ import { FixedSizeList } from 'react-window'
 import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
 import { TagInfo, WrappedTokenInfo } from 'state/types'
 import { useAudioModeManager } from 'state/user/hooks'
-import { USDC } from 'config/constants/tokens'
+import { BULL, GOLD, USDC } from 'config/constants/tokens'
 import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import { isAddress } from '../../utils'
 import Column, { AutoColumn } from '../Layout/Column'
@@ -32,7 +32,7 @@ interface CurrencySearchProps {
   showImportView: () => void
   setImportToken: (token: Token) => void
   height?: number
-  choseLiquidity?: boolean
+  chooseLiquidity?: boolean
 }
 
 function useSearchInactiveTokenLists(search: string | undefined, minResults = 10): WrappedTokenInfo[] {
@@ -91,10 +91,11 @@ function CurrencySearch({
   showImportView,
   setImportToken,
   height,
-  choseLiquidity = false
+  chooseLiquidity = false
 }: CurrencySearchProps) {
   const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
+  const _chainId = chainId ?? ChainId.BSC
 
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -103,11 +104,10 @@ function CurrencySearch({
   const debouncedQuery = useDebounce(searchQuery, 200)
 
   const [invertSearchOrder] = useState<boolean>(false)
-  const _allTokens = useAllTokens()
 
-  const allTokens = (choseLiquidity && otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC")) ?
-    { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[chainId] } :
-    _allTokens
+  const allTokens = (chooseLiquidity && otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC")) ?
+    { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[_chainId] } :
+    { usdc: USDC[_chainId], bull: BULL[_chainId], gold: GOLD[_chainId] }
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
@@ -250,7 +250,7 @@ function CurrencySearch({
             ref={inputRef as RefObject<HTMLInputElement>}
             onChange={handleInput}
             onKeyDown={handleEnter}
-            disabled={choseLiquidity}
+            disabled={chooseLiquidity}
           />
         </Row>
         {showCommonBases && (
