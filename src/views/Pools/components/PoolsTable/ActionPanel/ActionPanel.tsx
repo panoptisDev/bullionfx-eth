@@ -3,14 +3,14 @@ import { Box, Flex, Text, useMatchBreakpointsContext } from '@pancakeswap/uikit'
 import { useVaultPoolByKey } from 'state/pools/hooks'
 import { getVaultPosition, VaultPosition } from 'utils/cakePool'
 import BigNumber from 'bignumber.js'
-import { DeserializedPool, VaultKey, DeserializedLockedCakeVault } from 'state/types'
+import { DeserializedPool, VaultKey, DeserializedLockedCakeVault, DeserializedLockedVaultUser } from 'state/types'
 // import { useTranslation } from '@pancakeswap/localization'
 // import { CompoundingPoolTag, ManualPoolTag } from 'components/Tags'
 import { BIG_ZERO } from 'utils/bigNumber'
 import Harvest from './Harvest'
 import Stake from './Stake'
 import AutoHarvest from './AutoHarvest'
-// import { VaultPositionTagWithLabel } from '../../Vault/VaultPositionTag'
+import { VaultPositionTagWithLabel } from '../../Vault/VaultPositionTag'
 import YieldBoostRow from '../../LockedPool/Common/YieldBoostRow'
 import LockDurationRow from '../../LockedPool/Common/LockDurationRow'
 import useUserDataInVaultPresenter from '../../LockedPool/hooks/useUserDataInVaultPresenter'
@@ -177,13 +177,13 @@ const ActionPanel: React.FC<React.PropsWithChildren<ActionPanelProps>> = ({ acco
           <CakeVaultApr pool={pool} userData={vaultData.userData} vaultPosition={vaultPosition} />
         )}
         <Box width="100%">
-          {/* {pool.vaultKey === VaultKey.CakeVault && (
+          {pool.vaultKey === VaultKey.CakeVault && (
             <VaultPositionTagWithLabel
               userData={vaultData.userData as DeserializedLockedVaultUser}
               width={['auto', , 'fit-content']}
               ml={['12px', , , , , '32px']}
             />
-          )} */}
+          )}
           <ActionContainer isAutoVault={!!pool.vaultKey} hasBalance={poolStakingTokenBalance.gt(0)}>
             {pool.vaultKey ? <AutoHarvest {...pool} /> : <Harvest {...pool} />}
             <Stake pool={pool} />

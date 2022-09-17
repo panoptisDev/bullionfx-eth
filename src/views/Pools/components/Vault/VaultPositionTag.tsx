@@ -41,7 +41,7 @@ const positionLabel: Record<VaultPosition, ReactNode> = {
 
 const VaultPositionTag: FC<React.PropsWithChildren<{ position: VaultPosition }>> = ({ position }) => {
   return (
-    <Tag {...tagConfig[position]}>
+    <Tag {...tagConfig[position]} variant='secondaryAlter'>
       <Box as={iconConfig[position]} mr="4px" />
       {positionLabel[position]}
     </Tag>
