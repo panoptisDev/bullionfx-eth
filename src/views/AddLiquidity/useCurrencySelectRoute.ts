@@ -1,10 +1,16 @@
 import { Currency } from '@pancakeswap/sdk'
+import { GOLD, BULL, USDC } from 'config/constants/tokens'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import currencyId from 'utils/currencyId'
 
 export const useCurrencySelectRoute = () => {
   const router = useRouter()
+  const { chainId } = useActiveWeb3React()
+  const goldToken = GOLD[chainId]
+  const bullToken = BULL[chainId]
+  const usdcToken = USDC[chainId]
   const [currencyIdA, currencyIdB] = router.query.currency || []
 
   const handleCurrencyASelect = useCallback(
@@ -29,11 +35,15 @@ export const useCurrencySelectRoute = () => {
         } else {
           router.replace(`/add/${newCurrencyIdB}`, undefined, { shallow: true })
         }
-      } else {
-        router.replace(`/add/${currencyIdA || 'BNB'}/${newCurrencyIdB}`, undefined, { shallow: true })
+      } else if (currencyIdA) {
+        router.replace(`/add/${currencyIdA}/${newCurrencyIdB}`, undefined, { shallow: true })
+      } else if (currencyIdB === goldToken?.address || currencyIdB === bullToken?.address) {
+        router.replace(`/add/${usdcToken?.address}/${newCurrencyIdB}`, undefined, { shallow: true })
+      } else if (currencyIdB === usdcToken?.address) {
+        router.replace(`/add/${goldToken?.address}/${newCurrencyIdB}`, undefined, { shallow: true })
       }
     },
-    [currencyIdA, router, currencyIdB],
+    [currencyIdA, router, currencyIdB, bullToken, goldToken, usdcToken],
   )
 
   return {

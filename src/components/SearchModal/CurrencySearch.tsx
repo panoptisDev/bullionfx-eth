@@ -10,6 +10,7 @@ import { FixedSizeList } from 'react-window'
 import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
 import { TagInfo, WrappedTokenInfo } from 'state/types'
 import { useAudioModeManager } from 'state/user/hooks'
+import { USDC } from 'config/constants/tokens'
 import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import { isAddress } from '../../utils'
 import Column, { AutoColumn } from '../Layout/Column'
@@ -31,6 +32,7 @@ interface CurrencySearchProps {
   showImportView: () => void
   setImportToken: (token: Token) => void
   height?: number
+  choseLiquidity?: boolean
 }
 
 function useSearchInactiveTokenLists(search: string | undefined, minResults = 10): WrappedTokenInfo[] {
@@ -89,6 +91,7 @@ function CurrencySearch({
   showImportView,
   setImportToken,
   height,
+  choseLiquidity = false
 }: CurrencySearchProps) {
   const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
@@ -100,8 +103,11 @@ function CurrencySearch({
   const debouncedQuery = useDebounce(searchQuery, 200)
 
   const [invertSearchOrder] = useState<boolean>(false)
+  const _allTokens = useAllTokens()
 
-  const allTokens = useAllTokens()
+  const allTokens = (choseLiquidity && otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC")) ?
+    { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[chainId] } :
+    _allTokens
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
@@ -111,11 +117,11 @@ function CurrencySearch({
 
   const native = useNativeCurrency()
 
-  // const showBNB: boolean = useMemo(() => {
+  // const showETH: boolean = useMemo(() => {
   //   const s = debouncedQuery.toLowerCase().trim()
   //   return native && native.symbol?.toLowerCase?.()?.indexOf(s) !== -1
   // }, [debouncedQuery, native])
-  const showBNB = false
+  const showETH = false
 
   const filteredTokens: Token[] = useMemo(() => {
     const filterToken = createFilterToken(debouncedQuery)
@@ -192,7 +198,7 @@ function CurrencySearch({
       <Box margin="24px -24px">
         <CurrencyList
           height={isMobile ? (showCommonBases ? height || 250 : height ? height + 80 : 350) : 390}
-          showBNB={showBNB}
+          showETH={showETH}
           currencies={filteredSortedTokens}
           inactiveCurrencies={filteredInactiveTokens}
           breakIndex={
@@ -223,7 +229,7 @@ function CurrencySearch({
     searchTokenIsAdded,
     selectedCurrency,
     setImportToken,
-    showBNB,
+    showETH,
     showImportView,
     t,
     showCommonBases,
@@ -244,6 +250,7 @@ function CurrencySearch({
             ref={inputRef as RefObject<HTMLInputElement>}
             onChange={handleInput}
             onKeyDown={handleEnter}
+            disabled={choseLiquidity}
           />
         </Row>
         {showCommonBases && (

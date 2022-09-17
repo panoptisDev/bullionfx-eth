@@ -89,7 +89,7 @@ export default function AddLiquidity() {
   const [temporarilyZapMode, setTemporarilyZapMode] = useState(true)
   const [currencyIdA, currencyIdB] = router.query.currency || [
     USDC[chainId]?.address,
-    BULL[chainId]?.address ?? GOLD[chainId]?.address,
+    GOLD[chainId]?.address ?? BULL[chainId]?.address,
   ]
   const [steps, setSteps] = useState(Steps.Choose)
 
@@ -399,17 +399,17 @@ export default function AddLiquidity() {
       summary = `Zap ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${currencies[Field.CURRENCY_A]?.symbol
         } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`
       if (currencyA?.isNative || currencyB?.isNative) {
-        const tokenBIsBNB = currencyB?.isNative
-        method = 'zapInBNBRebalancing'
+        const tokenBIsETH = currencyB?.isNative
+        method = 'zapInETHRebalancing'
         args = [
-          wrappedCurrency(currencies[tokenBIsBNB ? Field.CURRENCY_A : Field.CURRENCY_B], chainId).address, // token1
-          parsedAmounts[tokenBIsBNB ? Field.CURRENCY_A : Field.CURRENCY_B].quotient.toString(), // token1AmountIn
+          wrappedCurrency(currencies[tokenBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B], chainId).address, // token1
+          parsedAmounts[tokenBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].quotient.toString(), // token1AmountIn
           pair.liquidityToken.address, // lp
           maxAmountIn, // tokenAmountInMax
           minAmountOut, // tokenAmountOutMin
-          zapIn.zapInEstimated.isToken0Sold && !tokenBIsBNB, // isToken0Sold
+          zapIn.zapInEstimated.isToken0Sold && !tokenBIsETH, // isToken0Sold
         ]
-        value = parsedAmounts[tokenBIsBNB ? Field.CURRENCY_B : Field.CURRENCY_A].quotient.toString()
+        value = parsedAmounts[tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].quotient.toString()
       } else {
         method = 'zapInTokenRebalancing'
         args = [
@@ -424,9 +424,9 @@ export default function AddLiquidity() {
         ]
       }
     } else if (currencies[zapIn.swapTokenField]?.isNative) {
-      method = 'zapInBNB'
+      method = 'zapInETH'
       args = [pair.liquidityToken.address, minAmountOut]
-      summary = `Zap in ${parsedAmounts[zapIn.swapTokenField]?.toSignificant(3)} BNB for ${getLPSymbol(
+      summary = `Zap in ${parsedAmounts[zapIn.swapTokenField]?.toSignificant(3)} ETH for ${getLPSymbol(
         pair.token0.symbol,
         pair.token1.symbol,
       )}`
@@ -621,7 +621,7 @@ export default function AddLiquidity() {
                 )}
                 <CurrencyInputPanel
                   disableCurrencySelect={canZap}
-                  showBUSD={currencies[Field.CURRENCY_A]?.symbol !== 'USDC'}
+                  showUSDC={currencies[Field.CURRENCY_A]?.symbol !== 'USDC'}
                   onInputBlur={zapIn.onInputBlurOnce}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_A}
                   disabled={canZap && !zapTokenCheckedA}
@@ -654,7 +654,7 @@ export default function AddLiquidity() {
                   <AddIcon width="16px" />
                 </ColumnCenter>
                 <CurrencyInputPanel
-                  showBUSD={currencies[Field.CURRENCY_B]?.symbol !== 'USDC'}
+                  showUSDC={currencies[Field.CURRENCY_B]?.symbol !== 'USDC'}
                   onInputBlur={zapIn.onInputBlurOnce}
                   disabled={canZap && !zapTokenCheckedB}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_B}

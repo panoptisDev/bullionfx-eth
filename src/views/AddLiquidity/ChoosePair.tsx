@@ -44,17 +44,21 @@ export function ChoosePair({
             <CurrencySelect
               id="add-liquidity-select-tokena"
               selectedCurrency={currencyA}
+              otherSelectedCurrency={currencyB}
               onCurrencySelect={handleCurrencyASelect}
-              showCommonBases
+              showCommonBases={false}
               commonBasesType={CommonBasesType.LIQUIDITY}
+              choseLiquidity
             />
             <AddIcon color="textSubtle" />
             <CurrencySelect
               id="add-liquidity-select-tokenb"
               selectedCurrency={currencyB}
+              otherSelectedCurrency={currencyA}
               onCurrencySelect={handleCurrencyBSelect}
-              showCommonBases
+              showCommonBases={false}
               commonBasesType={CommonBasesType.LIQUIDITY}
+              choseLiquidity
             />
           </FlexGap>
         </Box>

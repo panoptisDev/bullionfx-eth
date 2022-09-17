@@ -57,6 +57,7 @@ export const CurrencySelect = ({
   showCommonBases,
   commonBasesType,
   hideBalance,
+  choseLiquidity,
   ...props
 }: CurrencySelectProps) => {
   const { account } = useActiveWeb3React()
@@ -75,6 +76,7 @@ export const CurrencySelect = ({
       otherSelectedCurrency={otherSelectedCurrency}
       showCommonBases={showCommonBases}
       commonBasesType={commonBasesType}
+      choseLiquidity={choseLiquidity}
     />,
   )
 

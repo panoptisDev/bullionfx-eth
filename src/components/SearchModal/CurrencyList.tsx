@@ -43,7 +43,7 @@ function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
   return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
 }
 
-const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
+const MenuItem = styled(RowBetween) <{ disabled: boolean; selected: boolean }>`
   padding: 4px 20px;
   height: 56px;
   display: grid;
@@ -109,7 +109,7 @@ export default function CurrencyList({
   onCurrencySelect,
   otherCurrency,
   fixedListRef,
-  showBNB,
+  showETH,
   showImportView,
   setImportToken,
   breakIndex,
@@ -121,7 +121,7 @@ export default function CurrencyList({
   onCurrencySelect: (currency: Currency) => void
   otherCurrency?: Currency | null
   fixedListRef?: MutableRefObject<FixedSizeList | undefined>
-  showBNB: boolean
+  showETH: boolean
   showImportView: () => void
   setImportToken: (token: Token) => void
   breakIndex: number | undefined
@@ -129,14 +129,14 @@ export default function CurrencyList({
   const native = useNativeCurrency()
 
   const itemData: (Currency | undefined)[] = useMemo(() => {
-    let formatted: (Currency | undefined)[] = showBNB
+    let formatted: (Currency | undefined)[] = showETH
       ? [native, ...currencies, ...inactiveCurrencies]
       : [...currencies, ...inactiveCurrencies]
     if (breakIndex !== undefined) {
       formatted = [...formatted.slice(0, breakIndex), undefined, ...formatted.slice(breakIndex, formatted.length)]
     }
     return formatted
-  }, [breakIndex, currencies, inactiveCurrencies, showBNB, native])
+  }, [breakIndex, currencies, inactiveCurrencies, showETH, native])
 
   const { chainId } = useActiveWeb3React()
 

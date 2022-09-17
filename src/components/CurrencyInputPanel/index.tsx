@@ -95,7 +95,7 @@ interface CurrencyInputPanelProps {
   beforeButton?: React.ReactNode
   disabled?: boolean
   error?: boolean
-  showBUSD?: boolean
+  showUSDC?: boolean
 }
 export default function CurrencyInputPanel({
   value,
@@ -117,7 +117,7 @@ export default function CurrencyInputPanel({
   commonBasesType,
   disabled,
   error,
-  showBUSD,
+  showUSDC,
 }: CurrencyInputPanelProps) {
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
@@ -127,7 +127,7 @@ export default function CurrencyInputPanel({
   const tokenAddress = token ? isAddress(token.address) : null
 
   const amountInDollar = useUSDCCurrencyAmount(
-    showBUSD ? currency : undefined,
+    showUSDC ? currency : undefined,
     Number.isFinite(+value) ? +value : undefined,
   )
 
@@ -231,7 +231,7 @@ export default function CurrencyInputPanel({
             />
           </LabelRow>
           <InputRow selected={disableCurrencySelect}>
-            {!!currency && showBUSD && Number.isFinite(amountInDollar) && (
+            {!!currency && showUSDC && Number.isFinite(amountInDollar) && (
               <Text fontSize="12px" color="textSubtle" mr="12px">
                 ~{formatNumber(amountInDollar)} USD
               </Text>
