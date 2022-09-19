@@ -20,7 +20,7 @@ export interface FlexGapProps extends FlexProps {
   columnGap?: string
 }
 
-export const FlexGap = styled(Flex)<FlexGapProps>`
+export const FlexGap = styled(Flex) <FlexGapProps>`
   gap: ${({ gap }) => gap};
   row-gap: ${({ rowGap }) => rowGap};
   column-gap: ${({ columnGap }) => columnGap};

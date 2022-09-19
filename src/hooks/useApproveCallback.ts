@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react'
 import { logError } from 'utils/sentry'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useTranslation } from '@pancakeswap/localization'
-import { ROUTER_ADDRESS } from 'config/constants/exchange'
+import { MERGEROUTER_ADDRESS } from 'config/constants/exchange'
 import useTokenAllowance from './useTokenAllowance'
 import { Field } from '../state/swap/actions'
 import { useTransactionAdder, useHasPendingApproval } from '../state/transactions/hooks'
@@ -132,7 +132,7 @@ export function useApproveCallbackFromTrade(
     [trade, allowedSlippage],
   )
 
-  return useApproveCallback(amountToApprove, ROUTER_ADDRESS[chainId])
+  return useApproveCallback(amountToApprove, MERGEROUTER_ADDRESS[chainId])
 }
 
 // Wraps useApproveCallback in the context of a Gelato Limit Orders

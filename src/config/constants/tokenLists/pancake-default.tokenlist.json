@@ -3551,7 +3551,7 @@
       "address": "0xaDdF66e47873102Ec6e809aF57f407B3e865a790",
       "chainId": 5,
       "decimals": 18,
-      "logoURI": "https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg",
+      "logoURI": "https://res.cloudinary.com/sushi-cdn/image/fetch/f_auto,fl_sanitize,q_auto,w_48/https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg",
       "name": "USD Coin",
       "symbol": "USDC"
     },

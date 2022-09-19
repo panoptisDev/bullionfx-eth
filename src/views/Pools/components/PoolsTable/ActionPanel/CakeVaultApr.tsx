@@ -20,7 +20,7 @@ const CakeVaultApr: React.FC<React.PropsWithChildren<CakeVaultAprProps>> = ({ po
     duration:
       vaultPosition > VaultPosition.Flexible
         ? +(userData as DeserializedLockedVaultUser).lockEndTime -
-          +(userData as DeserializedLockedVaultUser).lockStartTime
+        +(userData as DeserializedLockedVaultUser).lockStartTime
         : MAX_LOCK_DURATION,
   })
 

@@ -4,7 +4,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useMemo } from 'react'
 import { BIPS_BASE } from 'config/constants/exchange'
 import { INITIAL_ALLOWED_SLIPPAGE } from 'config/constants'
-import { useRouterContract } from 'utils/exchange'
+import { useMergeRouterContract } from 'utils/exchange'
 import useTransactionDeadline from './useTransactionDeadline'
 
 interface SwapCall {
@@ -27,7 +27,7 @@ export function useSwapCallArguments(
 
   const recipient = recipientAddress === null ? account : recipientAddress
   const deadline = useTransactionDeadline()
-  const contract = useRouterContract()
+  const contract = useMergeRouterContract()
 
   return useMemo(() => {
     if (!trade || !recipient || !account || !chainId || !deadline) return []
