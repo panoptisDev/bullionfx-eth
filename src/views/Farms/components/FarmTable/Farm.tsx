@@ -48,11 +48,13 @@ const Farm: React.FunctionComponent<React.PropsWithChildren<FarmProps>> = ({ tok
 
     return null
   }
+  const primaryToken = token.symbol === "BULL" || token.symbol === "GOLD" ? quoteToken : token
+  const secondaryToken = token.symbol === "BULL" || token.symbol === "GOLD" ? token : quoteToken
 
   return (
     <Container>
       <TokenWrapper>
-        <TokenPairImage variant="inverted" primaryToken={token} secondaryToken={quoteToken} width={40} height={40} />
+        <TokenPairImage variant="inverted" primaryToken={primaryToken} secondaryToken={secondaryToken} width={40} height={40} />
       </TokenWrapper>
       <div>
         <Text bold>{label}</Text>

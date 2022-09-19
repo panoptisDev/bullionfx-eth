@@ -15,7 +15,7 @@ export default {
     minPriceUsdDisplayed: DEFAULT_MIN_PRICE_USD_DISPLAYED,
     token: ethTokens.eth,
   },
-  CAKE: {
+  BULL: {
     address: getAddress(addresses.predictionsCAKE),
     api: GRAPH_API_PREDICTION_CAKE,
     chainlinkOracleAddress: getAddress(addresses.chainlinkOracleCAKE),

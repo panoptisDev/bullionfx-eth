@@ -2311,11 +2311,11 @@ exports[`renders correctly 1`] = `
                     class="c60 c61"
                     color="#F4EEFF"
                     font-size="16px"
-                    href="https://docs.pancakeswap.finance/tokenomics/cake"
+                    href="https://docs.pancakeswap.finance/tokenomics/bull"
                     rel="noreferrer noopener"
                     target="_blank"
                   >
-                    CAKE
+                    BULL
                   </a>
                 </li>
                 <li
@@ -3213,7 +3213,7 @@ exports[`renders correctly 1`] = `
                   scale="sm"
                   target="_blank"
                 >
-                  Buy CAKE
+                  Buy BULL
                   <svg
                     class="c93"
                     color="#FFFFFF"

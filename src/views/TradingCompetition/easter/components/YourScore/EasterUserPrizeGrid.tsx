@@ -18,7 +18,7 @@ const StyledThead = styled.thead`
   border-bottom: 2px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
-const EasterUserPrizeGrid: React.FC<React.PropsWithChildren<{ userTradingInformation? }>> = ({
+const EasterUserPrizeGrid: React.FC<React.PropsWithChildren<{ userTradingInformation?}>> = ({
   userTradingInformation,
 }) => {
   const { t } = useTranslation()
@@ -30,7 +30,7 @@ const EasterUserPrizeGrid: React.FC<React.PropsWithChildren<{ userTradingInforma
     <StyledPrizeTable>
       <StyledThead>
         <tr>
-          <th>{t('CAKE Prizes')}</th>
+          <th>{t('BULL Prizes')}</th>
           <th>{t('Achievements')}</th>
           <th>{t('NFT')}</th>
         </tr>

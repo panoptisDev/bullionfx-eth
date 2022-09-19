@@ -96,6 +96,7 @@ const ConfirmAddLiquidityModal: React.FC<React.PropsWithChildren<InjectedModalPr
         customOnDismiss={customOnDismiss}
         attemptingTxn={attemptingTxn}
         currencyToAdd={currencyToAdd}
+        currencies={currencies}
         hash={hash}
         content={confirmationContent}
         pendingText={pendingText}

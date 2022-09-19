@@ -121,7 +121,7 @@ export const Tooltip = styled.div`
   }
 `
 
-const Label = styled(Flex)<{ dir: 'left' | 'right'; backgroundOpacity?: boolean }>`
+const Label = styled(Flex) <{ dir: 'left' | 'right'; backgroundOpacity?: boolean }>`
   position: relative;
   z-index: 1;
   background-color: ${({ theme }) => theme.card.background};
@@ -159,16 +159,16 @@ export const PricePairLabel: React.FC<React.PropsWithChildren> = () => {
   }, [])
 
   const onTokenSwitch = useCallback(() => {
-    if (router.query.token === PredictionSupportedSymbol.CAKE) {
+    if (router.query.token === PredictionSupportedSymbol.BULL) {
       router.query.token = PredictionSupportedSymbol.BNB
-    } else if (router.query.token === undefined && token.symbol === PredictionSupportedSymbol.CAKE) {
+    } else if (router.query.token === undefined && token.symbol === PredictionSupportedSymbol.BULL) {
       router.query.token = PredictionSupportedSymbol.BNB
     } else if (router.query.token === undefined && token.symbol === PredictionSupportedSymbol.BNB) {
-      router.query.token = PredictionSupportedSymbol.CAKE
+      router.query.token = PredictionSupportedSymbol.BULL
     } else if (token.symbol === undefined && router.query.token === undefined) {
       router.query.token = PredictionSupportedSymbol.BNB
     } else {
-      router.query.token = PredictionSupportedSymbol.CAKE
+      router.query.token = PredictionSupportedSymbol.BULL
     }
     if (!dismissTooltip) onDismissTooltip()
 

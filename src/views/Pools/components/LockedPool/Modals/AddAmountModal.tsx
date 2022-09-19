@@ -77,7 +77,7 @@ const AddAmountModal: React.FC<React.PropsWithChildren<AddAmountModalProps>> = (
     roundingMethod: 'ceil',
   })
 
-  // if you locked for 1 week, then add cake without renew the extension, it's possible that remainingDuration + passedDuration less than 1 week.
+  // if you locked for 1 week, then add bull without renew the extension, it's possible that remainingDuration + passedDuration less than 1 week.
   const atLeastOneWeekNewDuration = Math.max(ONE_WEEK_DEFAULT + MIN_DURATION_BUFFER, remainingDuration + passedDuration)
 
   const prepConfirmArg = useCallback(() => {

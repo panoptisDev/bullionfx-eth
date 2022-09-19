@@ -32,9 +32,11 @@ const CardHeading: React.FC<React.PropsWithChildren<ExpandableSectionProps>> = (
   quoteToken,
   boosted,
 }) => {
+  const primaryToken = token.symbol === "BULL" || token.symbol === "GOLD" ? quoteToken : token
+  const secondaryToken = token.symbol === "BULL" || token.symbol === "GOLD" ? token : quoteToken
   return (
     <Wrapper justifyContent="space-between" alignItems="center" mb="12px">
-      <TokenPairImage variant="inverted" primaryToken={token} secondaryToken={quoteToken} width={64} height={64} />
+      <TokenPairImage variant="inverted" primaryToken={primaryToken} secondaryToken={secondaryToken} width={64} height={64} />
       <Flex flexDirection="column" alignItems="flex-end">
         <Heading mb="4px">{lpLabel.split(' ')[0]}</Heading>
         <Flex justifyContent="center">

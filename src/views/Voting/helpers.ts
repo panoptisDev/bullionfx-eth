@@ -39,7 +39,7 @@ export interface Message {
 }
 
 const STRATEGIES = [
-  { name: 'cake', params: { symbol: 'CAKE', address: ethTokens.bull.address, decimals: 18, max: 300 } },
+  { name: 'bull', params: { symbol: 'BULL', address: ethTokens.bull.address, decimals: 18, max: 300 } },
 ]
 const NETWORK = '56'
 

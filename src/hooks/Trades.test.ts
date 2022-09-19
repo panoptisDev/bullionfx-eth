@@ -46,7 +46,7 @@ describe('Trade', () => {
   //         new Pair(new TokenAmount(ethTokens.weth, '1'), new TokenAmount(ethTokens.bull, '1')),
   //       ])
   //     })
-  //     it('should get all pair combinations wbnb, cake', () => {
+  //     it('should get all pair combinations wbnb, bull', () => {
   //       mockUsePairs.mockClear()
   //       renderHook(() => {
   //         Trades.useAllCommonPairs(ethTokens.weth, ethTokens.bull)

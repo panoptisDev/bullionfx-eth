@@ -33,7 +33,7 @@ const AuctionCakeBurn: React.FC<React.PropsWithChildren> = () => {
         const amountAsBN = ethersToBigNumber(amount)
         setBurnedCakeAmount(getBalanceNumber(amountAsBN))
       } catch (error) {
-        console.error('Failed to fetch burned auction cake', error)
+        console.error('Failed to fetch burned auction bull', error)
       }
     }
     if (isIntersecting && burnedCakeAmount === 0) {
@@ -44,7 +44,7 @@ const AuctionCakeBurn: React.FC<React.PropsWithChildren> = () => {
     <Flex flexDirection={['column-reverse', null, 'row']}>
       <Flex flexDirection="column" flex="2" ref={observerRef}>
         {burnedCakeAmount !== 0 ? (
-          <Balance fontSize="64px" bold value={burnedCakeAmount} decimals={0} unit=" CAKE" />
+          <Balance fontSize="64px" bold value={burnedCakeAmount} decimals={0} unit=" BULL" />
         ) : (
           <Skeleton width="256px" height="64px" />
         )}
@@ -62,7 +62,7 @@ const AuctionCakeBurn: React.FC<React.PropsWithChildren> = () => {
           <Skeleton width="128px" />
         )}
       </Flex>
-      <Image width={350} height={320} src="/images/burnt-cake.png" alt={t('Burnt CAKE')} />
+      <Image width={350} height={320} src="/images/burnt-bull.png" alt={t('Burnt BULL')} />
     </Flex>
   )
 }
