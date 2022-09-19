@@ -51,7 +51,7 @@ export function useVaultApy(chainId, { duration = MAX_LOCK_DURATION }: { duratio
   const totalSharesAsEtherBN = useMemo(() => FixedNumber.from(totalShares.toString()), [totalShares])
   const pricePerFullShareAsEtherBN = useMemo(() => FixedNumber.from(pricePerFullShare.toString()), [pricePerFullShare])
 
-  const { data: totalCakePoolEmissionPerYear } = useSWRImmutable('masterChef-total-cake-pool-emission', async () => {
+  const { data: totalCakePoolEmissionPerYear } = useSWRImmutable('masterChef-total-bull-pool-emission', async () => {
     const calls = [
       {
         address: masterChefAddress,

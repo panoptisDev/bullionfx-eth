@@ -40,7 +40,7 @@ const BoostedAction: React.FunctionComponent<BoostedActionPropsType> = ({ farmPi
         return (
           <ActionButton
             title={`${t('Up to')} ${boostMultiplerDisplay}x`}
-            description={t('Lock CAKE to activate yield booster')}
+            description={t('Lock BULL to activate yield booster')}
             style={{ whiteSpace: 'nowrap' }}
           >
             <NextLinkFromReactRouter to="/pools">{t('Go to Pool')}</NextLinkFromReactRouter>
@@ -50,7 +50,7 @@ const BoostedAction: React.FunctionComponent<BoostedActionPropsType> = ({ farmPi
         return (
           <ActionButton
             title={`${t('Up to')} ${boostMultiplerDisplay}x`}
-            description={t('Lock CAKE is ended. Re-lock CAKE to activate yield booster')}
+            description={t('Lock BULL is ended. Re-lock BULL to activate yield booster')}
             style={{ whiteSpace: 'nowrap' }}
           >
             <NextLinkFromReactRouter to="/pools">{t('Go to Pool')}</NextLinkFromReactRouter>

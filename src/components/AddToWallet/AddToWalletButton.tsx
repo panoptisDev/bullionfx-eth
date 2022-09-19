@@ -93,7 +93,7 @@ const AddToWalletButton: React.FC<AddToWalletButtonProps & ButtonProps> = ({
     >
       <Text color="secondary" small fontWeight={600}>
         {textOptions !== AddToWalletTextOptions.NO_TEXT &&
-          (textOptions === AddToWalletTextOptions.TEXT
+          (textOptions === AddToWalletTextOptions.TEXT_WITH_ASSET
             ? t('Add %asset% to %wallet%', { asset: tokenSymbol, wallet: connector.name })
             : t('Add to %wallet%', { wallet: connector.name }))}
       </Text>

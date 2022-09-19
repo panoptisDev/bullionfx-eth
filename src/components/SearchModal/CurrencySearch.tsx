@@ -104,10 +104,13 @@ function CurrencySearch({
   const debouncedQuery = useDebounce(searchQuery, 200)
 
   const [invertSearchOrder] = useState<boolean>(false)
+  const _allTokens = useAllTokens()
 
-  const allTokens = (chooseLiquidity && otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC")) ?
-    { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[_chainId] } :
-    { usdc: USDC[_chainId], bull: BULL[_chainId], gold: GOLD[_chainId] }
+  const allTokens = chooseLiquidity ?
+    (otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC") ?
+      { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[_chainId] } :
+      { usdc: USDC[_chainId], bull: BULL[_chainId], gold: GOLD[_chainId] }) :
+    _allTokens
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
@@ -117,11 +120,11 @@ function CurrencySearch({
 
   const native = useNativeCurrency()
 
-  // const showETH: boolean = useMemo(() => {
-  //   const s = debouncedQuery.toLowerCase().trim()
-  //   return native && native.symbol?.toLowerCase?.()?.indexOf(s) !== -1
-  // }, [debouncedQuery, native])
-  const showETH = false
+  const showETH: boolean = useMemo(() => {
+    const s = debouncedQuery.toLowerCase().trim()
+    return native && native.symbol?.toLowerCase?.()?.indexOf(s) !== -1
+  }, [debouncedQuery, native])
+  // const showETH = false
 
   const filteredTokens: Token[] = useMemo(() => {
     const filterToken = createFilterToken(debouncedQuery)

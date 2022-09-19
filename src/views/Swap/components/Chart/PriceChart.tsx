@@ -4,7 +4,7 @@ import {
   Flex,
   IconButton,
   ShrinkIcon,
-  // SyncAltIcon,
+  SyncAltIcon,
   Text,
   // TradingViewIcon,
   // LineGraphIcon,
@@ -30,7 +30,7 @@ import { StyledPriceChart } from './styles'
 const PriceChart = ({
   inputCurrency,
   outputCurrency,
-  // onSwitchTokens,
+  onSwitchTokens,
   isDark,
   isChartExpanded,
   setIsChartExpanded,
@@ -71,9 +71,9 @@ const PriceChart = ({
               {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol}
             </Text>
           )}
-          {/* <IconButton variant="text" onClick={onSwitchTokens}>
+          <IconButton variant="text" onClick={onSwitchTokens}>
             <SyncAltIcon ml="6px" color="primary" />
-          </IconButton> */}
+          </IconButton>
           {/* <Flex>
             <ChartButton
               aria-label={t('Basic')}

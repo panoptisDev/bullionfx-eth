@@ -10,7 +10,7 @@ export const WARNING_LIST_URLS: string[] = []
 
 // lower index == higher priority for token import
 export const DEFAULT_LIST_OF_LISTS: string[] = [
-  PANCAKE_EXTENDED,
+  // PANCAKE_EXTENDED,
   CMC,
   COINGECKO,
   ...UNSUPPORTED_LIST_URLS, // need to load unsupported tokens as well

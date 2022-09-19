@@ -175,7 +175,7 @@ export default function RemoveLiquidity() {
       { name: 'verifyingContract', type: 'address' },
     ]
     const domain = {
-      name: 'BullionFX LPs',
+      name: 'Bull LPs',
       version: '1',
       chainId,
       verifyingContract: pair.liquidityToken.address,

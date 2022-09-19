@@ -18,6 +18,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
 import { WrappedTokenInfo } from 'state/types'
+import { Field } from 'state/burn/actions'
 import { AutoColumn, ColumnCenter } from '../Layout/Column'
 import { getBlockExploreLink, getBlockExploreName } from '../../utils'
 import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToWalletButton'
@@ -60,15 +61,21 @@ export function TransactionSubmittedContent({
   chainId,
   hash,
   currencyToAdd,
+  currencies
 }: {
   onDismiss: () => void
   hash: string | undefined
   chainId: ChainId
   currencyToAdd?: Currency | undefined
+  currencies?: { [field in Field]?: Currency } | undefined
 }) {
   const { t } = useTranslation()
 
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
+  let tokenSymbol = currencyToAdd.symbol
+  if (currencies) {
+    tokenSymbol = `${currencies[Field.CURRENCY_A].symbol}-${currencies[Field.CURRENCY_B].symbol} LP`
+  }
 
   return (
     <Wrapper>
@@ -93,7 +100,7 @@ export function TransactionSubmittedContent({
               marginTextBetweenLogo="6px"
               textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
               tokenAddress={token.address}
-              tokenSymbol={currencyToAdd.symbol}
+              tokenSymbol={tokenSymbol}
               tokenDecimals={token.decimals}
               tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
             />
@@ -148,11 +155,12 @@ interface ConfirmationModalProps {
   attemptingTxn: boolean
   pendingText: string
   currencyToAdd?: Currency | undefined
+  currencies?: { [field in Field]?: Currency } | undefined
 }
 
 const TransactionConfirmationModal: React.FC<
   React.PropsWithChildren<InjectedModalProps & ConfirmationModalProps & ModalProps>
-> = ({ title, onDismiss, customOnDismiss, attemptingTxn, hash, pendingText, content, currencyToAdd, ...props }) => {
+> = ({ title, onDismiss, customOnDismiss, attemptingTxn, hash, pendingText, content, currencyToAdd, currencies, ...props }) => {
   const { chainId } = useActiveWeb3React()
 
   const handleDismiss = useCallback(() => {
@@ -174,6 +182,7 @@ const TransactionConfirmationModal: React.FC<
           hash={hash}
           onDismiss={handleDismiss}
           currencyToAdd={currencyToAdd}
+          currencies={currencies}
         />
       ) : (
         content()

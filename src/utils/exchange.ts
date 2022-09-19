@@ -8,6 +8,7 @@ import {
   BIPS_BASE,
   BLOCKED_PRICE_IMPACT_NON_EXPERT,
   INPUT_FRACTION_AFTER_FEE,
+  MERGEROUTER_ADDRESS,
   ONE_HUNDRED_PERCENT,
   ROUTER_ADDRESS,
 } from 'config/constants/exchange'
@@ -33,6 +34,11 @@ export function calculateSlippageAmount(value: CurrencyAmount<Currency>, slippag
 export function useRouterContract() {
   const chainId = useActiveChainId()
   return useContract<IBullRouter02>(ROUTER_ADDRESS[chainId], IBullRouter02ABI, true)
+}
+
+export function useMergeRouterContract() {
+  const chainId = useActiveChainId()
+  return useContract<IBullRouter02>(MERGEROUTER_ADDRESS[chainId], IBullRouter02ABI, true)
 }
 
 // computes price breakdown for the trade

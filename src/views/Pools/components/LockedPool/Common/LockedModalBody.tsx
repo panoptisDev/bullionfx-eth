@@ -40,13 +40,13 @@ const LockedModalBody: React.FC<React.PropsWithChildren<LockedModalBodyPropsType
   const { isValidAmount, isValidDuration, isOverMax }: ModalValidator = useMemo(() => {
     return typeof validator === 'function'
       ? validator({
-          duration,
-        })
+        duration,
+      })
       : {
-          isValidAmount: lockedAmount?.toNumber() > 0 && getBalanceAmount(currentBalance).gte(lockedAmount),
-          isValidDuration: duration > 0 && duration <= MAX_LOCK_DURATION,
-          isOverMax: duration > MAX_LOCK_DURATION,
-        }
+        isValidAmount: lockedAmount?.toNumber() > 0 && getBalanceAmount(currentBalance).gte(lockedAmount),
+        isValidDuration: duration > 0 && duration <= MAX_LOCK_DURATION,
+        isOverMax: duration > MAX_LOCK_DURATION,
+      }
   }, [validator, currentBalance, lockedAmount, duration])
 
   const cakeNeeded = useMemo(
@@ -93,11 +93,11 @@ const LockedModalBody: React.FC<React.PropsWithChildren<LockedModalBodyPropsType
       {cakeNeeded ? (
         hasEnoughBalanceToExtend ? (
           <Text fontSize="12px" mt="24px">
-            {t('0.0001 CAKE will be spent to extend')}
+            {t('0.0001 BULL will be spent to extend')}
           </Text>
         ) : (
           <Message variant="warning" mt="24px">
-            <MessageText maxWidth="200px">{t('0.0001 CAKE required for enabling extension')}</MessageText>
+            <MessageText maxWidth="200px">{t('0.0001 BULL required for enabling extension')}</MessageText>
           </Message>
         )
       ) : null}

@@ -102,11 +102,11 @@ const Deposit: React.FC<React.PropsWithChildren> = () => {
         </Flex>
         <Flex justifyContent="space-between">
           <Text color="textSubtle">{t('Total Value Locked')}</Text>
-          <Balance bold decimals={2} value={totalValueLocked} unit=" CAKE" />
+          <Balance bold decimals={2} value={totalValueLocked} unit=" BULL" />
         </Flex>
         <Flex justifyContent="space-between">
           <Text color="textSubtle">{t('Max. deposit cap')}</Text>
-          <Balance bold decimals={2} value={getBalanceNumber(maxTotalDeposit)} unit=" CAKE" />
+          <Balance bold decimals={2} value={getBalanceNumber(maxTotalDeposit)} unit=" BULL" />
         </Flex>
       </Container>
       <CardAction>

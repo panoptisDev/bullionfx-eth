@@ -271,7 +271,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               {t('Stake your tokens')}
             </Heading>
             <Text color="text" small>
-              {t('The easiest way to earn')}
+              {t('The easiest way to earn.')}
             </Text>
           </Flex>
         </Flex>

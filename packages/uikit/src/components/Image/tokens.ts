@@ -2,8 +2,8 @@
  * @see https://github.com/pancakeswap/pancake-frontend/blob/develop/src/config/constants/tokens.ts
  */
 const tokens = {
-  cake: {
-    symbol: "CAKE",
+  bull: {
+    symbol: "BULL",
     address: {
       56: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
       97: "",

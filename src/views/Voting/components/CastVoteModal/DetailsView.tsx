@@ -16,7 +16,7 @@ const StyledLinkExternal = styled(LinkExternal)`
   }
 `
 
-const FixedTermWrapper = styled(Box)<{ expired?: boolean }>`
+const FixedTermWrapper = styled(Box) <{ expired?: boolean }>`
   width: 100%;
   margin: 16px 0;
   padding: 1px 1px 3px 1px;
@@ -24,7 +24,7 @@ const FixedTermWrapper = styled(Box)<{ expired?: boolean }>`
   border-radius: ${({ theme }) => theme.radii.default};
 `
 
-const FixedTermCardInner = styled(Box)<{ expired?: boolean }>`
+const FixedTermCardInner = styled(Box) <{ expired?: boolean }>`
   position: relative;
   z-index: 1;
   padding: 8px 12px;
@@ -88,14 +88,14 @@ const DetailsView: React.FC<React.PropsWithChildren<DetailsViewProps>> = ({
           <Text>
             {isBoostingExpired
               ? t(
-                  'Your vCAKE boosting was expired at the snapshot block. Renew your fixed-term staking position to activate the boost for future voting proposals.',
-                )
+                'Your vCAKE boosting was expired at the snapshot block. Renew your fixed-term staking position to activate the boost for future voting proposals.',
+              )
               : t(
-                  'Voting power is calculated using the staking amount and remaining staking duration of the fixed-term CAKE staking position at the block.',
-                )}
+                'Voting power is calculated using the staking amount and remaining staking duration of the fixed-term BULL staking position at the block.',
+              )}
           </Text>
           <Text bold m="10px 0">
-            {`${t('CAKE locked:')} ${formatNumber(lockedCakeBalance, 0, 2)}`}
+            {`${t('BULL locked:')} ${formatNumber(lockedCakeBalance, 0, 2)}`}
           </Text>
           <StyleLink href="/pools">{t('Go to Pools')}</StyleLink>
         </Box>
@@ -110,7 +110,7 @@ const DetailsView: React.FC<React.PropsWithChildren<DetailsViewProps>> = ({
     <ModalInner mb="0">
       <Text as="p" mb="24px" fontSize="14px" color="textSubtle">
         {t(
-          'Your voting power is determined by the amount of CAKE you held and the remaining duration on the fixed-term staking position (if you have one) at the block detailed below. CAKE held in other places does not contribute to your voting power.',
+          'Your voting power is determined by the amount of BULL you held and the remaining duration on the fixed-term staking position (if you have one) at the block detailed below. BULL held in other places does not contribute to your voting power.',
         )}
       </Text>
       <Text color="secondary" textTransform="uppercase" mb="4px" bold fontSize="14px">
@@ -141,7 +141,7 @@ const DetailsView: React.FC<React.PropsWithChildren<DetailsViewProps>> = ({
       {Number.isFinite(cakeVaultBalance) && (
         <Flex alignItems="center" justifyContent="space-between" mb="4px">
           <Text color="textSubtle" fontSize="16px">
-            {t('Flexible CAKE Staking')}
+            {t('Flexible BULL Staking')}
           </Text>
           <Text textAlign="right">{formatNumber(cakeVaultBalance, 0, 3)}</Text>
         </Flex>
@@ -152,7 +152,7 @@ const DetailsView: React.FC<React.PropsWithChildren<DetailsViewProps>> = ({
             <Flex alignItems="center" justifyContent="space-between" mb="4px">
               <Flex>
                 <Text color="textSubtle" fontSize="16px">
-                  {t('Fixed Term CAKE Staking')}
+                  {t('Fixed Term BULL Staking')}
                 </Text>
                 {tooltipVisible && tooltip}
                 <Flex ref={targetRef}>
@@ -168,7 +168,7 @@ const DetailsView: React.FC<React.PropsWithChildren<DetailsViewProps>> = ({
               <FixedTermCardInner expired={isBoostingExpired}>
                 <Flex>
                   <Text color="textSubtle" fontSize="16px" mr="auto">
-                    {t('Fixed Term CAKE Staking')}
+                    {t('Fixed Term BULL Staking')}
                   </Text>
                   {tooltipVisible && tooltip}
                   <Flex ref={targetRef}>
@@ -210,7 +210,7 @@ const DetailsView: React.FC<React.PropsWithChildren<DetailsViewProps>> = ({
       {Number.isFinite(cakeBnbLpBalance) && (
         <Flex alignItems="center" justifyContent="space-between" mb="4px">
           <Text color="textSubtle" fontSize="16px">
-            {t('CAKE BNB LP')}
+            {t('BULL BNB LP')}
           </Text>
           <Text textAlign="right">{formatNumber(cakeBnbLpBalance, 0, 3)}</Text>
         </Flex>
