@@ -3,22 +3,24 @@ import { bullionfxTokens } from 'config/constants/tokens'
 import { isAddress } from 'utils'
 
 const getLpAddress = (token1: string | Token, token2: string | Token, chainId: number = ChainId.BSC) => {
-  if (typeof token1 === 'string' && token1 === 'eth') token1 = WNATIVE[chainId ?? ChainId.BSC].address
-  if (typeof token2 === 'string' && token2 === 'eth') token2 = WNATIVE[chainId ?? ChainId.BSC].address
-  let token1AsTokenInstance = token1
-  let token2AsTokenInstance = token2
-  if (!token1 || !token2) {
+  let _token1 = token1
+  let _token2 = token2
+  if (typeof _token1 === 'string' && _token1 === 'eth') _token1 = WNATIVE[chainId ?? ChainId.BSC].address
+  if (typeof _token2 === 'string' && _token2 === 'eth') _token2 = WNATIVE[chainId ?? ChainId.BSC].address
+  let token1AsTokenInstance = _token1
+  let token2AsTokenInstance = _token2
+  if (!_token1 || !_token2) {
     return null
   }
-  if (typeof token1 === 'string' || token1 instanceof String) {
-    const checksummedToken1Address = isAddress(token1)
+  if (typeof _token1 === 'string' || _token1 instanceof String) {
+    const checksummedToken1Address = isAddress(_token1)
     if (!checksummedToken1Address) {
       return null
     }
     token1AsTokenInstance = new Token(chainId, checksummedToken1Address, 18)
   }
-  if (typeof token2 === 'string' || token2 instanceof String) {
-    const checksummedToken2Address = isAddress(token2)
+  if (typeof _token2 === 'string' || _token2 instanceof String) {
+    const checksummedToken2Address = isAddress(_token2)
     if (!checksummedToken2Address) {
       return null
     }

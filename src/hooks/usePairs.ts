@@ -7,7 +7,6 @@ import { bullionfxTokens } from 'config/constants/tokens'
 
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
-import { transformUserResponse } from 'state/predictions/helpers'
 
 const PAIR_INTERFACE = new Interface(IBullPairABI)
 
@@ -30,15 +29,14 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     [chainId, currencies],
   )
 
-  const isBullionFXTokens = (token: Currency | undefined) => {
-    const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address === token?.address)
-    if (result && result.length > 0) return true
-    return false
-  }
-
   const pairAddresses = useMemo(
-    () =>
-      tokens.map(([tokenA, tokenB]) => {
+    () => {
+      const isBullionFXTokens = (token: Currency | undefined) => {
+        const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address === token?.address)
+        if (result && result.length > 0) return true
+        return false
+      }
+      return tokens.map(([tokenA, tokenB]) => {
         if (isBullionFXTokens(tokenA) && isBullionFXTokens(tokenB)) {
           try {
             return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
@@ -65,8 +63,10 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
 
           return undefined
         }
-      }),
-    [tokens],
+      })
+    }
+    ,
+    [tokens, chainId],
   )
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
