@@ -28,8 +28,8 @@ const getLpAddress = (token1: string | Token, token2: string | Token, chainId: n
   }
 
   const isBullionFXTokens = (token: Token) => {
-    const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address === token?.address)
-    if (result && result.length > 0) return true
+    const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address.toLowerCase() === token?.address.toLowerCase())
+    if (result) return true
     return false
   }
   if (isBullionFXTokens(token1AsTokenInstance as Token) && isBullionFXTokens(token2AsTokenInstance as Token)) return Pair.getAddress(token1AsTokenInstance as Token, token2AsTokenInstance as Token)
