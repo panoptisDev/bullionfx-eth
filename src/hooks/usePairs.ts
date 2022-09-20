@@ -1,4 +1,4 @@
-import { CurrencyAmount, Pair, Currency } from '@pancakeswap/sdk'
+import { CurrencyAmount, Pair, Currency, ChainId } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
 import IBullPairABI from 'config/abi/IBullPair.json'
 import { Interface } from '@ethersproject/abi'
@@ -30,9 +30,14 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
   )
 
   const pairAddresses = useMemo(
-    () =>
-      tokens.map(([tokenA, tokenB]) => {
-        if (bullionfxTokens.includes(tokenA?.symbol) && bullionfxTokens.includes(tokenB?.symbol)) {
+    () => {
+      const isBullionFXTokens = (token: Currency | undefined) => {
+        const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address.toLowerCase() === token?.address.toLowerCase())
+        if (result) return true
+        return false
+      }
+      return tokens.map(([tokenA, tokenB]) => {
+        if (isBullionFXTokens(tokenA) && isBullionFXTokens(tokenB)) {
           try {
             return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
           } catch (error: any) {
@@ -58,8 +63,9 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
 
           return undefined
         }
-      }),
-    [tokens],
+      })
+    },
+    [tokens, chainId],
   )
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')

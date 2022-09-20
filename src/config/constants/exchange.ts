@@ -23,7 +23,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.BSC]: [
     WNATIVE[ChainId.BSC],
     USDC[ChainId.BSC],
-    WETH9[ChainId.BSC],
+    // WETH9[ChainId.BSC],
   ],
   [ChainId.BSC_TESTNET]: [WNATIVE[ChainId.BSC_TESTNET], USDC[ChainId.BSC_TESTNET], WETH9[ChainId.BSC_TESTNET]],
 }

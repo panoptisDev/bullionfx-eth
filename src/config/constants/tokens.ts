@@ -85,11 +85,14 @@ export const ethTokens = {
   usdc: USDC_MAINNET,
 }
 
-export const bullionfxTokens = [
-  "BULL",
-  "GOLD",
-  "USDC"
-]
+export const bullionfxTokens = {
+  [ChainId.BSC]: [],
+  [ChainId.BSC_TESTNET]: [
+    USDC[ChainId.BSC_TESTNET],
+    BULL[ChainId.BSC_TESTNET],
+    GOLD[ChainId.BSC_TESTNET]
+  ]
+}
 
 export const ethTokensGoerli = {
   weth: WNATIVE[ChainId.BSC_TESTNET],

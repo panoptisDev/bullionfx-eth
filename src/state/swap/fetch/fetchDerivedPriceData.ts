@@ -7,7 +7,7 @@ import { Block } from 'state/info/types'
 import { multiQuery } from 'views/Info/utils/infoQueryHelpers'
 import { getDerivedPrices, getDerivedPricesQueryConstructor } from '../queries/getDerivedPrices'
 import { PairDataTimeWindowEnum } from '../types'
-import { ChainId } from '../../../../packages/swap-sdk/src/constants'
+import { ChainId, WNATIVE } from '../../../../packages/swap-sdk/src/constants'
 
 const getTokenDerivedUsdPrices = async (tokenAddress: string, blocks: Block[], chainId: number) => {
   const infoClient = chainId === ChainId.BSC_TESTNET ? INFO_CLIENT_GOERLI : INFO_CLIENT
@@ -83,6 +83,10 @@ const fetchDerivedPriceData = async (
   timeWindow: PairDataTimeWindowEnum,
   chainId: number
 ) => {
+  let _token0Address = token0Address
+  let _token1Address = token1Address
+  if (typeof _token0Address === 'string' && _token0Address === 'eth') _token0Address = WNATIVE[chainId ?? ChainId.BSC].address.toLowerCase()
+  if (typeof _token1Address === 'string' && _token1Address === 'eth') _token1Address = WNATIVE[chainId ?? ChainId.BSC].address.toLowerCase()
   const interval = getInterval(timeWindow)
   const endTimestamp = getUnixTime(new Date())
   const startTimestamp = getUnixTime(startOfHour(sub(endTimestamp * 1000, { days: getSkipDaysToStart(timeWindow) })))
@@ -101,8 +105,8 @@ const fetchDerivedPriceData = async (
     }
 
     const [token0DerivedUsd, token1DerivedUsd] = await Promise.all([
-      getTokenDerivedUsdPrices(token0Address, blocks, chainId),
-      getTokenDerivedUsdPrices(token1Address, blocks, chainId),
+      getTokenDerivedUsdPrices(_token0Address, blocks, chainId),
+      getTokenDerivedUsdPrices(_token1Address, blocks, chainId),
     ])
     return { token0DerivedUsd, token1DerivedUsd }
   } catch (error) {

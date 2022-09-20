@@ -354,7 +354,6 @@ export const useFetchPairPrices = ({
     isLoading,
     chainId
   ])
-
   useEffect(() => {
     const updatePairId = () => {
       try {
