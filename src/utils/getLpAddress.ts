@@ -1,7 +1,10 @@
-import { Token, Pair, ChainId } from '@pancakeswap/sdk'
+import { Token, Pair, ChainId, WNATIVE } from '@pancakeswap/sdk'
+import { bullionfxTokens } from 'config/constants/tokens'
 import { isAddress } from 'utils'
 
 const getLpAddress = (token1: string | Token, token2: string | Token, chainId: number = ChainId.BSC) => {
+  if (typeof token1 === 'string' && token1 === 'eth') token1 = WNATIVE[chainId ?? ChainId.BSC].address
+  if (typeof token2 === 'string' && token2 === 'eth') token2 = WNATIVE[chainId ?? ChainId.BSC].address
   let token1AsTokenInstance = token1
   let token2AsTokenInstance = token2
   if (!token1 || !token2) {
@@ -21,7 +24,14 @@ const getLpAddress = (token1: string | Token, token2: string | Token, chainId: n
     }
     token2AsTokenInstance = new Token(chainId, checksummedToken2Address, 18)
   }
-  return Pair.getAddress(token1AsTokenInstance as Token, token2AsTokenInstance as Token)
+
+  const isBullionFXTokens = (token: Token) => {
+    const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address === token?.address)
+    if (result && result.length > 0) return true
+    return false
+  }
+  if (isBullionFXTokens(token1AsTokenInstance as Token) && isBullionFXTokens(token2AsTokenInstance as Token)) return Pair.getAddress(token1AsTokenInstance as Token, token2AsTokenInstance as Token)
+  return Pair.getSushiAddress(token1AsTokenInstance as Token, token2AsTokenInstance as Token)
 }
 
 export default getLpAddress

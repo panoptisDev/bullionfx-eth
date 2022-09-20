@@ -7,7 +7,7 @@ import { Block } from 'state/info/types'
 import { multiQuery } from 'views/Info/utils/infoQueryHelpers'
 import { getDerivedPrices, getDerivedPricesQueryConstructor } from '../queries/getDerivedPrices'
 import { PairDataTimeWindowEnum } from '../types'
-import { ChainId } from '../../../../packages/swap-sdk/src/constants'
+import { ChainId, WNATIVE } from '../../../../packages/swap-sdk/src/constants'
 
 const getTokenDerivedUsdPrices = async (tokenAddress: string, blocks: Block[], chainId: number) => {
   const infoClient = chainId === ChainId.BSC_TESTNET ? INFO_CLIENT_GOERLI : INFO_CLIENT
@@ -83,6 +83,8 @@ const fetchDerivedPriceData = async (
   timeWindow: PairDataTimeWindowEnum,
   chainId: number
 ) => {
+  if (typeof token0Address === 'string' && token0Address === 'eth') token0Address = WNATIVE[chainId ?? ChainId.BSC].address.toLowerCase()
+  if (typeof token1Address === 'string' && token1Address === 'eth') token1Address = WNATIVE[chainId ?? ChainId.BSC].address.toLowerCase()
   const interval = getInterval(timeWindow)
   const endTimestamp = getUnixTime(new Date())
   const startTimestamp = getUnixTime(startOfHour(sub(endTimestamp * 1000, { days: getSkipDaysToStart(timeWindow) })))
