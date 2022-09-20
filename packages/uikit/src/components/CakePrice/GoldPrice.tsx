@@ -4,12 +4,19 @@ import LogoRoundGold from "../Svg/Icons/LogoRoundGold";
 import Text from "../Text/Text";
 import Skeleton from "../Skeleton/Skeleton";
 import { Colors } from "../../theme";
+import { formatAmount, formatAmountNotation } from "../../util/formatInfoNumbers";
 
 export interface Props {
   chainId: number;
   color?: keyof Colors;
   goldPriceUsd?: number;
   showSkeleton?: boolean;
+}
+
+const formatOptions = {
+  notation: 'standard' as formatAmountNotation,
+  displayThreshold: 0.001,
+  tokenPrecision: true,
 }
 
 const PriceLink = styled.a`
@@ -39,7 +46,7 @@ const GoldPrice: React.FC<React.PropsWithChildren<Props>> = ({
       target="_blank"
     >
       <LogoRoundGold width="24px" mr="8px" />
-      <Text color={color} bold small>{`$${goldPriceUsd.toFixed(3)}`}</Text>
+      <Text color={color} bold small>{formatAmount(goldPriceUsd, formatOptions)}</Text>
     </PriceLink>
   ) : showSkeleton ? (
     <Skeleton width={80} height={24} />

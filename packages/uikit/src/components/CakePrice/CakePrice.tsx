@@ -4,12 +4,19 @@ import LogoRound from "../Svg/Icons/LogoRound";
 import Text from "../Text/Text";
 import Skeleton from "../Skeleton/Skeleton";
 import { Colors } from "../../theme";
+import { formatAmount, formatAmountNotation } from "../../util/formatInfoNumbers";
 
 export interface Props {
   color?: keyof Colors;
   cakePriceUsd?: number;
   showSkeleton?: boolean;
   chainId: number;
+}
+
+const formatOptions = {
+  notation: 'standard' as formatAmountNotation,
+  displayThreshold: 0.001,
+  tokenPrecision: true,
 }
 
 const PriceLink = styled.a`
@@ -39,7 +46,7 @@ const CakePrice: React.FC<React.PropsWithChildren<Props>> = ({
       target="_blank"
     >
       <LogoRound width="24px" mr="8px" />
-      <Text color={color} bold small>{`$${cakePriceUsd.toFixed(3)}`}</Text>
+      <Text color={color} bold small>{formatAmount(cakePriceUsd, formatOptions)}</Text>
     </PriceLink>
   ) : showSkeleton ? (
     <Skeleton width={80} height={24} />
