@@ -5,7 +5,7 @@ import { serializeTokens } from 'utils/serializeTokens'
 import { ethTokens, ethTokensGoerli } from './tokens'
 import { SerializedPoolConfig, PoolCategory } from './types'
 
-// const serializedTokens = serializeTokens(ethTokens)
+const serializedTokens = serializeTokens(ethTokens)
 const serializedTokensTestnet = serializeTokens(ethTokensGoerli)
 
 export const MAX_LOCK_DURATION = 31536000
@@ -59,18 +59,18 @@ export const vaultPoolConfig = {
 
 export const livePools: SerializedPoolConfig[] = [
 
-  // {
-  //   sousId: 0,
-  //   stakingToken: serializedTokens.bull,
-  //   earningToken: serializedTokens.bull,
-  //   contractAddress: {
-  //     5: '',
-  //     1: '',
-  //   },
-  //   poolCategory: PoolCategory.CORE,
-  //   tokenPerBlock: '0.25',
-  //   isFinished: false,
-  // },
+  {
+    sousId: 0,
+    stakingToken: serializedTokens.bull,
+    earningToken: serializedTokens.bull,
+    contractAddress: {
+      5: '',
+      1: '0x565aAA93a6586e3637AE1C5ECe989913072cF22C',
+    },
+    poolCategory: PoolCategory.CORE,
+    tokenPerBlock: '0.25',
+    isFinished: false,
+  },
   // {
   //   sousId: 1,
   //   stakingToken: serializedTokens.gold,
