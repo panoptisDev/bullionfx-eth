@@ -14,6 +14,54 @@
   ],
   "tokens": [
     {
+      "address": "0x7D3258C5F0ef16598458c99B8aF2154e74aEb5b0",
+      "chainId": 1,
+      "decimals": 18,
+      "logoURI": "",
+      "name": "BULL",
+      "symbol": "BULL"
+    },
+    {
+      "address": "0x6a8042bd179229b6926b33F1d4aC053D8190309D",
+      "chainId": 5,
+      "decimals": 18,
+      "logoURI": "",
+      "name": "BULL",
+      "symbol": "BULL"
+    },
+    {
+      "address": "0x57c88ed53d53fDc6B41D57463E6C405dE162843e",
+      "chainId": 1,
+      "decimals": 18,
+      "logoURI": "",
+      "name": "GOLD",
+      "symbol": "GOLD"
+    },
+    {
+      "address": "0xa782EFE83e99271de6264764c9Cd05F58D68A4cD",
+      "chainId": 5,
+      "decimals": 18,
+      "logoURI": "",
+      "name": "GOLD",
+      "symbol": "GOLD"
+    },
+    {
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "chainId": 1,
+      "decimals": 6,
+      "logoURI": "https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg",
+      "name": "USD Coin",
+      "symbol": "USDC"
+    },
+    {
+      "address": "0xaDdF66e47873102Ec6e809aF57f407B3e865a790",
+      "chainId": 5,
+      "decimals": 18,
+      "logoURI": "https://res.cloudinary.com/sushi-cdn/image/fetch/f_auto,fl_sanitize,q_auto,w_48/https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg",
+      "name": "USD Coin",
+      "symbol": "USDC"
+    },
+    {
       "address": "0x111111111117dC0aa78b770fA6A738034120C302",
       "chainId": 1,
       "decimals": 18,
@@ -2982,14 +3030,6 @@
       "symbol": "UOP"
     },
     {
-      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "chainId": 1,
-      "decimals": 6,
-      "logoURI": "https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg",
-      "name": "USD Coin",
-      "symbol": "USDC"
-    },
-    {
       "address": "0x674C6Ad92Fd080e4004b2312b45f796a192D27a0",
       "chainId": 1,
       "decimals": 18,
@@ -3530,30 +3570,6 @@
       "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xc778417E063141139Fce010982780140Aa0cD5Ab/logo.png",
       "name": "Wrapped Ether",
       "symbol": "WETH"
-    },
-    {
-      "address": "0x6a8042bd179229b6926b33F1d4aC053D8190309D",
-      "chainId": 5,
-      "decimals": 18,
-      "logoURI": "",
-      "name": "BULL",
-      "symbol": "BULL"
-    },
-    {
-      "address": "0xa782EFE83e99271de6264764c9Cd05F58D68A4cD",
-      "chainId": 5,
-      "decimals": 18,
-      "logoURI": "",
-      "name": "GOLD",
-      "symbol": "GOLD"
-    },
-    {
-      "address": "0xaDdF66e47873102Ec6e809aF57f407B3e865a790",
-      "chainId": 5,
-      "decimals": 18,
-      "logoURI": "https://res.cloudinary.com/sushi-cdn/image/fetch/f_auto,fl_sanitize,q_auto,w_48/https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg",
-      "name": "USD Coin",
-      "symbol": "USDC"
     },
     {
       "address": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",

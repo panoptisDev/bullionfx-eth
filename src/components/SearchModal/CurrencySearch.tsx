@@ -133,7 +133,7 @@ function CurrencySearch({
 
   const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)
 
-  const tokenComparator = useTokenComparator(invertSearchOrder)
+  const tokenComparator = useTokenComparator(invertSearchOrder, chainId)
 
   const filteredSortedTokens: Token[] = useMemo(() => {
     return [...filteredQueryTokens].sort(tokenComparator)

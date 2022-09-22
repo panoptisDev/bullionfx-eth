@@ -4,12 +4,12 @@ import { BULL, ethTokens, ethTokensGoerli, GOLD, USDC } from './tokens'
 import { ChainMap, ChainTokenList } from './types'
 
 export const ROUTER_ADDRESS: ChainMap<string> = {
-  [ChainId.BSC]: '',
+  [ChainId.BSC]: '0x100838b967DB5d714d5c0F2297e3D03bB62974C9',
   [ChainId.BSC_TESTNET]: '0xb66c5FbE976B7d57C995A83858539CAc9eEdcD94',
 }
 
 export const MERGEROUTER_ADDRESS: ChainMap<string> = {
-  [ChainId.BSC]: '',
+  [ChainId.BSC]: '0xB5ff179A82CEB9d9cF4e5B6416b3C714900E7Db2',
   [ChainId.BSC_TESTNET]: '0xf18842edd44DC3724034713E3864F1ee01ccD16b',
 }
 

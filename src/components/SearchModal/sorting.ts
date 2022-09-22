@@ -1,4 +1,5 @@
-import { Token, CurrencyAmount } from '@pancakeswap/sdk'
+import { Token, CurrencyAmount, ChainId } from '@pancakeswap/sdk'
+import { BULL, GOLD, USDC } from 'config/constants/tokens'
 import { useMemo } from 'react'
 import { useAllTokenBalances } from '../../state/wallet/hooks'
 
@@ -18,7 +19,7 @@ function balanceComparator(balanceA?: CurrencyAmount<Token>, balanceB?: Currency
 
 function getTokenComparator(balances: {
   [tokenAddress: string]: CurrencyAmount<Token> | undefined
-}): (tokenA: Token, tokenB: Token) => number {
+}, defaultTopTokens): (tokenA: Token, tokenB: Token) => number {
   return function sortTokens(tokenA: Token, tokenB: Token): number {
     // -1 = a is first
     // 1 = b is first
@@ -31,6 +32,11 @@ function getTokenComparator(balances: {
     if (balanceComp !== 0) return balanceComp
 
     if (tokenA.symbol && tokenB.symbol) {
+      const tokenAIndex = defaultTopTokens.indexOf(tokenA.address.toLowerCase())
+      const tokenBIndex = defaultTopTokens.indexOf(tokenB.address.toLowerCase())
+      if (tokenAIndex !== -1 || tokenBIndex !== -1) {
+        return tokenAIndex === -1 ? 1 : tokenBIndex === -1 ? -1 : tokenAIndex < tokenBIndex ? -1 : 1
+      }
       // sort by symbol
       return tokenA.symbol.toLowerCase() < tokenB.symbol.toLowerCase() ? -1 : 1
     }
@@ -38,9 +44,14 @@ function getTokenComparator(balances: {
   }
 }
 
-function useTokenComparator(inverted: boolean): (tokenA: Token, tokenB: Token) => number {
+function useTokenComparator(inverted: boolean, chainId: number): (tokenA: Token, tokenB: Token) => number {
   const balances = useAllTokenBalances()
-  const comparator = useMemo(() => getTokenComparator(balances ?? {}), [balances])
+  const defaultTopTokens = [
+    BULL[chainId ?? ChainId.BSC].address.toLowerCase(),
+    GOLD[chainId ?? ChainId.BSC].address.toLowerCase(),
+    USDC[chainId ?? ChainId.BSC].address.toLowerCase()
+  ]
+  const comparator = useMemo(() => getTokenComparator(balances ?? {}, defaultTopTokens), [balances, defaultTopTokens])
   return useMemo(() => {
     if (inverted) {
       return (tokenA: Token, tokenB: Token) => comparator(tokenA, tokenB) * -1

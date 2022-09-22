@@ -2,11 +2,11 @@ import { ChainId, Token, WNATIVE } from '@pancakeswap/sdk'
 
 const BULL_MAINNET = new Token(
   ChainId.BSC,
-  '0x6B3595068778DD592e39A122f4f5a5cF09C90fE2', // sushi token
+  '0x7D3258C5F0ef16598458c99B8aF2154e74aEb5b0', // sushi token
   18,
-  'SUSHI',
-  'SushiToken',
-  'https://sushi.com/',
+  'BULL',
+  'BULL',
+  'https://bullionfx.com/',
 )
 
 const BULL_TESTNET = new Token(
@@ -20,7 +20,7 @@ const BULL_TESTNET = new Token(
 
 const GOLD_MAINNET = new Token(
   ChainId.BSC,
-  '0x6B3595068778DD592e39A122f4f5a5cF09C90fE2',
+  '0x57c88ed53d53fDc6B41D57463E6C405dE162843e',
   18,
   'GOLD',
   'GOLD',

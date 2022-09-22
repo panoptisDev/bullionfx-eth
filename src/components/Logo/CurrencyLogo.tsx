@@ -23,27 +23,24 @@ export default function CurrencyLogo({
   style?: React.CSSProperties
 }) {
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
-
   const srcs: string[] = useMemo(() => {
     if (currency?.isNative) return []
 
     if (currency?.isToken) {
       const tokenLogoURL = getTokenLogoURL(currency)
 
+      if (currency.address === "0x57c88ed53d53fDc6B41D57463E6C405dE162843e" && currency.chainId === ChainId.BSC) return [`/images/tokens/${currency.address.toLowerCase()}.png`]
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
         return [...uriLocations, tokenLogoURL]
       }
-      if (!tokenLogoURL) return []
+      if (!tokenLogoURL) return [`/images/tokens/${currency.address}`]
       return [tokenLogoURL]
     }
     return []
   }, [currency, uriLocations])
 
   if (currency?.isNative) {
-    if (currency.chainId === ChainId.BSC) {
-      return <BinanceIcon width={size} style={style} />
-    }
     return <StyledLogo size={size} srcs={[`/images/chains/${currency.chainId || ChainId.BSC}.png`]} width={size} style={style} />
   }
   if (currency?.symbol === "BULL") {
