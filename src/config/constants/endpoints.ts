@@ -15,9 +15,9 @@ export const GRAPH_API_POTTERY = process.env.NEXT_PUBLIC_GRAPH_API_POTTERY //
  */
 export const GRAPH_API_PREDICTION_V1 = 'https://api.thegraph.com/subgraphs/name/pancakeswap/prediction'
 
-export const INFO_CLIENT = 'https://api.thegraph.com/subgraphs/name/enjoydream420/bullionfx_main_exchange'//'https://bsc.streamingfast.io/subgraphs/name/pancakeswap/exchange-v2'
+export const INFO_CLIENT = 'https://api.thegraph.com/subgraphs/name/enjoydream420/bullionfx_main_exchange' // 'https://bsc.streamingfast.io/subgraphs/name/pancakeswap/exchange-v2'
 export const INFO_CLIENT_GOERLI = 'https://api.thegraph.com/subgraphs/name/enjoydream420/goerli-bull-exchange-merge'
-export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/enjoydream420/bullionfx_main_block'//'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks'
+export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/enjoydream420/bullionfx_main_block' // 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks'
 export const BLOCKS_CLIENT_GOERLI = 'https://api.thegraph.com/subgraphs/name/enjoydream420/goerli-bull-block'
 export const GRAPH_API_NFTMARKET = process.env.NEXT_PUBLIC_GRAPH_API_NFT_MARKET
 export const GRAPH_HEALTH = 'https://api.thegraph.com/index-node/graphql'

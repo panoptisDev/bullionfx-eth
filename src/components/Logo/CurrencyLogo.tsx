@@ -1,5 +1,4 @@
 import { ChainId, Currency, Token } from '@pancakeswap/sdk'
-import { BinanceIcon } from '@pancakeswap/uikit'
 import { GOLD } from 'config/constants/tokens'
 import { useMemo } from 'react'
 import { WrappedTokenInfo } from 'state/types'

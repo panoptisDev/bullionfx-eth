@@ -123,7 +123,7 @@ function CurrencySearch({
   const showETH: boolean = useMemo(() => {
     const s = debouncedQuery.toLowerCase().trim()
     return !chooseLiquidity && native && native.symbol?.toLowerCase?.()?.indexOf(s) !== -1
-  }, [debouncedQuery, native])
+  }, [debouncedQuery, native, chooseLiquidity])
   // const showETH = false
 
   const filteredTokens: Token[] = useMemo(() => {
