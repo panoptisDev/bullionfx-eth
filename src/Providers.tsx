@@ -29,7 +29,7 @@ const Providers: React.FC<React.PropsWithChildren<{ store: Store; children: Reac
       <Provider store={store}>
         <MatchBreakpointsProvider>
           <ToastsProvider>
-            <NextThemeProvider>
+            <NextThemeProvider defaultTheme='dark'>
               <StyledThemeProvider>
                 <LanguageProvider>
                   <SWRConfig
