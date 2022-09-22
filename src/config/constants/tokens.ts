@@ -11,10 +11,10 @@ const BULL_MAINNET = new Token(
 
 const BULL_TESTNET = new Token(
   ChainId.BSC_TESTNET,
-  '0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f',
+  '0x6a8042bd179229b6926b33F1d4aC053D8190309D',
   18,
   'BULL',
-  'BullionFX',
+  'BULL',
   'https://bullionfx.com/',
 )
 
@@ -29,7 +29,7 @@ const GOLD_MAINNET = new Token(
 
 const GOLD_TESTNET = new Token(
   ChainId.BSC_TESTNET,
-  '0xAE617d20232297FD2540c93b6fCc2475f11cdd67',
+  '0xa782EFE83e99271de6264764c9Cd05F58D68A4cD',
   18,
   'GOLD',
   'GOLD',
@@ -109,7 +109,7 @@ export const ethTokensGoerli = {
   usdc: USDC_TESTNET,
   syrup: new Token(
     ChainId.BSC_TESTNET,
-    '0x99616ecDb02400dddF9a67B3B84086D641e33EeC',
+    '0xa9a7eD3E8527b5649007c89886Ef3d31951fe5FC',
     18,
     'SYRUP',
     'SyrupBar Token',

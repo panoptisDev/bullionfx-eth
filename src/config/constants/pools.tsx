@@ -91,7 +91,7 @@ export const livePoolsTestnet: SerializedPoolConfig[] = [
     stakingToken: serializedTokensTestnet.bull,
     earningToken: serializedTokensTestnet.bull,
     contractAddress: {
-      5: '0x406647eA55c99e1690ce1E68aE8ff4DAe2662698',
+      5: '0x8D2EdBf067ba5164b6884dE70b41802A111f6Dce',
       1: '',
     },
     poolCategory: PoolCategory.CORE,
@@ -103,7 +103,7 @@ export const livePoolsTestnet: SerializedPoolConfig[] = [
     stakingToken: serializedTokensTestnet.gold,
     earningToken: serializedTokensTestnet.bull,
     contractAddress: {
-      5: '0x5b19fa6Cd8B998D5024A1b6A30Ea1ee840404bE4',
+      5: '0xd338C5A08F20442518758E45b0E54b8cCdC32dBC',
       1: '',
     },
     poolCategory: PoolCategory.CORE,

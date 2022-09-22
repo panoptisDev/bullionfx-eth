@@ -5,12 +5,12 @@ import { ChainMap, ChainTokenList } from './types'
 
 export const ROUTER_ADDRESS: ChainMap<string> = {
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x02c6594bD3ca0c59A8d801C297Ee5Df4B915F104',
+  [ChainId.BSC_TESTNET]: '0xb66c5FbE976B7d57C995A83858539CAc9eEdcD94',
 }
 
 export const MERGEROUTER_ADDRESS: ChainMap<string> = {
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x7A652C29646559Fc1235468a96c5a68792Cb3B56',
+  [ChainId.BSC_TESTNET]: '0xf18842edd44DC3724034713E3864F1ee01ccD16b',
 }
 
 export const SUSHISWAP_ROUTER_ADDRESS: ChainMap<string> = {

@@ -1,10 +1,10 @@
 export default {
   masterChef: {
-    5: '0x406647eA55c99e1690ce1E68aE8ff4DAe2662698',
+    5: '0x8D2EdBf067ba5164b6884dE70b41802A111f6Dce',
     1: '',
   },
   masterChefV1: {
-    5: '0xCCBF0E1975A9dDD7cB41Af7f2C6F037DBaa04d10',
+    5: '0x4Cd16dE03CC52e532403CC1Cd2Aa7663B914AC94',
     1: '',
   },
   lotteryV2: {
@@ -61,11 +61,11 @@ export default {
   },
   bullVault: {
     1: '',
-    5: '0x08eBFA11f7BCCFdFCD3C596ED104e86A2B348937',
+    5: '0x33FeE740Aa5C22df0874616688B90551FcB0531b',
   },
   bullFlexibleSideVault: {
     1: '',
-    5: '0x279D0a1CE3a88AEDA7ebe830184b86F4f3FEc1B4',
+    5: '0xcc0d165f6f21A5EF952e5AeD97E6bd6c950b1bD1',
   },
   predictionsBNB: {
     1: '0x18B2A687610328590Bc8F2e5fEdDe3b582A49cdA', //
@@ -130,7 +130,7 @@ export default {
   // TODO: multi
   zap: {
     1: '0xD4c4a7C55c9f7B3c48bafb6E8643Ba79F42418dF', //
-    5: '0x28d913ba5Fb7A7133587F53Fe6604d90d14208a1', //
+    5: '0x32F7958ce6B059684c6A5fc8272bf8C26A77Dbcc', //
   },
   IBull: {
     1: '',
@@ -138,10 +138,10 @@ export default {
   },
   bBullFarmBooster: {
     1: '',
-    5: '0xEc0F1A798D7577E341d81CbD575C60aB99dE6C66',
+    5: '0x4761387258BB0d74F8b3B70d72D91E79674B9257',
   },
   bBullFarmBoosterProxyFactory: {
     1: '',
-    5: '0x19D333C64643d749aB1509F3db300495A22E5557',
+    5: '0x57586A0635aCDccF43901229c9F52e3EBD3A79f9',
   },
 }

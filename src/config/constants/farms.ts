@@ -30,7 +30,7 @@ export const farmsTestnet: SerializedFarmConfig[] = [
     pid: 1,
     lpSymbol: 'BULL-USDC LP',
     lpAddresses: {
-      5: '0x1B48401Ed178027ADaC9e37878dDC8D676B3eF46',
+      5: '0xf1C49EA3820FF22fcFad2521736b14122F832ce5',
       1: '',
     },
     token: serializedTokensTestnet.bull,
@@ -40,7 +40,7 @@ export const farmsTestnet: SerializedFarmConfig[] = [
     pid: 2,
     lpSymbol: 'GOLD-USDC LP',
     lpAddresses: {
-      5: '0x5d2c3A0C4F2d5338F4871c4aF1a95ac453b12f33',
+      5: '0x0B3B8aF8255d32B13D57DaF4beB5CF9A1AC3c80C',
       1: '',
     },
     token: serializedTokensTestnet.gold,

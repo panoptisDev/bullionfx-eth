@@ -3532,15 +3532,15 @@
       "symbol": "WETH"
     },
     {
-      "address": "0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f",
+      "address": "0x6a8042bd179229b6926b33F1d4aC053D8190309D",
       "chainId": 5,
       "decimals": 18,
       "logoURI": "",
-      "name": "BullionFX",
+      "name": "BULL",
       "symbol": "BULL"
     },
     {
-      "address": "0xAE617d20232297FD2540c93b6fCc2475f11cdd67",
+      "address": "0xa782EFE83e99271de6264764c9Cd05F58D68A4cD",
       "chainId": 5,
       "decimals": 18,
       "logoURI": "",
