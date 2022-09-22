@@ -42,7 +42,7 @@ const GoldPrice: React.FC<React.PropsWithChildren<Props>> = ({
   const outputCurrency = _chainId === 5 ? '0xAE617d20232297FD2540c93b6fCc2475f11cdd67' : ''
   return goldPriceUsd ? (
     <PriceLink
-      href={`/swap?outputCurrency=${outputCurrency}&chainId=${_chainId}`}
+      href={`/trade?outputCurrency=${outputCurrency}&chainId=${_chainId}`}
       target="_blank"
     >
       <LogoRoundGold width="24px" mr="8px" />

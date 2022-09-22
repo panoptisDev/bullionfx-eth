@@ -97,7 +97,7 @@ const defaultProps = {
       <UserMenuComponent account="0xbdda50183d817c3289f895a4472eb475967dc980" />
     </>
   ),
-  activeItem: "/swap",
+  activeItem: "/trade",
   activeSubItem: "https://exchange.pancakeswap.finance",
   buyCakeLabel: "Buy BULL",
 };
@@ -201,7 +201,7 @@ export const NotConnected: React.FC<React.PropsWithChildren> = () => {
         links={links}
         subLinks={links[0].items as SubMenuItemsType[]}
         footerLinks={footerLinks}
-        activeItem="/swap"
+        activeItem="/trade"
         activeSubItem="https://exchange.pancakeswap.finance"
         buyCakeLabel="Buy BULL"
       >
@@ -234,7 +234,7 @@ export const WithoutConnectButton: React.FC<React.PropsWithChildren> = () => {
         links={links}
         footerLinks={footerLinks}
         subLinks={links[0].items as SubMenuItemsType[]}
-        activeItem="/swap"
+        activeItem="/trade"
         activeSubItem="https://exchange.pancakeswap.finance"
         buyCakeLabel="Buy BULL"
       >
@@ -260,7 +260,7 @@ export const WithSubmenuSelected: React.FC<React.PropsWithChildren> = () => {
         links={links}
         subLinks={links[0].items as SubMenuItemsType[]}
         footerLinks={footerLinks}
-        activeItem="/swap"
+        activeItem="/trade"
         activeSubItem="https://exchange.pancakeswap.finance"
         buyCakeLabel="Buy BULL"
       >

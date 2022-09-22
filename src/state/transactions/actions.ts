@@ -5,7 +5,7 @@ import { ReactText } from 'react'
 
 export type TransactionType =
   | 'approve'
-  | 'swap'
+  | 'trade'
   | 'wrap'
   | 'add-liquidity'
   | 'remove-liquidity'

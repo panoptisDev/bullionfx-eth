@@ -22,7 +22,7 @@ const BTTWarning = () => {
         </Link>
       </Text>
       <LinkExternal href="https://medium.com/@BitTorrent/tutorial-how-to-swap-bttold-to-btt-453264d7142">
-        {t('For more details on the swap, please refer here.')}
+        {t('For more details on the trade, please refer here.')}
       </LinkExternal>
     </>
   )

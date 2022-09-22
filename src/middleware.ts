@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/swap',
+    '/trade',
     '/pool',
     '/pools',
     '/farms',

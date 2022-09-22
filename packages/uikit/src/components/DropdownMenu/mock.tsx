@@ -4,7 +4,7 @@ import { DropdownMenuItems, DropdownMenuItemType } from "./types";
 const ItemsMock: DropdownMenuItems[] = [
   {
     label: "Exchange",
-    href: "/swap",
+    href: "/trade",
   },
   {
     label: "Liquidity",

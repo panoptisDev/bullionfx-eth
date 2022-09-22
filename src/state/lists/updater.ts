@@ -17,7 +17,7 @@ export default function Updater(): null {
   const isWindowVisible = useIsWindowVisible()
   const router = useRouter()
   const includeListUpdater = useMemo(() => {
-    return ['/swap', '/limit-orders', 'liquidity', '/add', '/find', '/remove'].some((item) => {
+    return ['/trade', '/limit-orders', 'liquidity', '/add', '/find', '/remove'].some((item) => {
       return router.pathname.startsWith(item)
     })
   }, [router.pathname])

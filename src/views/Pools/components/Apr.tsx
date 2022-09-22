@@ -50,7 +50,7 @@ const Apr: React.FC<React.PropsWithChildren<AprProps>> = ({
 
   const stakingTokenBalance = userData?.stakingTokenBalance ? new BigNumber(userData.stakingTokenBalance) : BIG_ZERO
 
-  const apyModalLink = stakingToken.address ? `/swap?outputCurrency=${stakingToken.address}` : '/swap'
+  const apyModalLink = stakingToken.address ? `/trade?outputCurrency=${stakingToken.address}` : '/trade'
 
   const [onPresentApyModal] = useModal(
     <RoiCalculatorModal

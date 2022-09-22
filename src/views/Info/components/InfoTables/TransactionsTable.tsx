@@ -106,8 +106,8 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> =
           {transaction.type === TransactionType.MINT
             ? t('Add %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })
             : transaction.type === TransactionType.SWAP
-            ? t('Swap %token0% for %token1%', { token0: inputTokenSymbol, token1: outputTokenSymbol })
-            : t('Remove %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })}
+              ? t('Trade %token0% for %token1%', { token0: inputTokenSymbol, token1: outputTokenSymbol })
+              : t('Remove %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })}
         </Text>
       </LinkExternal>
       <Text>${formatAmount(transaction.amountUSD)}</Text>
@@ -144,22 +144,22 @@ const TransactionTable: React.FC<
     const toBeAbsList = [SORT_FIELD.amountToken0, SORT_FIELD.amountToken1]
     return transactions
       ? transactions
-          .slice()
-          .sort((a, b) => {
-            if (a && b) {
-              const firstField = a[sortField as keyof Transaction]
-              const secondField = b[sortField as keyof Transaction]
-              const [first, second] = toBeAbsList.includes(sortField)
-                ? [Math.abs(firstField as number), Math.abs(secondField as number)]
-                : [firstField, secondField]
-              return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
-            }
-            return -1
-          })
-          .filter((x) => {
-            return txFilter === undefined || x.type === txFilter
-          })
-          .slice(ITEMS_PER_INFO_TABLE_PAGE * (page - 1), page * ITEMS_PER_INFO_TABLE_PAGE)
+        .slice()
+        .sort((a, b) => {
+          if (a && b) {
+            const firstField = a[sortField as keyof Transaction]
+            const secondField = b[sortField as keyof Transaction]
+            const [first, second] = toBeAbsList.includes(sortField)
+              ? [Math.abs(firstField as number), Math.abs(secondField as number)]
+              : [firstField, secondField]
+            return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+          }
+          return -1
+        })
+        .filter((x) => {
+          return txFilter === undefined || x.type === txFilter
+        })
+        .slice(ITEMS_PER_INFO_TABLE_PAGE * (page - 1), page * ITEMS_PER_INFO_TABLE_PAGE)
       : []
   }, [transactions, page, sortField, sortDirection, txFilter])
 

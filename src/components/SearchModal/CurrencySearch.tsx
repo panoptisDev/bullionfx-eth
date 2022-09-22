@@ -106,11 +106,13 @@ function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
   const _allTokens = useAllTokens()
 
-  const allTokens = chooseLiquidity ?
-    (otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC") ?
-      { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[_chainId] } :
-      { usdc: USDC[_chainId], bull: BULL[_chainId], gold: GOLD[_chainId] }) :
-    _allTokens
+  const allTokens = useMemo(() => {
+    return chooseLiquidity ?
+      (otherSelectedCurrency && (otherSelectedCurrency.symbol !== "USDC") ?
+        { [otherSelectedCurrency.symbol.toLowerCase()]: otherSelectedCurrency, usdc: USDC[_chainId] } :
+        { usdc: USDC[_chainId], bull: BULL[_chainId], gold: GOLD[_chainId] }) :
+      _allTokens
+  }, [chooseLiquidity, otherSelectedCurrency, _chainId, _allTokens])
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)

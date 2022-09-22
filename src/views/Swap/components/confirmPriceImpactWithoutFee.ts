@@ -15,7 +15,7 @@ export default function confirmPriceImpactWithoutFee(priceImpactWithoutFee: Perc
       // eslint-disable-next-line no-alert
       window.prompt(
         t(
-          'This swap has a price impact of at least %amount%%. Please type the word "%word%" to continue with this swap.',
+          'This trade has a price impact of at least %amount%%. Please type the word "%word%" to continue with this trade.',
           {
             amount: PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN.toFixed(0),
             word: confirmWord,
@@ -28,7 +28,7 @@ export default function confirmPriceImpactWithoutFee(priceImpactWithoutFee: Perc
     // eslint-disable-next-line no-alert
     return window.confirm(
       t(
-        'This swap has a price impact of at least %amount%%. Please confirm that you would like to continue with this swap.',
+        'This trade has a price impact of at least %amount%%. Please confirm that you would like to continue with this trade.',
         {
           amount: ALLOWED_PRICE_IMPACT_HIGH.toFixed(0),
         },

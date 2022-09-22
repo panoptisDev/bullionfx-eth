@@ -43,12 +43,12 @@ const config: (t: ContextApi['t'], isDark: boolean, languageCode?: string, chain
         label: t('Trade'),
         icon: SwapIcon,
         fillIcon: SwapFillIcon,
-        href: '/swap',
+        href: '/trade',
         showItemsOnMobile: false,
         items: [
           {
-            label: t('Swap'),
-            href: '/swap',
+            label: t('Trade'),
+            href: '/trade',
           },
           // {
           //   label: t('Limit'),

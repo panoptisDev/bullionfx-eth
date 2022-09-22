@@ -103,7 +103,7 @@ const ConfirmSwapModal: React.FC<React.PropsWithChildren<InjectedModalProps & Co
 
   return (
     <TransactionConfirmationModal
-      title={t('Confirm Swap')}
+      title={t('Confirm Trade')}
       onDismiss={onDismiss}
       customOnDismiss={customOnDismiss}
       attemptingTxn={attemptingTxn}

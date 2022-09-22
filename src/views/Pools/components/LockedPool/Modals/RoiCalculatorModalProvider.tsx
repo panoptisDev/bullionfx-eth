@@ -22,7 +22,7 @@ const RoiCalculatorModalProvider: React.FC<
       <VaultRoiCalculatorModal
         pool={pool}
         linkLabel={t('Get %symbol%', { symbol: 'BULL' })}
-        linkHref={stakingTokenAddress ? `/swap?outputCurrency=${stakingTokenAddress}` : '/swap'}
+        linkHref={stakingTokenAddress ? `/trade?outputCurrency=${stakingTokenAddress}` : '/trade'}
         stakingTokenBalance={pool?.userData?.stakingTokenBalance}
         onBack={() => setShowRoiCalculator(false)}
         initialValue={_toString(lockedAmount)}

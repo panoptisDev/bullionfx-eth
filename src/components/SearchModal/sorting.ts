@@ -46,11 +46,13 @@ function getTokenComparator(balances: {
 
 function useTokenComparator(inverted: boolean, chainId: number): (tokenA: Token, tokenB: Token) => number {
   const balances = useAllTokenBalances()
-  const defaultTopTokens = [
-    BULL[chainId ?? ChainId.BSC].address.toLowerCase(),
-    GOLD[chainId ?? ChainId.BSC].address.toLowerCase(),
-    USDC[chainId ?? ChainId.BSC].address.toLowerCase()
-  ]
+  const defaultTopTokens = useMemo(() => {
+    return [
+      BULL[chainId ?? ChainId.BSC].address.toLowerCase(),
+      GOLD[chainId ?? ChainId.BSC].address.toLowerCase(),
+      USDC[chainId ?? ChainId.BSC].address.toLowerCase()
+    ]
+  }, [chainId])
   const comparator = useMemo(() => getTokenComparator(balances ?? {}, defaultTopTokens), [balances, defaultTopTokens])
   return useMemo(() => {
     if (inverted) {

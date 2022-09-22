@@ -109,9 +109,9 @@ const handleLinkClick = (e: MouseEvent, router: NextRouter) => {
     if (entry === 'add') {
       const [currency1, currency2] = params
       _bridgeUtils.jump({ path: entry, query: { currency1, currency2 } })
-    } else if (url.pathname === '/swap') {
+    } else if (url.pathname === '/trade') {
       const query = url.search ? url.search.slice(1).split('=') : undefined
-      _bridgeUtils.jump({ path: 'swap', query: query ? { [query[0]]: query[1] } : undefined })
+      _bridgeUtils.jump({ path: 'trade', query: query ? { [query[0]]: query[1] } : undefined })
     } else if (mpWebviewPath.has(url.pathname)) {
       const newPathname = `/_mp${url.pathname}`
       router.push(newPathname)

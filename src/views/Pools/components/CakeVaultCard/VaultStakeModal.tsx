@@ -114,7 +114,7 @@ const VaultStakeModal: React.FC<React.PropsWithChildren<VaultStakeModalProps>> =
   const annualRoi = interestBreakdown[3] * pool.earningTokenPrice
   const formattedAnnualRoi = formatNumber(annualRoi, annualRoi > 10000 ? 0 : 2, annualRoi > 10000 ? 0 : 2)
 
-  const getTokenLink = stakingToken.address ? `/swap?outputCurrency=${stakingToken.address}` : '/swap'
+  const getTokenLink = stakingToken.address ? `/trade?outputCurrency=${stakingToken.address}` : '/trade'
   const convertedStakeAmount = getDecimalAmount(new BigNumber(stakeAmount), stakingToken.decimals)
 
   const handleStakeInputChange = (input: string) => {

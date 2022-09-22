@@ -30,13 +30,13 @@ export const status = {
 export const links: MenuItemsType[] = [
   {
     label: "Trade",
-    href: "/swap",
+    href: "/trade",
     icon: SwapIcon,
     fillIcon: SwapFillIcon,
     items: [
       {
         label: "Exchange",
-        href: "/swap",
+        href: "/trade",
       },
       {
         label: "Liquidity",

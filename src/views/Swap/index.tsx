@@ -340,7 +340,7 @@ export default function Swap() {
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
 
   const [onPresentImportTokenWarningModal] = useModal(
-    <ImportTokenWarningModal tokens={importTokensNotInDefault} onCancel={() => router.push('/swap')} />,
+    <ImportTokenWarningModal tokens={importTokensNotInDefault} onCancel={() => router.push('/trade')} />,
   )
 
   useEffect(() => {
@@ -424,7 +424,7 @@ export default function Swap() {
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               <AppBody>
                 <CurrencyInputHeader
-                  title={t('Swap')}
+                  title={t('Trade')}
                   subtitle={t('Trade Gold the better way')}
                   setIsChartDisplayed={setIsChartDisplayed}
                   isChartDisplayed={isChartDisplayed}
@@ -597,8 +597,8 @@ export default function Swap() {
                           {priceImpactSeverity > 3 && !isExpertMode
                             ? t('Price Impact High')
                             : priceImpactSeverity > 2
-                              ? t('Swap Anyway')
-                              : t('Swap')}
+                              ? t('Trade Anyway')
+                              : t('Trade')}
                         </Button>
                       </RowBetween>
                     ) : (
@@ -626,8 +626,8 @@ export default function Swap() {
                           (priceImpactSeverity > 3 && !isExpertMode
                             ? t('Price Impact Too High')
                             : priceImpactSeverity > 2
-                              ? t('Swap Anyway')
-                              : t('Swap'))}
+                              ? t('Trade Anyway')
+                              : t('Trade'))}
                       </Button>
                     )}
                     {showApproveFlow && (

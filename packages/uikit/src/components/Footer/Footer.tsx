@@ -101,7 +101,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             </Box>
             <Button
               as="a"
-              href="/swap?outputCurrency=0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f&chainId=5"
+              href="/trade?outputCurrency=0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f&chainId=5"
               target="_blank"
               scale="sm"
               endIcon={<ArrowForwardIcon color={lightColors.backgroundAlt} />}

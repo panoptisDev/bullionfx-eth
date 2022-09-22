@@ -95,12 +95,12 @@ const config = {
     return [
       {
         source: '/send',
-        destination: '/swap',
+        destination: '/trade',
         permanent: true,
       },
       {
-        source: '/swap/:outputCurrency',
-        destination: '/swap?outputCurrency=:outputCurrency',
+        source: '/trade/:outputCurrency',
+        destination: '/trade?outputCurrency=:outputCurrency',
         permanent: true,
       },
       {
@@ -135,7 +135,7 @@ const config = {
       },
       {
         source: '/',
-        destination: '/swap',
+        destination: '/trade',
         permanent: true
       }
     ]

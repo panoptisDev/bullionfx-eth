@@ -11,7 +11,7 @@ export default {
   component: BottomNav,
   argTypes: {
     activeItem: {
-      options: ["/swap", "/earn", "/win", "/nft"],
+      options: ["/trade", "/earn", "/win", "/nft"],
       control: { type: "select" },
     },
   },
@@ -31,5 +31,5 @@ export const Default = Template.bind({});
 Default.args = {
   items: MenuItemsMock,
   activeItem: "/earn",
-  activeSubItem: "/swap",
+  activeSubItem: "/trade",
 };

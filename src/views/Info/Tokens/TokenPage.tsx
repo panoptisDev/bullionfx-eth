@@ -172,7 +172,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                     {t('Add Liquidity')}
                   </Button>
                 </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/swap?inputCurrency=${address}`}>
+                <NextLinkFromReactRouter to={`/trade?inputCurrency=${address}`}>
                   <Button>{t('Trade')}</Button>
                 </NextLinkFromReactRouter>
               </Flex>

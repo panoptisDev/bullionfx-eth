@@ -14,7 +14,7 @@ export const Default: React.FC<React.PropsWithChildren> = () => {
   return (
     <BrowserRouter>
       <Box width="300px">
-        <DropdownMenu items={ItemsMock} activeItem="/swap">
+        <DropdownMenu items={ItemsMock} activeItem="/trade">
           Wallet
         </DropdownMenu>
       </Box>

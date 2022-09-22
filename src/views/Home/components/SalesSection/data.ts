@@ -6,7 +6,7 @@ export const swapSectionData = (t: TranslateFunction): SalesSectionProps => ({
   bodyText: t('Trade any token on ETH Chain in seconds, just by connecting your wallet.'),
   reverse: false,
   primaryButton: {
-    to: '/swap',
+    to: '/trade',
     text: t('Trade Now'),
     external: false,
   },
@@ -56,7 +56,7 @@ export const cakeSectionData = (t: TranslateFunction): SalesSectionProps => ({
   ),
   reverse: false,
   primaryButton: {
-    to: '/swap?outputCurrency=0x6a8042bd179229b6926b33F1d4aC053D8190309D&chainId=5',
+    to: '/trade?outputCurrency=0x7D3258C5F0ef16598458c99B8aF2154e74aEb5b0&chainId=1',
     text: t('Buy BULL'),
     external: false,
   },
