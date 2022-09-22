@@ -5,6 +5,8 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import { FlexGap } from 'components/Layout/Flex'
 import { useTranslation } from '@pancakeswap/localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { BULL, GOLD } from 'config/constants/tokens'
+import { BULL_USDC_LIQUIDITY_FEE, GOLD_USDC_LIQUIDITY_FEE } from 'config/constants'
 import { AppHeader } from '../../components/App'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
@@ -24,15 +26,20 @@ export function ChoosePair({
   const { account } = useActiveWeb3React()
   const isValid = !error
   const { handleCurrencyASelect, handleCurrencyBSelect } = useCurrencySelectRoute()
+  let liquidityFee
+  if (currencyA && currencyB) {
+    if (currencyA.symbol === BULL[currencyA.chainId].symbol || currencyB.symbol === BULL[currencyB.chainId].symbol) liquidityFee = BULL_USDC_LIQUIDITY_FEE
+    if (currencyA.symbol === GOLD[currencyA.chainId].symbol || currencyB.symbol === GOLD[currencyB.chainId].symbol) liquidityFee = GOLD_USDC_LIQUIDITY_FEE
+  } else if (!currencyA && !currencyB) liquidityFee = GOLD_USDC_LIQUIDITY_FEE
 
   return (
     <>
       <AppHeader
         title={t('Add Liquidity')}
-        subtitle={t('Receive LP tokens and earn 0.12% trading fees')}
-        helper={t(
-          'Liquidity providers earn a 0.17% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
-        )}
+        subtitle={liquidityFee ? t(`Receive LP tokens and earn ${liquidityFee}% trading fees`) : ''}
+        helper={liquidityFee ? t(
+          `Liquidity providers earn a ${liquidityFee}% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+        ) : ''}
         backTo="/liquidity"
       />
       <CardBody>

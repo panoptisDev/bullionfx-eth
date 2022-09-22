@@ -1,26 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_WETHAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_bullionfxRouter",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_maxZapReverseRatio",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -37,6 +16,19 @@
       }
     ],
     "name": "AdminTokenRecovery",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
     "type": "event"
   },
   {
@@ -371,6 +363,29 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_WETHAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_bullionfxRouter",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxZapReverseRatio",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

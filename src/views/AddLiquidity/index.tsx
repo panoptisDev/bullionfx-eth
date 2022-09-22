@@ -30,6 +30,7 @@ import { useLPApr } from 'state/swap/hooks'
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
 import { BULL, USDC, GOLD } from 'config/constants/tokens'
 import { useUSDCCurrencyAmount } from 'hooks/useUSDCPrice'
+import { BULL_USDC_LIQUIDITY_FEE, GOLD_USDC_LIQUIDITY_FEE } from 'config/constants'
 import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -579,6 +580,12 @@ export default function AddLiquidity() {
     Number.isFinite(+maxAmounts[Field.CURRENCY_B]) ? +maxAmounts[Field.CURRENCY_B] : undefined,
   )
 
+  let liquidityFee
+  if (currencyA && currencyB) {
+    if (currencyA.symbol === BULL[currencyA.chainId].symbol || currencyB.symbol === BULL[currencyB.chainId].symbol) liquidityFee = BULL_USDC_LIQUIDITY_FEE
+    if (currencyA.symbol === GOLD[currencyA.chainId].symbol || currencyB.symbol === GOLD[currencyB.chainId].symbol) liquidityFee = GOLD_USDC_LIQUIDITY_FEE
+  } else if (!currencyA && !currencyB) liquidityFee = GOLD_USDC_LIQUIDITY_FEE
+
   return (
     <Page>
       <AppBody>
@@ -598,10 +605,10 @@ export default function AddLiquidity() {
                   ? `${getLPSymbol(currencies[Field.CURRENCY_A].symbol, currencies[Field.CURRENCY_B].symbol)}`
                   : t('Add Liquidity')
               }
-              subtitle={t('Receive LP tokens and earn 0.12% trading fees')}
-              helper={t(
-                'Liquidity providers earn a 0.17% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
-              )}
+              subtitle={liquidityFee ? t(`Receive LP tokens and earn ${liquidityFee}% trading fees`) : ''}
+              helper={liquidityFee ? t(
+                `Liquidity providers earn a ${liquidityFee}% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+              ) : ''}
               backTo={canZap ? () => setSteps(Steps.Choose) : '/liquidity'}
             />
             <CardBody>

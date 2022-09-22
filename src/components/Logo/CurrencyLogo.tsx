@@ -1,5 +1,6 @@
 import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import { BinanceIcon } from '@pancakeswap/uikit'
+import { GOLD } from 'config/constants/tokens'
 import { useMemo } from 'react'
 import { WrappedTokenInfo } from 'state/types'
 import styled from 'styled-components'
@@ -29,12 +30,12 @@ export default function CurrencyLogo({
     if (currency?.isToken) {
       const tokenLogoURL = getTokenLogoURL(currency)
 
-      if (currency.address === "0x57c88ed53d53fDc6B41D57463E6C405dE162843e" && currency.chainId === ChainId.BSC) return [`/images/tokens/${currency.address.toLowerCase()}.png`]
+      if (currency.address.toLowerCase() === GOLD[currency.chainId].address.toLowerCase() && currency.chainId === ChainId.BSC) return [`/images/tokens/${currency.address}.png`]
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
         return [...uriLocations, tokenLogoURL]
       }
-      if (!tokenLogoURL) return [`/images/tokens/${currency.address}`]
+      if (!tokenLogoURL) return currency.chainId === ChainId.BSC ? [`/images/tokens/${currency.address}.png`] : [`/images/tokens/testnet/${currency.address}.png`]
       return [tokenLogoURL]
     }
     return []

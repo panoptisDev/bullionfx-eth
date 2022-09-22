@@ -29,6 +29,9 @@ export const FARM_AUCTION_HOSTING_IN_SECONDS = 604800
 
 export const PREDICTION_TOOLTIP_DISMISS_KEY = 'prediction-switcher-dismiss-tooltip'
 
+export const BULL_USDC_LIQUIDITY_FEE = 0.12
+export const GOLD_USDC_LIQUIDITY_FEE = 0.3
+
 // Gelato uses this address to define a native currency in all chains
 export const GELATO_NATIVE = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
