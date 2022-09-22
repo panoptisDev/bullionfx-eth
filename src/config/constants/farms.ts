@@ -1,8 +1,8 @@
 import { serializeTokens } from 'utils/serializeTokens'
-import { ethTokensGoerli } from './tokens'
+import { ethTokensGoerli, ethTokens } from './tokens'
 import { SerializedFarmConfig } from './types'
 
-// const serializedTokens = serializeTokens(ethTokens)
+const serializedTokens = serializeTokens(ethTokens)
 const serializedTokensTestnet = serializeTokens(ethTokensGoerli)
 
 // export const CAKE_BNB_LP_MAINNET = '0x0eD7e52944161450477ee417DE9Cd3a859b14fD0'
@@ -16,13 +16,32 @@ const farms: SerializedFarmConfig[] = [
   //   v1pid: 0,
   //   lpSymbol: 'BULL',
   //   lpAddresses: {
-  //     5: '0x589dce1954803B52b417182B026F71E40d138Ac2',
-  //     1: '',
+  //     5: '',
+  //     1: '0x1842eD4B402B10c4D06556A38C7E1F2fB136aD1C',
   //   },
   //   token: serializedTokens.syrup,
   //   quoteToken: serializedTokens.wbnb,
   // },
-
+  {
+    pid: 1,
+    lpSymbol: 'BULL-USDC LP',
+    lpAddresses: {
+      5: '',
+      1: '0xac8C3E409A7D0F154CdA57745cd00d6D7b50A9e6',
+    },
+    token: serializedTokens.bull,
+    quoteToken: serializedTokens.usdc,
+  },
+  {
+    pid: 2,
+    lpSymbol: 'GOLD-USDC LP',
+    lpAddresses: {
+      5: '',
+      1: '0x58f6015b84837F83dd04D5b6c8533711301B2CBA',
+    },
+    token: serializedTokens.gold,
+    quoteToken: serializedTokens.usdc,
+  },
 ]
 
 export const farmsTestnet: SerializedFarmConfig[] = [
