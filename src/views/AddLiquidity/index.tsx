@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
-import { JSBI, CurrencyAmount, Token, WNATIVE, MINIMUM_LIQUIDITY } from '@pancakeswap/sdk'
+import { JSBI, CurrencyAmount, Token, WNATIVE, MINIMUM_LIQUIDITY, ChainId } from '@pancakeswap/sdk'
 import {
   Button,
   Text,
@@ -75,7 +75,7 @@ enum Steps {
   Add,
 }
 
-// const zapSupportedChain = [ChainId.BSC, ChainId.BSC_TESTNET]
+const zapSupportedChain = [ChainId.BSC, ChainId.BSC_TESTNET]
 
 export default function AddLiquidity() {
   const router = useRouter()
@@ -176,18 +176,17 @@ export default function AddLiquidity() {
     {},
   )
 
-  // const canZap = useMemo(
-  //   () =>
-  //     !!zapModeStatus &&
-  //     !noLiquidity &&
-  //     zapSupportedChain.includes(chainId) &&
-  //     !(
-  //       (pair && JSBI.lessThan(pair.reserve0.quotient, MINIMUM_LIQUIDITY)) ||
-  //       (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
-  //     ),
-  //   [chainId, noLiquidity, pair, zapModeStatus],
-  // )
-  const canZap = true
+  const canZap = useMemo(
+    () =>
+      !!zapModeStatus &&
+      !noLiquidity &&
+      zapSupportedChain.includes(chainId) &&
+      !(
+        (pair && JSBI.lessThan(pair.reserve0.quotient, MINIMUM_LIQUIDITY)) ||
+        (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
+      ),
+    [chainId, noLiquidity, pair, zapModeStatus],
+  )
 
   const { handleCurrencyASelect, handleCurrencyBSelect } = useCurrencySelectRoute()
 
@@ -542,7 +541,7 @@ export default function AddLiquidity() {
   const noAnyInputAmount = !parsedAmounts[Field.CURRENCY_A] && !parsedAmounts[Field.CURRENCY_B]
 
   const showAddLiquidity =
-    (!!currencies[Field.CURRENCY_A] && !!currencies[Field.CURRENCY_B] && steps === Steps.Add) || !canZap
+    (!!currencies[Field.CURRENCY_A] && !!currencies[Field.CURRENCY_B] && steps === Steps.Add)
 
   const showZapWarning =
     preferZapInstead &&
@@ -628,7 +627,7 @@ export default function AddLiquidity() {
                   </ColumnCenter>
                 )}
                 <CurrencyInputPanel
-                  disableCurrencySelect={canZap}
+                  disableCurrencySelect
                   showUSDC={currencies[Field.CURRENCY_A]?.symbol !== 'USDC'}
                   onInputBlur={zapIn.onInputBlurOnce}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_A}
@@ -679,7 +678,7 @@ export default function AddLiquidity() {
                     )
                   }
                   onCurrencySelect={handleCurrencyBSelect}
-                  disableCurrencySelect={canZap}
+                  disableCurrencySelect
                   zapStyle={canZap ? 'zap' : 'noZap'}
                   value={formattedAmounts[Field.CURRENCY_B]}
                   onUserInput={onFieldBInput}
