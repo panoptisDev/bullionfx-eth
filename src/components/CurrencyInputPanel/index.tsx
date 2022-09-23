@@ -96,6 +96,7 @@ interface CurrencyInputPanelProps {
   disabled?: boolean
   error?: boolean
   showUSDC?: boolean
+  chooseLiquidity?: boolean
 }
 export default function CurrencyInputPanel({
   value,
@@ -118,6 +119,7 @@ export default function CurrencyInputPanel({
   disabled,
   error,
   showUSDC,
+  chooseLiquidity
 }: CurrencyInputPanelProps) {
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
@@ -138,6 +140,7 @@ export default function CurrencyInputPanel({
       otherSelectedCurrency={otherCurrency}
       showCommonBases={showCommonBases}
       commonBasesType={commonBasesType}
+      chooseLiquidity={chooseLiquidity}
     />,
   )
 

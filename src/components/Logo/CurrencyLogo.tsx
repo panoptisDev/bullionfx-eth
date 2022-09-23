@@ -29,7 +29,9 @@ export default function CurrencyLogo({
     if (currency?.isToken) {
       const tokenLogoURL = getTokenLogoURL(currency)
 
-      if (currency.address.toLowerCase() === GOLD[currency.chainId].address.toLowerCase() && currency.chainId === ChainId.BSC) return [`/images/tokens/${currency.address}.png`]
+      if (currency.address.toLowerCase() === GOLD[currency.chainId].address.toLowerCase()) {
+        return [currency.chainId === ChainId.BSC ? `/images/tokens/${currency.address}.png` : `/images/tokens/testnet/${currency.address}.png`]
+      }
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
         return [...uriLocations, tokenLogoURL]
