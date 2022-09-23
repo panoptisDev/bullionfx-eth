@@ -27,6 +27,7 @@ import { useSelector } from 'react-redux'
 import { useGasPrice } from 'state/user/hooks'
 import { warningSeverity } from 'utils/exchange'
 import tryParseAmount from 'utils/tryParseAmount'
+import { GOLD, USDC } from 'config/constants/tokens'
 import { AppState, useAppDispatch } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
@@ -273,8 +274,13 @@ function guessMaxZappableAmount(
     if (!maxSwapAmount) {
       return undefined
     }
+    const isGoldUsdcPair = (
+      pair.token0.address === GOLD[pair.token0.chainId].address && pair.token1.address === USDC[pair.token1.chainId].address
+    ) || (
+        pair.token0.address === USDC[pair.token0.chainId].address && pair.token1.address === GOLD[pair.token1.chainId].address
+      )
 
-    const [_, newPair] = pair.getInputAmount(CurrencyAmount.fromRawAmount(token0AmountIn.currency, maxSwapAmount))
+    const [_, newPair] = pair.getInputAmount(CurrencyAmount.fromRawAmount(token0AmountIn.currency, maxSwapAmount), isGoldUsdcPair)
 
     return JSBI.add(
       maxSwapAmount,

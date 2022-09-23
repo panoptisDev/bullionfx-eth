@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { isTradeBetter } from 'utils/trades'
-import { Currency, CurrencyAmount, Pair, Token, Trade, TradeType } from '@pancakeswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Pair, Token, Trade, TradeType } from '@pancakeswap/sdk'
 import flatMap from 'lodash/flatMap'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -12,6 +12,7 @@ import {
   BETTER_TRADE_LESS_HOPS_THRESHOLD,
   ADDITIONAL_BASES,
 } from 'config/constants/exchange'
+import { GOLD, USDC } from 'config/constants/tokens'
 import { PairState, usePairs } from './usePairs'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
@@ -100,6 +101,7 @@ export function useTradeExactIn(
   currencyAmountIn?: CurrencyAmount<Currency>,
   currencyOut?: Currency,
 ): Trade<Currency, Currency, TradeType> | null {
+  const { chainId } = useActiveWeb3React()
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
 
   const [singleHopOnly] = useUserSingleHopOnly()
@@ -108,7 +110,7 @@ export function useTradeExactIn(
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       if (singleHopOnly) {
         return (
-          Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+          Trade.bestTradeExactIn(allowedPairs, GOLD[chainId ?? ChainId.BSC], USDC[chainId ?? ChainId.BSC], currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
           null
         )
       }
@@ -116,7 +118,7 @@ export function useTradeExactIn(
       let bestTradeSoFar: Trade<Currency, Currency, TradeType> | null = null
       for (let i = 1; i <= MAX_HOPS; i++) {
         const currentTrade: Trade<Currency, Currency, TradeType> | null =
-          Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: i, maxNumResults: 1 })[0] ??
+          Trade.bestTradeExactIn(allowedPairs, GOLD[chainId ?? ChainId.BSC], USDC[chainId ?? ChainId.BSC], currencyAmountIn, currencyOut, { maxHops: i, maxNumResults: 1 })[0] ??
           null
         // if current trade is best yet, save it
         if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
@@ -127,7 +129,7 @@ export function useTradeExactIn(
     }
 
     return null
-  }, [allowedPairs, currencyAmountIn, currencyOut, singleHopOnly])
+  }, [allowedPairs, currencyAmountIn, currencyOut, singleHopOnly, chainId])
 }
 
 /**
@@ -137,6 +139,7 @@ export function useTradeExactOut(
   currencyIn?: Currency,
   currencyAmountOut?: CurrencyAmount<Currency>,
 ): Trade<Currency, Currency, TradeType> | null {
+  const { chainId } = useActiveWeb3React()
   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
 
   const [singleHopOnly] = useUserSingleHopOnly()
@@ -145,7 +148,7 @@ export function useTradeExactOut(
     if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
       if (singleHopOnly) {
         return (
-          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+          Trade.bestTradeExactOut(allowedPairs, GOLD[chainId ?? ChainId.BSC], USDC[chainId ?? ChainId.BSC], currencyIn, currencyAmountOut, { maxHops: 1, maxNumResults: 1 })[0] ??
           null
         )
       }
@@ -153,7 +156,7 @@ export function useTradeExactOut(
       let bestTradeSoFar: Trade<Currency, Currency, TradeType> | null = null
       for (let i = 1; i <= MAX_HOPS; i++) {
         const currentTrade =
-          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: i, maxNumResults: 1 })[0] ??
+          Trade.bestTradeExactOut(allowedPairs, GOLD[chainId ?? ChainId.BSC], USDC[chainId ?? ChainId.BSC], currencyIn, currencyAmountOut, { maxHops: i, maxNumResults: 1 })[0] ??
           null
         if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
           bestTradeSoFar = currentTrade
@@ -162,7 +165,7 @@ export function useTradeExactOut(
       return bestTradeSoFar
     }
     return null
-  }, [currencyIn, currencyAmountOut, allowedPairs, singleHopOnly])
+  }, [currencyIn, currencyAmountOut, allowedPairs, singleHopOnly, chainId])
 }
 
 export function useIsTransactionUnsupported(currencyIn?: Currency, currencyOut?: Currency): boolean {

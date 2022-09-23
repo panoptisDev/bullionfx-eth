@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, JSBI, Percent, Trade, TradeType } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount, Fraction, JSBI, Pair, Percent, Trade, TradeType } from '@pancakeswap/sdk'
 import IBullRouter02ABI from 'config/abi/IBullRouter02.json'
 import { IBullRouter02 } from 'config/abi/types/IBullRouter02'
 import {
@@ -7,11 +7,13 @@ import {
   ALLOWED_PRICE_IMPACT_MEDIUM,
   BIPS_BASE,
   BLOCKED_PRICE_IMPACT_NON_EXPERT,
+  GOLD_USDC_INPUT_FRACTOIN_AFTER_FEE,
   INPUT_FRACTION_AFTER_FEE,
   MERGEROUTER_ADDRESS,
   ONE_HUNDRED_PERCENT,
   ROUTER_ADDRESS,
 } from 'config/constants/exchange'
+import { GOLD, USDC } from 'config/constants/tokens'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useContract } from 'hooks/useContract'
 import { Field } from '../state/swap/actions'
@@ -52,7 +54,19 @@ export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, Tra
     ? undefined
     : ONE_HUNDRED_PERCENT.subtract(
       trade.route.pairs.reduce<Fraction>(
-        (currentFee: Fraction): Fraction => currentFee.multiply(INPUT_FRACTION_AFTER_FEE),
+        (currentFee: Fraction, pair: Pair) => {
+          if (
+            (
+              pair.token0.address.toLowerCase() === GOLD[pair.token0.chainId].address.toLowerCase() &&
+              pair.token1.address.toLowerCase() === USDC[pair.token1.chainId].address.toLowerCase()
+            ) ||
+            (
+              pair.token0.address.toLowerCase() === USDC[pair.token0.chainId].address.toLowerCase() &&
+              pair.token1.address.toLowerCase() === GOLD[pair.token1.chainId].address.toLowerCase()
+            )
+          ) return currentFee.multiply(GOLD_USDC_INPUT_FRACTOIN_AFTER_FEE)
+          return currentFee.multiply(INPUT_FRACTION_AFTER_FEE)
+        },
         ONE_HUNDRED_PERCENT,
       ),
     )
@@ -73,7 +87,6 @@ export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, Tra
       trade.inputAmount.currency,
       realizedLPFee.multiply(trade.inputAmount.quotient).quotient,
     )
-
   return { priceImpactWithoutFee: priceImpactWithoutFeePercent, realizedLPFee: realizedLPFeeAmount }
 }
 

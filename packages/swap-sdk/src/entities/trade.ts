@@ -112,9 +112,11 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
    */
   public static exactIn<TInput extends Currency, TOutput extends Currency>(
     route: Route<TInput, TOutput>,
-    amountIn: CurrencyAmount<TInput>
+    amountIn: CurrencyAmount<TInput>,
+    gold: Token,
+    usdc: Token
   ): Trade<TInput, TOutput, TradeType.EXACT_INPUT> {
-    return new Trade(route, amountIn, TradeType.EXACT_INPUT)
+    return new Trade(route, amountIn, TradeType.EXACT_INPUT, gold, usdc)
   }
 
   /**
@@ -124,15 +126,19 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
    */
   public static exactOut<TInput extends Currency, TOutput extends Currency>(
     route: Route<TInput, TOutput>,
-    amountOut: CurrencyAmount<TOutput>
+    amountOut: CurrencyAmount<TOutput>,
+    gold: Token,
+    usdc: Token
   ): Trade<TInput, TOutput, TradeType.EXACT_OUTPUT> {
-    return new Trade(route, amountOut, TradeType.EXACT_OUTPUT)
+    return new Trade(route, amountOut, TradeType.EXACT_OUTPUT, gold, usdc)
   }
 
   public constructor(
     route: Route<TInput, TOutput>,
     amount: TTradeType extends TradeType.EXACT_INPUT ? CurrencyAmount<TInput> : CurrencyAmount<TOutput>,
-    tradeType: TTradeType
+    tradeType: TTradeType,
+    gold: Token,
+    usdc: Token
   ) {
     this.route = route
     this.tradeType = tradeType
@@ -143,7 +149,12 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       tokenAmounts[0] = amount.wrapped
       for (let i = 0; i < route.path.length - 1; i++) {
         const pair = route.pairs[i]
-        const [outputAmount] = pair.getOutputAmount(tokenAmounts[i])
+        const isGoldUsdcPair = (
+          pair.token0.address === gold.address && pair.token1.address === usdc.address
+        ) || (
+            pair.token0.address === usdc.address && pair.token1.address === gold.address
+          )
+        const [outputAmount] = pair.getOutputAmount(tokenAmounts[i], isGoldUsdcPair)
         tokenAmounts[i + 1] = outputAmount
       }
       this.inputAmount = CurrencyAmount.fromFractionalAmount(route.input, amount.numerator, amount.denominator)
@@ -157,7 +168,12 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       tokenAmounts[tokenAmounts.length - 1] = amount.wrapped
       for (let i = route.path.length - 1; i > 0; i--) {
         const pair = route.pairs[i - 1]
-        const [inputAmount] = pair.getInputAmount(tokenAmounts[i])
+        const isGoldUsdcPair = (
+          pair.token0.address === gold.address && pair.token1.address === usdc.address
+        ) || (
+            pair.token0.address === usdc.address && pair.token1.address === gold.address
+          )
+        const [inputAmount] = pair.getInputAmount(tokenAmounts[i], isGoldUsdcPair)
         tokenAmounts[i - 1] = inputAmount
       }
       this.inputAmount = CurrencyAmount.fromFractionalAmount(
@@ -225,6 +241,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
    */
   public static bestTradeExactIn<TInput extends Currency, TOutput extends Currency>(
     pairs: Pair[],
+    gold: Token,
+    usdc: Token,
     currencyAmountIn: CurrencyAmount<TInput>,
     currencyOut: TOutput,
     { maxNumResults = 3, maxHops = 3 }: BestTradeOptions = {},
@@ -245,9 +263,15 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       if (!pair.token0.equals(amountIn.currency) && !pair.token1.equals(amountIn.currency)) continue
       if (pair.reserve0.equalTo(ZERO) || pair.reserve1.equalTo(ZERO)) continue
 
+      const isGoldUsdcPair = (
+        pair.token0.address === gold.address && pair.token1.address === usdc.address
+      ) || (
+          pair.token0.address === usdc.address && pair.token1.address === gold.address
+        )
+
       let amountOut: CurrencyAmount<Token>
       try {
-        ;[amountOut] = pair.getOutputAmount(amountIn)
+        ;[amountOut] = pair.getOutputAmount(amountIn, isGoldUsdcPair)
       } catch (error) {
         // input too low
         if ((error as InsufficientInputAmountError).isInsufficientInputAmountError) {
@@ -262,7 +286,9 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
           new Trade(
             new Route([...currentPairs, pair], currencyAmountIn.currency, currencyOut),
             currencyAmountIn,
-            TradeType.EXACT_INPUT
+            TradeType.EXACT_INPUT,
+            gold,
+            usdc
           ),
           maxNumResults,
           tradeComparator
@@ -273,6 +299,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         // otherwise, consider all the other paths that lead from this token as long as we have not exceeded maxHops
         Trade.bestTradeExactIn(
           pairsExcludingThisPair,
+          gold,
+          usdc,
           currencyAmountIn,
           currencyOut,
           {
@@ -319,6 +347,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
    */
   public static bestTradeExactOut<TInput extends Currency, TOutput extends Currency>(
     pairs: Pair[],
+    gold: Token,
+    usdc: Token,
     currencyIn: TInput,
     currencyAmountOut: CurrencyAmount<TOutput>,
     { maxNumResults = 3, maxHops = 3 }: BestTradeOptions = {},
@@ -339,9 +369,15 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       if (!pair.token0.equals(amountOut.currency) && !pair.token1.equals(amountOut.currency)) continue
       if (pair.reserve0.equalTo(ZERO) || pair.reserve1.equalTo(ZERO)) continue
 
+      const isGoldUsdcPair = (
+        pair.token0.address === gold.address && pair.token1.address === usdc.address
+      ) || (
+          pair.token0.address === usdc.address && pair.token1.address === gold.address
+        )
+
       let amountIn: CurrencyAmount<Token>
       try {
-        ;[amountIn] = pair.getInputAmount(amountOut)
+        ;[amountIn] = pair.getInputAmount(amountOut, isGoldUsdcPair)
       } catch (error) {
         // not enough liquidity in this pair
         if ((error as InsufficientReservesError).isInsufficientReservesError) {
@@ -356,7 +392,9 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
           new Trade(
             new Route([pair, ...currentPairs], currencyIn, currencyAmountOut.currency),
             currencyAmountOut,
-            TradeType.EXACT_OUTPUT
+            TradeType.EXACT_OUTPUT,
+            gold,
+            usdc
           ),
           maxNumResults,
           tradeComparator
@@ -367,6 +405,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         // otherwise, consider all the other paths that arrive at this token as long as we have not exceeded maxHops
         Trade.bestTradeExactOut(
           pairsExcludingThisPair,
+          gold,
+          usdc,
           currencyIn,
           currencyAmountOut,
           {

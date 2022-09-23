@@ -92,7 +92,9 @@ export const ZERO_PERCENT = new Percent('0')
 export const ONE_HUNDRED_PERCENT = new Percent('1')
 
 export const BASE_FEE = new Percent(JSBI.BigInt(30), BIPS_BASE)
+export const GOLD_USDC_FEE = new Percent(JSBI.BigInt(100), BIPS_BASE)
 export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
+export const GOLD_USDC_INPUT_FRACTOIN_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(GOLD_USDC_FEE)
 
 // BNB
 export const DEFAULT_INPUT_CURRENCY = 'USDC'

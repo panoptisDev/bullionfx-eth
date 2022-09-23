@@ -8,6 +8,7 @@ import useTotalSupply from 'hooks/useTotalSupply'
 
 import { useTranslation } from '@pancakeswap/localization'
 import tryParseAmount from 'utils/tryParseAmount'
+import { GOLD, USDC } from 'config/constants/tokens'
 import { AppState, useAppDispatch } from '../index'
 import { useTokenBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
@@ -58,24 +59,24 @@ export function useDerivedBurnInfo(
   const totalSupply = useTotalSupply(pair?.liquidityToken)
   const liquidityValueA =
     pair &&
-    totalSupply &&
-    userLiquidity &&
-    tokenA &&
-    // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
-    JSBI.greaterThanOrEqual(totalSupply.quotient, userLiquidity.quotient)
+      totalSupply &&
+      userLiquidity &&
+      tokenA &&
+      // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
+      JSBI.greaterThanOrEqual(totalSupply.quotient, userLiquidity.quotient)
       ? CurrencyAmount.fromRawAmount(tokenA, pair.getLiquidityValue(tokenA, totalSupply, userLiquidity, false).quotient)
       : undefined
 
   const liquidityValueB =
     pair &&
-    totalSupply &&
-    userLiquidity &&
-    tokenB &&
-    // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
-    JSBI.greaterThanOrEqual(totalSupply.quotient, userLiquidity.quotient)
+      totalSupply &&
+      userLiquidity &&
+      tokenB &&
+      // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
+      JSBI.greaterThanOrEqual(totalSupply.quotient, userLiquidity.quotient)
       ? CurrencyAmount.fromRawAmount(tokenB, pair.getLiquidityValue(tokenB, totalSupply, userLiquidity, false).quotient)
       : undefined
-  const liquidityValues: { [Field.CURRENCY_A]?: CurrencyAmount<Token>; [Field.CURRENCY_B]?: CurrencyAmount<Token> } = {
+  const liquidityValues: { [Field.CURRENCY_A]?: CurrencyAmount<Token>;[Field.CURRENCY_B]?: CurrencyAmount<Token> } = {
     [Field.CURRENCY_A]: liquidityValueA,
     [Field.CURRENCY_B]: liquidityValueB,
   }
@@ -112,8 +113,8 @@ export function useDerivedBurnInfo(
     removalCheckedA && removalCheckedB
       ? undefined
       : removalCheckedA
-      ? tokens[Field.CURRENCY_A]?.address
-      : tokens[Field.CURRENCY_B]?.address
+        ? tokens[Field.CURRENCY_A]?.address
+        : tokens[Field.CURRENCY_B]?.address
 
   const amountA =
     tokenA && percentToRemove && percentToRemove.greaterThan('0') && liquidityValueA
@@ -129,8 +130,13 @@ export function useDerivedBurnInfo(
 
   const estimateZapOutAmount = useMemo(() => {
     if (pair && tokenAmountToZap) {
+      const isGoldUsdcPair = (
+        pair.token0.address === GOLD[pair.token0.chainId].address && pair.token1.address === USDC[pair.token1.chainId].address
+      ) || (
+          pair.token0.address === USDC[pair.token0.chainId].address && pair.token1.address === GOLD[pair.token1.chainId].address
+        )
       try {
-        return pair.getOutputAmount(tokenAmountToZap)[0]
+        return pair.getOutputAmount(tokenAmountToZap, isGoldUsdcPair)[0]
       } catch (error) {
         return undefined
       }
@@ -149,23 +155,23 @@ export function useDerivedBurnInfo(
     [Field.CURRENCY_A]: !zapMode
       ? amountA
       : amountA && removalCheckedA && !removalCheckedB && estimateZapOutAmount
-      ? CurrencyAmount.fromRawAmount(
+        ? CurrencyAmount.fromRawAmount(
           tokenA,
           JSBI.add(percentToRemove.multiply(liquidityValueA.quotient).quotient, estimateZapOutAmount.quotient),
         )
-      : !removalCheckedA
-      ? undefined
-      : amountA,
+        : !removalCheckedA
+          ? undefined
+          : amountA,
     [Field.CURRENCY_B]: !zapMode
       ? amountB
       : amountB && removalCheckedB && !removalCheckedA && estimateZapOutAmount
-      ? CurrencyAmount.fromRawAmount(
+        ? CurrencyAmount.fromRawAmount(
           tokenB,
           JSBI.add(percentToRemove.multiply(liquidityValueB.quotient).quotient, estimateZapOutAmount.quotient),
         )
-      : !removalCheckedB
-      ? undefined
-      : amountB,
+        : !removalCheckedB
+          ? undefined
+          : amountB,
   }
 
   let error: string | undefined
