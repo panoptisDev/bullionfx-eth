@@ -139,11 +139,9 @@ export function useSwapCallback(
                 ? trade.outputAmount.toSignificant(3)
                 : trade.minimumAmountOut(pct).toSignificant(3)
 
-            const base = `Swap ${
-              trade.tradeType === TradeType.EXACT_OUTPUT ? 'max.' : ''
-            } ${inputAmount} ${inputSymbol} for ${
-              trade.tradeType === TradeType.EXACT_INPUT ? 'min.' : ''
-            } ${outputAmount} ${outputSymbol}`
+            const base = `Trade ${trade.tradeType === TradeType.EXACT_OUTPUT ? 'max.' : ''
+              } ${inputAmount} ${inputSymbol} for ${trade.tradeType === TradeType.EXACT_INPUT ? 'min.' : ''
+              } ${outputAmount} ${outputSymbol}`
 
             const recipientAddressText =
               recipientAddress && isAddress(recipientAddress) ? truncateHash(recipientAddress) : recipientAddress
@@ -153,11 +151,11 @@ export function useSwapCallback(
             const translatableWithRecipient =
               trade.tradeType === TradeType.EXACT_OUTPUT
                 ? recipient === account
-                  ? 'Swap max. %inputAmount% %inputSymbol% for %outputAmount% %outputSymbol%'
-                  : 'Swap max. %inputAmount% %inputSymbol% for %outputAmount% %outputSymbol% to %recipientAddress%'
+                  ? 'Trade max. %inputAmount% %inputSymbol% for %outputAmount% %outputSymbol%'
+                  : 'Trade max. %inputAmount% %inputSymbol% for %outputAmount% %outputSymbol% to %recipientAddress%'
                 : recipient === account
-                ? 'Swap %inputAmount% %inputSymbol% for min. %outputAmount% %outputSymbol%'
-                : 'Swap %inputAmount% %inputSymbol% for min. %outputAmount% %outputSymbol% to %recipientAddress%'
+                  ? 'Trade %inputAmount% %inputSymbol% for min. %outputAmount% %outputSymbol%'
+                  : 'Trade %inputAmount% %inputSymbol% for min. %outputAmount% %outputSymbol% to %recipientAddress%'
 
             addTransaction(response, {
               summary: withRecipient,
@@ -171,7 +169,7 @@ export function useSwapCallback(
                   ...(recipient !== account && { recipientAddress: recipientAddressText }),
                 },
               },
-              type: 'swap',
+              type: 'trade',
             })
 
             return response.hash
@@ -182,8 +180,8 @@ export function useSwapCallback(
               throw new Error('Transaction rejected.')
             } else {
               // otherwise, the error was unexpected and we need to convey that
-              console.error(`Swap failed`, error, methodName, args, value)
-              throw new Error(t('Swap failed: %message%', { message: transactionErrorToUserReadableMessage(error, t) }))
+              console.error(`Trade failed`, error, methodName, args, value)
+              throw new Error(t('Trade failed: %message%', { message: transactionErrorToUserReadableMessage(error, t) }))
             }
           })
       },
