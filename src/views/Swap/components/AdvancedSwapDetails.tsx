@@ -71,18 +71,18 @@ function TradeSummary({
           <Text fontSize="14px" color="textSubtle">
             {t('Liquidity Provider Fee')}
           </Text>
-          <QuestionHelper
+          {/* <QuestionHelper
             text={
               <>
                 <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: totalFeePercent })}</Text>
                 <Text>- {t('%amount% to LP token holders', { amount: lpHoldersFeePercent })}</Text>
                 <Text>- {t('%amount% to the Treasury', { amount: treasuryFeePercent })}</Text>
-                {/* <Text>- {t('%amount% towards BULL buyback and burn', { amount: buyBackFeePercent })}</Text> */}
+                <Text>- {t('%amount% towards BULL buyback and burn', { amount: buyBackFeePercent })}</Text>
               </>
             }
             ml="4px"
             placement="top-start"
-          />
+          /> */}
         </RowFixed>
         <Text fontSize="14px">
           {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}

@@ -20,8 +20,9 @@ import useTotalSupply from 'hooks/useTotalSupply'
 import useBUSDPrice from 'hooks/useUSDCPrice'
 import { multiplyPriceByAmount } from 'utils/prices'
 // import { useWeb3React } from '@pancakeswap/wagmi'
-import { BIG_INT_ZERO } from 'config/constants/exchange'
+import { BASE_FEE, BIG_INT_ZERO, GOLD_USDC_FEE } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { GOLD, USDC } from 'config/constants/tokens'
 
 import { useTokenBalance } from '../../state/wallet/hooks'
 import { currencyId } from '../../utils/currencyId'
@@ -104,6 +105,12 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
     currency0,
     currency1,
   )
+
+  const isGoldUsdcPool = (
+    pair.token0.address === GOLD[pair.token0.chainId].address && pair.token1.address === USDC[pair.token1.chainId].address
+  ) || (
+      pair.token0.address === USDC[pair.token0.chainId].address && pair.token1.address === GOLD[pair.token1.chainId].address
+    )
 
   return (
     <>
@@ -188,7 +195,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
               🥞
             </span>{' '}
             {t(
-              "By adding liquidity you'll earn 0.17% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.",
+              `By adding liquidity you'll earn ${isGoldUsdcPool ? GOLD_USDC_FEE.toSignificant() : BASE_FEE.toSignificant()}% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.`,
             )}
           </Text>
         </LightCard>
