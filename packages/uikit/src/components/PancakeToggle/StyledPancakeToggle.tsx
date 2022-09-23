@@ -63,9 +63,9 @@ const scaleKeyValues = {
 
 const getScale =
   (property: ScaleKeys) =>
-  ({ scale = scales.LG }: PancakeToggleProps) => {
-    return scaleKeyValues[scale][property];
-  };
+    ({ scale = scales.LG }: PancakeToggleProps) => {
+      return scaleKeyValues[scale][property];
+    };
 
 export const PancakeStack = styled.div<HandleProps>`
   position: relative;
@@ -154,7 +154,7 @@ export const PancakeInput = styled.input<InputProps>`
   width: 40px;
 
   &:focus + label {
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    box-shadow: ${({ theme }) => theme.colors.secondary};
   }
 
   &:checked + label .pancakes {

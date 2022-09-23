@@ -23,9 +23,9 @@ function TradeSummary({
   const isExactIn = trade.tradeType === TradeType.EXACT_INPUT
   const slippageAdjustedAmounts = computeSlippageAdjustedAmounts(trade, allowedSlippage)
 
-  const totalFeePercent = `${(TOTAL_FEE * 100).toFixed(2)}%`
-  const lpHoldersFeePercent = `${(LP_HOLDERS_FEE * 100).toFixed(2)}%`
-  const treasuryFeePercent = `${(TREASURY_FEE * 100).toFixed(4)}%`
+  // const totalFeePercent = `${(TOTAL_FEE * 100).toFixed(2)}%`
+  // const lpHoldersFeePercent = `${(LP_HOLDERS_FEE * 100).toFixed(2)}%`
+  // const treasuryFeePercent = `${(TREASURY_FEE * 100).toFixed(4)}%`
   // const buyBackFeePercent = `${(BUYBACK_FEE * 100).toFixed(4)}%`
 
   return (

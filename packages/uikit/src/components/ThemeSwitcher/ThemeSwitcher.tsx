@@ -11,10 +11,10 @@ const ThemeSwitcher: React.FC<React.PropsWithChildren<Props>> = ({ isDark, toggl
   <Toggle
     checked={isDark}
     defaultColor="textDisabled"
-    checkedColor="textDisabled"
+    checkedColor="cardBorder"
     onChange={() => toggleTheme(!isDark)}
     scale="md"
-    startIcon={(isActive = false) => <SunIcon color={isActive ? "warning" : "backgroundAlt"} />}
+    startIcon={(isActive = false) => <SunIcon color={isActive ? "warning" : "textSubtle"} />}
     endIcon={(isActive = false) => <MoonIcon color={isActive ? "secondary" : "backgroundAlt"} />}
   />
 );

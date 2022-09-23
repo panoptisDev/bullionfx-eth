@@ -33,9 +33,9 @@ const scaleKeyValues = {
 
 const getScale =
   (property: ScaleKeys) =>
-  ({ scale = scales.LG }: ToggleProps) => {
-    return scaleKeyValues[scale][property];
-  };
+    ({ scale = scales.LG }: ToggleProps) => {
+      return scaleKeyValues[scale][property];
+    };
 
 export const Handle = styled.div<HandleProps>`
   background-color: ${({ theme }) => theme.toggle.handleBackground};
@@ -63,12 +63,9 @@ export const Input = styled.input<InputProps>`
   }
 
   &:focus + ${Handle} {
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    outline: 3px solid ${({ theme }) => theme.colors.secondary};
   }
 
-  &:hover + ${Handle}:not(:disabled):not(:checked) {
-    box-shadow: ${({ theme }) => theme.shadows.focus};
-  }
 `;
 
 const StyledToggle = styled.div<StyleToggleProps>`
@@ -76,7 +73,6 @@ const StyledToggle = styled.div<StyleToggleProps>`
   background-color: ${({ theme, $checked, $checkedColor, $defaultColor }) =>
     theme.colors[$checked ? $checkedColor : $defaultColor]};
   border-radius: 24px;
-  box-shadow: ${({ theme }) => theme.shadows.inset};
   cursor: pointer;
   display: inline-flex;
   height: ${getScale("toggleHeight")};

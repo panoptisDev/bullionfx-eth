@@ -43,12 +43,12 @@ const Checkbox = styled.input.attrs({ type: "checkbox" }) <CheckboxProps>`
   }
 
   &:hover:not(:disabled):not(:checked) {
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    box-shadow: ${({ theme }) => theme.colors.secondary};
   }
 
   &:focus {
     outline: none;
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    box-shadow: ${({ theme }) => theme.colors.secondary};
   }
 
   &:checked {

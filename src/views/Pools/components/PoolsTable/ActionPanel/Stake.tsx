@@ -120,7 +120,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
 
   const needsApproval = vaultKey ? !isVaultApproved : !allowance.gt(0) && !isBnbPool
 
-  const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal tokenSymbol={stakingToken.symbol} />)
+  const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal token={stakingToken} />)
 
   const [onPresentStake] = useModal(
     <StakeModal

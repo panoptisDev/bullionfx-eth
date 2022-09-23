@@ -32,7 +32,7 @@ const StakeAction: React.FC<React.PropsWithChildren<StakeActionsProps>> = ({
     stakingToken.decimals,
   )
 
-  const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal tokenSymbol={stakingToken.symbol} />)
+  const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal token={stakingToken} />)
 
   const [onPresentStake] = useModal(
     <StakeModal

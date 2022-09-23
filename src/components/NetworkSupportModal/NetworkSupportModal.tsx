@@ -21,13 +21,13 @@ export function NetworkSupportModal({
   const foundChain = useMemo(() => chains.find((c) => c.id === chainId), [chainId])
   const historyManager = useHistory()
 
-  const lastValidPath = historyManager?.history?.find((h) => ['/swap', 'liquidity', '/'].includes(h))
+  const lastValidPath = historyManager?.history?.find((h) => ['/trade', 'liquidity', '/'].includes(h))
 
   return (
     <Modal title={title} hideCloseButton headerBackground="gradients.cardHeader">
       <Grid style={{ gap: '16px' }} maxWidth="360px">
         <Text bold>{t('It’s a BNB Smart Chain only feature')}</Text>
-        <Text small>{t('Currently only Swap is supported in BNB Smart Chain')}</Text>
+        <Text small>{t('Currently only Trade is supported in BNB Smart Chain')}</Text>
 
         {image && (
           <Box mx="auto" my="8px" position="relative" width="100%" minHeight="250px">

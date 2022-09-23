@@ -2,9 +2,10 @@ import { useTranslation } from '@pancakeswap/localization'
 import styled from 'styled-components'
 import { Modal, Text, Button, OpenNewIcon, Link } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
+import { Token } from '@pancakeswap/sdk'
 
 interface NotEnoughTokensModalProps {
-  tokenSymbol: string
+  token: Token
   onDismiss?: () => void
 }
 
@@ -13,7 +14,7 @@ const StyledLink = styled(Link)`
 `
 
 const NotEnoughTokensModal: React.FC<React.PropsWithChildren<NotEnoughTokensModalProps>> = ({
-  tokenSymbol,
+  token,
   onDismiss,
 }) => {
   const { t } = useTranslation()
@@ -21,21 +22,21 @@ const NotEnoughTokensModal: React.FC<React.PropsWithChildren<NotEnoughTokensModa
 
   return (
     <Modal
-      title={t('%symbol% required', { symbol: tokenSymbol })}
+      title={t('%symbol% required', { symbol: token.symbol })}
       onDismiss={onDismiss}
       headerBackground={theme.colors.gradients.cardHeader}
     >
       <Text color="failure" bold>
-        {t('Insufficient %symbol% balance', { symbol: tokenSymbol })}
+        {t('Insufficient %symbol% balance', { symbol: token.symbol })}
       </Text>
-      <Text mt="24px">{t('You’ll need %symbol% to stake in this pool!', { symbol: tokenSymbol })}</Text>
+      <Text mt="24px">{t('You’ll need %symbol% to stake in this pool!', { symbol: token.symbol })}</Text>
       <Text>
         {t('Buy some %symbol%, or make sure your %symbol% isn’t in another pool or LP.', {
-          symbol: tokenSymbol,
+          symbol: token.symbol,
         })}
       </Text>
-      <Button mt="24px" as="a" external href="/trade">
-        {t('Buy')} {tokenSymbol}
+      <Button mt="24px" as="a" external href={`/trade?chainId=${token.chainId}&outputCurrency=${token.address}`}>
+        {t('Buy')} {token.symbol}
       </Button>
       <StyledLink href="https://yieldwatch.net" external>
         <Button variant="secondary" mt="8px" width="100%">

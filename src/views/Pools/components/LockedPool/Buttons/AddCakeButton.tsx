@@ -34,7 +34,7 @@ const AddCakeButton: React.FC<React.PropsWithChildren<AddButtonProps>> = ({
     'AddAmountModal',
   )
 
-  const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal tokenSymbol={stakingToken.symbol} />)
+  const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal token={stakingToken} />)
 
   const handleClicked = useCallback(() => {
     return currentBalance.gt(0) ? openAddAmountModal() : onPresentTokenRequired()

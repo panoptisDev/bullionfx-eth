@@ -14,8 +14,8 @@ import {
 
 const MenuItemsMock: MenuItemsType[] = [
   {
-    label: "Swap",
-    href: "/swap",
+    label: "Trade",
+    href: "/trade",
     icon: SwapIcon,
     fillIcon: SwapFillIcon,
     items: ItemsMock,

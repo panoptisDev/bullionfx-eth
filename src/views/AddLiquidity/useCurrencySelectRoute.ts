@@ -37,9 +37,9 @@ export const useCurrencySelectRoute = () => {
         }
       } else if (currencyIdA) {
         router.replace(`/add/${currencyIdA}/${newCurrencyIdB}`, undefined, { shallow: true })
-      } else if (currencyIdB === goldToken?.address || currencyIdB === bullToken?.address) {
+      } else if (newCurrencyIdB === goldToken?.address || newCurrencyIdB === bullToken?.address) {
         router.replace(`/add/${usdcToken?.address}/${newCurrencyIdB}`, undefined, { shallow: true })
-      } else if (currencyIdB === usdcToken?.address) {
+      } else if (newCurrencyIdB === usdcToken?.address) {
         router.replace(`/add/${goldToken?.address}/${newCurrencyIdB}`, undefined, { shallow: true })
       }
     },
