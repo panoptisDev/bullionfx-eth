@@ -60,15 +60,15 @@ export const Input = styled.input<InputProps>`
 
   &:checked + ${Handle} {
     left: ${getScale("checkedLeft")};
-    outline: 3px solid ${({ theme }) => theme.colors.secondary};
+    outline: 3px solid ${({ theme }) => theme.colors.toggleBorder};
   }
 
   &:focus + ${Handle} {
-    outline: 3px solid ${({ theme }) => theme.colors.secondary};
+    outline: 3px solid ${({ theme }) => theme.colors.toggleBorder};
   }
 
   &:hover + ${Handle}:not(:disabled):not(:checked) {
-    outline: 3px solid ${({ theme }) => theme.colors.secondary};
+    outline: 3px solid ${({ theme }) => theme.colors.toggleBorder};
   }
 `;
 

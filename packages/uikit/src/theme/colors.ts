@@ -10,6 +10,7 @@ export const baseColors = {
   secondaryAlter: "#A19797",
   success: "#16DB65",
   warning: "#FFB237",
+  toggleBorder: "#E9CA6D",
 };
 
 export const additionalColors = {
