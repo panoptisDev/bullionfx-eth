@@ -72,7 +72,7 @@ export function TransactionSubmittedContent({
   const { t } = useTranslation()
 
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
-  let tokenSymbol = currencyToAdd.symbol
+  let tokenSymbol = currencyToAdd?.symbol
   if (currencies) {
     tokenSymbol = `${currencies[Field.CURRENCY_A].symbol}-${currencies[Field.CURRENCY_B].symbol} LP`
   }
