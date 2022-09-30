@@ -32,7 +32,7 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
   const pairAddresses = useMemo(
     () => {
       const isBullionFXTokens = (token: Currency | undefined) => {
-        const result = bullionfxTokens[chainId ?? ChainId.BSC].find(each => token?.isToken && each.address.toLowerCase() === token?.address.toLowerCase())
+        const result = bullionfxTokens[chainId ?? ChainId.BSC]?.find(each => token?.isToken && each.address.toLowerCase() === token?.address.toLowerCase())
         if (result) return true
         return false
       }
