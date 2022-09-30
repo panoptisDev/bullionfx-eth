@@ -39,7 +39,7 @@ const GOLD_TESTNET = new Token(
 const USDC_MAINNET = new Token(
   ChainId.BSC,
   '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  18,
+  6,
   'USDC',
   'Tether USD',
   'https://www.centre.io/',
