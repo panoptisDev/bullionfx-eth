@@ -86,7 +86,11 @@ export const ethTokens = {
 }
 
 export const bullionfxTokens = {
-  [ChainId.BSC]: [],
+  [ChainId.BSC]: [
+    USDC[ChainId.BSC],
+    BULL[ChainId.BSC],
+    GOLD[ChainId.BSC]
+  ],
   [ChainId.BSC_TESTNET]: [
     USDC[ChainId.BSC_TESTNET],
     BULL[ChainId.BSC_TESTNET],

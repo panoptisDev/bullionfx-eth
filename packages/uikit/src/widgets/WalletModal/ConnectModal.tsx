@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled, { useTheme } from "styled-components";
-import EXTERNAL_LINK_PROPS from "../../util/externalLinkProps";
+// import EXTERNAL_LINK_PROPS from "../../util/externalLinkProps";
 import Grid from "../../components/Box/Grid";
 import Box from "../../components/Box/Box";
 import getThemeValue from "../../util/getThemeValue";
-import Text from "../../components/Text/Text";
+// import Text from "../../components/Text/Text";
 import Heading from "../../components/Heading/Heading";
-import { Button } from "../../components/Button";
+// import { Button } from "../../components/Button";
 import { ModalBody, ModalCloseButton, ModalContainer, ModalHeader, ModalTitle } from "../Modal";
 import WalletCard, { MoreWalletCard } from "./WalletCard";
 import config, { walletLocalStorageKey } from "./config";
@@ -60,7 +60,7 @@ const ConnectModal: React.FC<React.PropsWithChildren<Props>> = ({
   t,
   connectors,
 }) => {
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
   const theme = useTheme();
   const sortedConfig = getPreferredConfig(connectors || config);
   // Filter out WalletConnect if user is inside TrustWallet built-in browser
@@ -88,7 +88,7 @@ const ConnectModal: React.FC<React.PropsWithChildren<Props>> = ({
             {!showMore && <MoreWalletCard t={t} onClick={() => setShowMore(true)} />}
           </Grid>
         </WalletWrapper>
-        <Box p="24px">
+        {/* <Box p="24px">
           <Text textAlign="center" color="textSubtle" as="p" mb="16px">
             {t("Haven’t got a crypto wallet yet?")}
           </Text>
@@ -101,7 +101,7 @@ const ConnectModal: React.FC<React.PropsWithChildren<Props>> = ({
           >
             {t("Learn How to Connect")}
           </Button>
-        </Box>
+        </Box> */}
       </ModalBody>
     </ModalContainer>
   );
