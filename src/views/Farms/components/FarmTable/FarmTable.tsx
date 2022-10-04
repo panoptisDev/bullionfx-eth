@@ -190,13 +190,13 @@ const FarmTable: React.FC<React.PropsWithChildren<ITableProps>> = ({ farms, cake
         <TableWrapper ref={tableWrapperEl}>
           <StyledTable>
             <TableBody>
-              {sortedRows.map((row) => {
+              {sortedRows.map((row, index) => {
                 return row?.details?.boosted ? (
                   <ProxyFarmContainer key={`table-row-${row.farm.pid}`} farm={row.details}>
-                    <Row {...row} userDataReady={userDataReady} chainId={chainId} />
+                    <Row {...row} userDataReady={userDataReady} chainId={chainId} isLastChild={index === sortedRows.length - 1} />
                   </ProxyFarmContainer>
                 ) : (
-                  <Row {...row} userDataReady={userDataReady} key={`table-row-${row.farm.pid}`} chainId={chainId} />
+                  <Row {...row} userDataReady={userDataReady} key={`table-row-${row.farm.pid}`} chainId={chainId} isLastChild={index === sortedRows.length - 1} />
                 )
               })}
             </TableBody>

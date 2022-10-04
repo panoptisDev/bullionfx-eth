@@ -34,6 +34,7 @@ export interface RowProps {
 interface RowPropsWithLoading extends RowProps {
   userDataReady: boolean
   chainId: number
+  isLastChild?: boolean
 }
 
 const cells = {
@@ -77,7 +78,7 @@ const FarmMobileCell = styled.td`
 `
 
 const Row: React.FunctionComponent<React.PropsWithChildren<RowPropsWithLoading>> = (props) => {
-  const { details, userDataReady, initialActivity } = props
+  const { details, userDataReady, initialActivity, isLastChild } = props
   const hasSetInitialValue = useRef(false)
   const hasStakedAmount = !!useFarmUser(details.pid).stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
@@ -157,7 +158,7 @@ const Row: React.FunctionComponent<React.PropsWithChildren<RowPropsWithLoading>>
                 )
             }
           })}
-          <GradientBar />
+          {!(isLastChild && !actionPanelExpanded) && <GradientBar />}
         </StyledTr>
       )
     }

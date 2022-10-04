@@ -49,7 +49,7 @@ const PoolsTable: React.FC<React.PropsWithChildren<PoolsTableProps>> = ({ pools,
   return (
     <StyledTableBorder>
       <StyledTable id="pools-table" role="table" ref={tableWrapperEl}>
-        {pools.map((pool) =>
+        {pools.map((pool, index) =>
           pool.vaultKey ? (
             pool.earningToken ? (
               <VaultPoolRow
@@ -57,6 +57,7 @@ const PoolsTable: React.FC<React.PropsWithChildren<PoolsTableProps>> = ({ pools,
                 key={pool.vaultKey}
                 vaultKey={pool.vaultKey}
                 account={account}
+                isLastChild={index === pools.length - 1}
               />
             ) : (<div key={pool.vaultKey} />)
           ) : (
@@ -65,6 +66,7 @@ const PoolsTable: React.FC<React.PropsWithChildren<PoolsTableProps>> = ({ pools,
               key={pool.sousId}
               sousId={pool.sousId}
               account={account}
+              isLastChild={index === pools.length - 1}
             />
           ),
         )}

@@ -2,6 +2,7 @@ import { useState, memo, ReactNode, useCallback, useEffect, useRef } from 'react
 import styled from 'styled-components'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import { useMatchBreakpointsContext } from '@pancakeswap/uikit'
+import { GradientBar } from 'views/Farms/components/FarmTable/styleds'
 
 import ExpandActionCell from './Cells/ExpandActionCell'
 
@@ -13,8 +14,8 @@ const StyledRow = styled.div`
 `
 
 const ExpandRow: React.FC<
-  React.PropsWithChildren<{ children: ReactNode; panel: ReactNode; initialActivity?: boolean }>
-> = ({ children, panel, initialActivity }) => {
+  React.PropsWithChildren<{ children: ReactNode; panel: ReactNode; initialActivity?: boolean, isLastChild?: boolean }>
+> = ({ children, panel, initialActivity, isLastChild }) => {
   const hasSetInitialValue = useRef(false)
   const { isTablet, isDesktop } = useMatchBreakpointsContext()
 
@@ -35,6 +36,7 @@ const ExpandRow: React.FC<
     <>
       <StyledRow role="row" onClick={toggleExpanded}>
         {children}
+        {isLastChild && expanded && <GradientBar />}
         <ExpandActionCell expanded={expanded} isFullLayout={isTablet || isDesktop} />
       </StyledRow>
       {shouldRenderActionPanel && panel}

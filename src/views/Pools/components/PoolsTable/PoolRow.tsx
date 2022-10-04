@@ -16,8 +16,8 @@ import StakedCell from './Cells/StakedCell'
 import ExpandRow from './ExpandRow'
 
 export const VaultPoolRow: React.FC<
-  React.PropsWithChildren<{ vaultKey: VaultKey; account: string; initialActivity?: boolean }>
-> = memo(({ vaultKey, account, initialActivity }) => {
+  React.PropsWithChildren<{ vaultKey: VaultKey; account: string; initialActivity?: boolean; isLastChild?:boolean }>
+> = memo(({ vaultKey, account, initialActivity, isLastChild }) => {
   const { isXs, isSm, isMd, isLg, isXl, isXxl } = useMatchBreakpointsContext()
   const isLargerScreen = isLg || isXl || isXxl
   const isXLargerScreen = isXl || isXxl
@@ -29,21 +29,23 @@ export const VaultPoolRow: React.FC<
       panel={
         <ActionPanel account={account} pool={pool} expanded breakpoints={{ isXs, isSm, isMd, isLg, isXl, isXxl }} />
       }
+      isLastChild={isLastChild}
     >
       <NameCell pool={pool} />
       {isXLargerScreen && <AutoEarningsCell pool={pool} account={account} />}
       {isXLargerScreen ? <StakedCell pool={pool} account={account} /> : null}
       <AutoAprCell pool={pool} />
       {isLargerScreen && <TotalStakedCell pool={pool} />}
-      <GradientBar />
+      {!isLastChild && <GradientBar />}
     </ExpandRow>
   )
 })
 
-const PoolRow: React.FC<React.PropsWithChildren<{ sousId: number; account: string; initialActivity?: boolean }>> = ({
+const PoolRow: React.FC<React.PropsWithChildren<{ sousId: number; account: string; initialActivity?: boolean; isLastChild?:boolean }>> = ({
   sousId,
   account,
   initialActivity,
+  isLastChild
 }) => {
   const { isXs, isSm, isMd, isLg, isXl, isXxl, isDesktop } = useMatchBreakpointsContext()
   const isLargerScreen = isLg || isXl || isXxl
@@ -55,13 +57,14 @@ const PoolRow: React.FC<React.PropsWithChildren<{ sousId: number; account: strin
       panel={
         <ActionPanel account={account} pool={pool} expanded breakpoints={{ isXs, isSm, isMd, isLg, isXl, isXxl }} />
       }
+      isLastChild={isLastChild}
     >
       <NameCell pool={pool} />
       <EarningsCell pool={pool} account={account} />
       {isLargerScreen && <TotalStakedCell pool={pool} />}
       <AprCell pool={pool} />
       {isDesktop && <EndsInCell pool={pool} />}
-      <GradientBar />
+      {!isLastChild && <GradientBar />}
     </ExpandRow>
   )
 }
