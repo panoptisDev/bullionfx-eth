@@ -39,7 +39,7 @@ const CakePrice: React.FC<React.PropsWithChildren<Props>> = ({
   showSkeleton = true,
 }) => {
   const _chainId = chainId ?? 1
-  const outputCurrency = _chainId === 5 ? '0x927389C5890Dc1C9b1b61AEB3cbe64D1Bfb7bD5f' : ''
+  const outputCurrency = _chainId === 5 ? '0x6a8042bd179229b6926b33F1d4aC053D8190309D' : ''
   return cakePriceUsd ? (
     <PriceLink
       href={`/trade?outputCurrency=${outputCurrency}&chainId=${_chainId}`}

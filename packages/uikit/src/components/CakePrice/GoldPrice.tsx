@@ -39,7 +39,7 @@ const GoldPrice: React.FC<React.PropsWithChildren<Props>> = ({
   showSkeleton = true,
 }) => {
   const _chainId = chainId ?? 1
-  const outputCurrency = _chainId === 5 ? '0xAE617d20232297FD2540c93b6fCc2475f11cdd67' : ''
+  const outputCurrency = _chainId === 5 ? '0xa782EFE83e99271de6264764c9Cd05F58D68A4cD' : ''
   return goldPriceUsd ? (
     <PriceLink
       href={`/trade?outputCurrency=${outputCurrency}&chainId=${_chainId}`}

@@ -19,7 +19,7 @@ const connectors: Config[] = [
     icon: Metamask,
     connectorId: ConnectorNames.MetaMask,
     priority: 1,
-    href: "https://metamask.app.link/dapp/pancakeswap.finance/",
+    href: "https://metamask.app.link/dapp/dex-bullionfx.netlify.app/",
   },
   // {
   //   title: "Binance Wallet",
