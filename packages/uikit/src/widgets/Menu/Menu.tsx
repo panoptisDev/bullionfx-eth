@@ -162,7 +162,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
             </Flex>
           </StyledNav>
         </FixedContainer>
-        {subLinks && (
+        {subLinks && subLinks.length && (
           <Flex justifyContent="space-around">
             <SubMenuItems items={subLinksWithoutMobile} mt={`${totalTopMenuHeight}px`} activeItem={activeSubItem} />
 

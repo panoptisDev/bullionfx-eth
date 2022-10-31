@@ -128,14 +128,54 @@ const config = {
         destination: '/pools',
         permanent: true,
       },
-      {
-        source: '/collectibles',
-        destination: '/nfts',
-        permanent: true,
-      },
+      // {
+      //   source: '/collectibles',
+      //   destination: '/nfts',
+      //   permanent: true,
+      // },
       {
         source: '/',
         destination: '/trade',
+        permanent: true
+      },
+      {
+        source: '/ifo',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/info',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/competition',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/nfts',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/prediction',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/profile',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/teams',
+        destination: '/404',
+        permanent: true
+      },
+      {
+        source: '/voting',
+        destination: '/404',
         permanent: true
       }
     ]

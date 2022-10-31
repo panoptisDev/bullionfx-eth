@@ -27,6 +27,7 @@ export const config = {
     '/pools',
     '/farms',
     '/add',
+    '/credit',
     // '/ifo',
     '/remove',
     // '/prediction',

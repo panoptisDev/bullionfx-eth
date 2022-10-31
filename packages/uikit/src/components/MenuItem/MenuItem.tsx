@@ -17,7 +17,7 @@ const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
   const { isMobile } = useMatchBreakpointsContext();
   const menuItemRef = useRef<HTMLDivElement>(null);
   const { linkComponent } = useContext(MenuContext);
-  const itemLinkProps: any = href
+  const itemLinkProps: any = href && !isDisabled
     ? {
         as: linkComponent,
         href,
