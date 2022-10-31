@@ -18,7 +18,7 @@ export const getGQLHeaders = (endpoint: string) => {
   return undefined
 }
 
-export const infoClient = new GraphQLClient(INFO_CLIENT, { headers: getGQLHeaders(INFO_CLIENT) })
+export const infoClient = new GraphQLClient(INFO_CLIENT)
 export const infoClientTestnet = new GraphQLClient(INFO_CLIENT_GOERLI)
 
 export const infoServerClient = new GraphQLClient(INFO_CLIENT, {

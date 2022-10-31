@@ -17,14 +17,14 @@ const getLpAddress = (token1: string | Token, token2: string | Token, chainId: n
     if (!checksummedToken1Address) {
       return null
     }
-    token1AsTokenInstance = new Token(chainId, checksummedToken1Address, 18)
+    token1AsTokenInstance = new Token(chainId ?? ChainId.BSC, checksummedToken1Address, 18)
   }
   if (typeof _token2 === 'string' || _token2 instanceof String) {
     const checksummedToken2Address = isAddress(_token2)
     if (!checksummedToken2Address) {
       return null
     }
-    token2AsTokenInstance = new Token(chainId, checksummedToken2Address, 18)
+    token2AsTokenInstance = new Token(chainId ?? ChainId.BSC, checksummedToken2Address, 18)
   }
 
   const isBullionFXTokens = (token: Token) => {
