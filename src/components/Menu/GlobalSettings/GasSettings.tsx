@@ -1,8 +1,8 @@
 import { Flex, Button, Text } from '@pancakeswap/uikit'
 import QuestionHelper from 'components/QuestionHelper'
 import { useTranslation } from '@pancakeswap/localization'
-import { useGasPriceManager, useSuitableGasPrice } from 'state/user/hooks'
-// import { GAS_PRICE_GWEI, GAS_PRICE } from 'state/types'
+import { useGasPriceManager } from 'state/user/hooks'
+import { GAS_PRICE_GWEI, GAS_PRICE } from 'state/types'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '@pancakeswap/sdk'
 
@@ -10,7 +10,6 @@ const GasSettings = () => {
   const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
   const [gasPrice, setGasPrice] = useGasPriceManager()
-  const suitableGasPrice = useSuitableGasPrice()
 
   return (
     <Flex flexDirection="column">
@@ -32,39 +31,33 @@ const GasSettings = () => {
           mr="4px"
           scale="sm"
           onClick={() => {
-            // setGasPrice(GAS_PRICE_GWEI.default)
-            setGasPrice("default", suitableGasPrice)
+            setGasPrice(GAS_PRICE_GWEI.default)
           }}
-          // variant={gasPrice === GAS_PRICE_GWEI.default ? 'primary' : 'tertiary'}
-          variant={gasPrice === "default" ? 'primary' : 'tertiary'}
+          variant={gasPrice === GAS_PRICE_GWEI.default ? 'primary' : 'tertiary'}
         >
-          {t('Standard (%gasPrice%)', { gasPrice: (Number(suitableGasPrice) / 1000000000).toFixed(2) })}
+          {t('Standard (%gasPrice%)', { gasPrice: GAS_PRICE.default })}
         </Button>
         <Button
           mt="4px"
           mr="4px"
           scale="sm"
           onClick={() => {
-            // setGasPrice(GAS_PRICE_GWEI.fast)
-            setGasPrice("fast", (Number(suitableGasPrice) * 1.4).toFixed())
+            setGasPrice(GAS_PRICE_GWEI.fast)
           }}
-          // variant={gasPrice === GAS_PRICE_GWEI.fast ? 'primary' : 'tertiary'}
-          variant={gasPrice === "fast" ? 'primary' : 'tertiary'}
+          variant={gasPrice === GAS_PRICE_GWEI.fast ? 'primary' : 'tertiary'}
         >
-          {t('Fast (%gasPrice%)', { gasPrice: (Number(suitableGasPrice) * 1.4 / 1000000000).toFixed(2) })}
+          {t('Fast (%gasPrice%)', { gasPrice: GAS_PRICE.fast })}
         </Button>
         <Button
           mr="4px"
           mt="4px"
           scale="sm"
           onClick={() => {
-            // setGasPrice(GAS_PRICE_GWEI.instant)
-            setGasPrice("instant", (Number(suitableGasPrice) * 1.8).toFixed())
+            setGasPrice(GAS_PRICE_GWEI.instant)
           }}
-          // variant={gasPrice === GAS_PRICE_GWEI.instant ? 'primary' : 'tertiary'}
-          variant={gasPrice === "instant" ? 'primary' : 'tertiary'}
+          variant={gasPrice === GAS_PRICE_GWEI.instant ? 'primary' : 'tertiary'}
         >
-          {t('Instant (%gasPrice%)', { gasPrice: (Number(suitableGasPrice) * 1.8 / 1000000000).toFixed(2) })}
+          {t('Instant (%gasPrice%)', { gasPrice: GAS_PRICE.instant })}
         </Button>
       </Flex>
     </Flex>
