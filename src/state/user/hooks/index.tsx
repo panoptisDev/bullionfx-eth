@@ -41,6 +41,7 @@ import {
   setSubgraphHealthIndicatorDisplayed,
   updateUserLimitOrderAcceptedWarning,
   setZapDisabled,
+  updateGasPriceType,
 } from '../actions'
 import { deserializeToken, serializeToken } from './helpers'
 import { GAS_PRICE_GWEI } from '../../types'
@@ -401,6 +402,16 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
   )
 }
 
+export function useSuitableGasPrice(): string {
+  const { chainId } = useActiveWeb3React()
+  const { data } = useFeeData({
+    chainId,
+    enabled: chainId !== ChainId.BSC && chainId !== ChainId.BSC_TESTNET,
+    watch: true,
+  })
+  return data?.formatted?.gasPrice
+}
+
 export function useGasPrice(): string {
   const { chainId, chain } = useActiveWeb3React()
   const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
@@ -421,13 +432,14 @@ export function useGasPrice(): string {
   return data?.formatted?.gasPrice
 }
 
-export function useGasPriceManager(): [string, (userGasPrice: string) => void] {
+export function useGasPriceManager(): [string, (userGasPriceType: string, userGasPrice: string) => void] {
   const dispatch = useAppDispatch()
   const userGasPrice = useGasPrice()
 
   const setGasPrice = useCallback(
-    (gasPrice: string) => {
+    (gasPriceType: string, gasPrice: string) => {
       dispatch(updateGasPrice({ gasPrice }))
+      dispatch(updateGasPriceType({ gasPriceType }))
     },
     [dispatch],
   )
