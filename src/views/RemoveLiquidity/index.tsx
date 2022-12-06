@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { splitSignature } from '@ethersproject/bytes'
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useRouter } from 'next/router'
 import useToast from 'hooks/useToast'

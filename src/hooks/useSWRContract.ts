@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { FetchStatus } from 'config/constants/types'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { FormatTypes } from '@ethersproject/abi'
 import useSWR, {
   Middleware,

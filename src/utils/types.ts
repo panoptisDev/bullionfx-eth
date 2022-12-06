@@ -1,5 +1,5 @@
 import { FarmAuction, Predictions } from 'config/abi/types'
-import { Contract, ContractFunction } from '@ethersproject/contracts'
+import { Contract, ContractFunction } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 
 export type MultiCallResponse<T> = T | null

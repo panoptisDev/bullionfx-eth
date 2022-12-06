@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { BIG_ZERO } from 'utils/bigNumber'
 
 // Retrieve IFO allowance

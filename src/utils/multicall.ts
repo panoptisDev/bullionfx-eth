@@ -1,5 +1,5 @@
 import { Interface } from '@ethersproject/abi'
-import { CallOverrides } from '@ethersproject/contracts'
+import { CallOverrides } from 'ethers'
 import { getMulticallContract } from 'utils/contractHelpers'
 
 export interface Call {

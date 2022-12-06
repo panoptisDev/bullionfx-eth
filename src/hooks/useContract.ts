@@ -61,7 +61,7 @@ import {
 import { useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { WNATIVE } from '@pancakeswap/sdk'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
