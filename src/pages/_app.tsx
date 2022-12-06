@@ -13,17 +13,21 @@ import useUserAgent from 'hooks/useUserAgent'
 import useThemeCookie from 'hooks/useThemeCookie'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { useStore, persistor } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
+import { useGasPriceManager } from 'state/user/hooks'
 import { NextPage } from 'next'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useFeeData } from 'wagmi'
 import { Blocklist, Updaters } from '..'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import { ChainId } from '../../packages/swap-sdk/src/constants'
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
@@ -125,6 +129,33 @@ const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBou
 
 const App = ({ Component, pageProps, ...appProps }: AppPropsWithLayout) => {
   const noNeedLayout = [`/451`].includes(appProps.router.pathname)
+  const { chainId } = useActiveWeb3React()
+  const { data, refetch } = useFeeData({
+    chainId,
+    enabled: chainId !== ChainId.BSC && chainId !== ChainId.BSC_TESTNET,
+    watch: true,
+  })
+  const [gasPrice, setGasPrice] = useGasPriceManager()
+
+  useEffect(() => {
+    switch(gasPrice) {
+      case "default":
+        setGasPrice(gasPrice, data?.formatted?.gasPrice)
+        break
+      case "fast":
+        setGasPrice("fast", (Number(data?.formatted?.gasPrice) * 1.4).toFixed())
+        break
+      case "instant":
+        setGasPrice("fast", (Number(data?.formatted?.gasPrice) * 1.8).toFixed())
+        break
+      default:
+        setGasPrice(gasPrice, data?.formatted?.gasPrice)
+    }
+    const timer = setInterval(() => {
+      refetch()
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [gasPrice, setGasPrice, data?.formatted?.gasPrice, refetch])
 
   if (noNeedLayout) {
     return <Component {...pageProps} />
