@@ -424,11 +424,11 @@ export function useGasPrice(): string {
     return userGas
   }
   if (chainId === ChainId.BSC_TESTNET) {
-    return GAS_PRICE_GWEI.testnet
+    return (Number(userGas) * 2).toFixed()
   }
-  if (chain?.testnet) {
-    return data?.formatted?.maxPriorityFeePerGas
-  }
+  // if (chain?.testnet) {
+  //   return data?.formatted?.maxPriorityFeePerGas
+  // }
   return data?.formatted?.gasPrice
 }
 

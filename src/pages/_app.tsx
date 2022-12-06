@@ -140,7 +140,7 @@ const App = ({ Component, pageProps, ...appProps }: AppPropsWithLayout) => {
   useEffect(() => {
     switch(gasPrice) {
       case "default":
-        setGasPrice(gasPrice, data?.formatted?.gasPrice)
+        setGasPrice("default", (Number(data?.formatted?.gasPrice) * 1.05).toFixed())
         break
       case "fast":
         setGasPrice("fast", (Number(data?.formatted?.gasPrice) * 1.4).toFixed())
